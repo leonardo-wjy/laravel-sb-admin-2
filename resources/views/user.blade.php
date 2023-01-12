@@ -19,7 +19,7 @@
             <div class="card-body">
 
                 <div class="table-responsive">
-                    <table id="tbl_list" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th style="width: 30px;">No</th>
@@ -29,7 +29,7 @@
                                 <th style="width: 50px;">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody style="cursor: pointer;">
 
                         </tbody>
                     </table>
@@ -40,7 +40,7 @@
 </div>
 <!-- /.container-fluid -->
 
-<!-- Change Password Modal-->
+<!-- Create Modal-->
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -65,7 +65,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="control-label font-weight-bold">Nomor Telepon<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="telp" id="telp">
+                                <input type="text" class="form-control" name="phone" id="phone">
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="control-label font-weight-bold">Password<span class="text-danger">*</span></label>
@@ -93,7 +93,60 @@
     </div>
 </div>
 
-<!-- Change Password Modal-->
+<!-- Edit Modal-->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card shadow">
+                <div class="modal-header card-header py-3 d-flex justify-content-between align-items-center">
+                    <div class="col px-0">
+                        <h6 class="font-weight-bold text-primary">Edit User</h6>
+                    </div>
+                </div>
+                <div class="modal-body card-body">
+                    <form class="update-form" role="form" method="POST" enctype="multipart/form-data">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="control-label font-weight-bold">Nama<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control name-edit" name="name_edit" id="name_edit">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label font-weight-bold">Email<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control email-edit" name="email_edit" id="email_edit">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="control-label font-weight-bold">Nomor Telepon<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control phone-edit" name="phone_edit" id="phone_edit">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label font-weight-bold">Password></label>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control password-edit" name="passwd_edit" id="passwd_edit">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span class="input-group-text bg-white" id="basic-addon2" onclick="edit_change_password_show_hide()">
+                                            <i class="fas fa-eye" id="edit_change_show_eye"></i>
+                                            <i class="fas fa-eye-slash d-none" id="edit_change_hide_eye"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-outline-danger">Batal</button>
+                    <button type="button" class="btn btn-primary btn-submit-form">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Detail Modal-->
 <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -149,10 +202,26 @@
         }
     }
 
+    const edit_change_password_show_hide = function() {
+        var x = document.getElementById("passwd_edit");
+        var show_eye = document.getElementById("edit_change_show_eye");
+        var hide_eye = document.getElementById("edit_change_hide_eye");
+        hide_eye.classList.remove("d-none");
+        if (x.type === "text") {
+            x.type = "password";
+            show_eye.style.display = "none";
+            hide_eye.style.display = "block";
+        } else {
+            x.type = "text";
+            show_eye.style.display = "block";
+            hide_eye.style.display = "none";
+        }
+    }
+
     // Call the dataTables jQuery plugin
     $(document).ready(function () {
 
-        $('#tbl_list').DataTable({
+        const table = $('#dataTable').DataTable({
             dom: "<'row'<'col-sm-12 col-md-6'><'col-sm-12 col-md-6'f>>t<'row align-items-start'<'col-md-4'l><'col-md-4 text-center'i><'col-md-4'p>>",
             processing: true,
             serverSide: true,
@@ -202,7 +271,7 @@
                             cancelButtonText: 'Batal',
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                
+
                             }
                         })
                     })
@@ -224,8 +293,17 @@
             language: {
                 emptyTable: "Tidak Ada Data",
                 lengthMenu: "Show _MENU_ entries",
-                searchPlaceholder: "Cari Username / Nama"
+                searchPlaceholder: "Cari Nama / Email / Telp"
             }
+        });
+
+        $(".dataTables_info").addClass("pt-0");
+        $('#dataTable tbody').on('click', 'tr td:not(.actions):not(.dataTables_empty)', function() {
+            const data = table.row(this).data();
+            $(".name-edit").val(data.name)
+            $(".email-edit").val(data.email)
+            $(".phone-edit").val(data.phone)
+            $("#editModal").modal()
         });
     });
 </script>
