@@ -13,14 +13,18 @@ class UserController extends Controller
         if (request()->ajax()) {
             $users = array(
             [
+                "no" => 1,
                 "id" => 1,
                 "name" => "tes",
-                "email" => "tes@gmail.com"
+                "email" => "tes@gmail.com",
+                "phone" => "0812388383332"
             ],
             [
+                "no" => 2,
                 "id" => 2,
                 "name" => "andi",
-                "email" => "andi@gmail.com"
+                "email" => "andi@gmail.com",
+                "phone" => "08123883834848"
             ]
             );
             // $users = User::query();

@@ -14,7 +14,7 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 style="padding-top: 8px;" class="m-0 font-weight-bold text-primary float-sm-left">User</h6>
-                <a class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#createModal" ><i class="fas fa-plus">&nbsp;</i>Tambah</a>
+                <a class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#createModal"><i class="fas fa-plus">&nbsp;</i>Tambah</a>
             </div>
             <div class="card-body">
 
@@ -22,10 +22,11 @@
                     <table id="tbl_list" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th>No</th>
+                                <th style="width: 30px;">No</th>
                                 <th>Name</th>
                                 <th>Email</th>
-
+                                <th>Nomor Telepon</th>
+                                <th style="width: 50px;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -92,6 +93,44 @@
     </div>
 </div>
 
+<!-- Change Password Modal-->
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card shadow">
+                <div class="modal-header card-header py-3 d-flex justify-content-between align-items-center">
+                    <div class="col px-0">
+                        <h6 class="font-weight-bold text-primary">Detail User</h6>
+                    </div>
+                </div>
+                <div class="modal-body card-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label font-weight-bold">Nama</label>
+                            <input type="text" readonly class="form-control name-detail">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label font-weight-bold">Email</label>
+                            <input type="text" readonly class="form-control email-detail">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label font-weight-bold">Nomor Telepon</label>
+                            <input type="text" readonly class="form-control phone-detail">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-outline-danger">Batal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
     const change_password_show_hide = function() {
@@ -126,7 +165,7 @@
                 targets: "_all"
             }],
             columns: [{
-                data: "id",
+                data: "no",
                 className: "text-center actions"
             }, {
                 data: "name",
@@ -134,6 +173,36 @@
             }, {
                 data: "email",
                 className: "text-center"
+            }, {
+                data: "phone",
+                className: "text-center"
+            },
+            {
+                data: "id",
+                className: "text-center actions",
+                searchable: false,
+                sortable: false,
+                render: function(data, type, row) {
+                    $(".view-detail").click(function() {
+                       $(".name-detail").val($(this).data('name'))
+                       $(".email-detail").val($(this).data('email'))
+                       $(".phone-detail").val($(this).data('phone'))
+                       $("#detailModal").modal()
+                    })
+
+                    return `
+                    <div class="dropleft">
+                        <button type="button" class="btn btn-link" data-toggle="dropdown" aria-expanded="false" data-offset="10,20">
+                            <i class="fa fa-ellipsis-v"></i>
+                        </button>
+                        <div class="dropdown-menu" style="box-shadow: 0px 2px 40px rgba(0, 0, 0, 0.2);">
+                            <button class="dropdown-item view-detail" data-id="${row.id}" data-name="${row.name}" data-email="${row.email}" data-phone="${row.phone}"><strong>Lihat</strong></button>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item"><strong>Hapus</strong></a>
+                        </div>
+                    </div>
+                    `
+                }
             }],
             language: {
                 emptyTable: "Tidak Ada Data",
