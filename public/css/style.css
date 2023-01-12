@@ -1,3 +1,4 @@
+/* sweetalert */
 .swal2-popup {
     border-radius: 6px !important;
   }
@@ -55,6 +56,8 @@
     font-family: "Poppins", sans-serif !important;
   }
   
+/* create form */
+
 .modal
   .modal-dialog
   .modal-content
@@ -119,6 +122,80 @@
   .modal-content
   .modal-body
   form.create-form
+  .form-row
+  .form-group
+  .row
+  .col-md-3
+  .input-group-text
+  i {
+  margin: 0px auto;
+}
+
+/* update form */
+.modal
+  .modal-dialog
+  .modal-content
+  .modal-body
+  form.update-form
+  .form-row
+  .form-group
+  .row
+  .col-md-9 {
+  padding-right: 0px;
+}
+
+.modal
+  .modal-dialog
+  .modal-content
+  .modal-body
+  form.update-form
+  .form-row
+  .form-group
+  .row
+  .col-md-9
+  .form-control {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-right: 0px;
+}
+
+.modal
+  .modal-dialog
+  .modal-content
+  .modal-body
+  form.update-form
+  .form-row
+  .form-group
+  .row
+  .col-md-3 {
+  padding-left: 0px;
+}
+
+.modal
+  .modal-dialog
+  .modal-content
+  .modal-body
+  form.update-form
+  .form-row
+  .form-group
+  .row
+  .col-md-3
+  .input-group-text {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  font-family: "Poppins", sans-serif !important;
+  font-size: 13px;
+  font-weight: 500;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  background-color: #e9ecef !important;
+}
+
+.modal
+  .modal-dialog
+  .modal-content
+  .modal-body
+  form.update-form
   .form-row
   .form-group
   .row

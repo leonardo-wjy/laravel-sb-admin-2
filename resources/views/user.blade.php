@@ -139,7 +139,7 @@
                 </div>
                 <div class="card-footer modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-outline-danger">Batal</button>
-                    <button type="button" class="btn btn-primary btn-submit-form">Simpan</button>
+                    <button type="button" class="btn btn-primary btn-submit-form">Ubah</button>
                 </div>
             </div>
         </div>
