@@ -190,6 +190,23 @@
                        $("#detailModal").modal()
                     })
 
+                    $(".delete-data").click(function() {
+                        Swal.fire({
+                            icon: 'question',
+                            title: 'Hapus Data?',
+                            confirmButtonColor: '#4e73df',
+                            cancelButtonColor: '#d33',
+                            showCancelButton: true,
+                            reverseButtons: true,
+                            confirmButtonText: 'Hapus',
+                            cancelButtonText: 'Batal',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                
+                            }
+                        })
+                    })
+
                     return `
                     <div class="dropleft">
                         <button type="button" class="btn btn-link" data-toggle="dropdown" aria-expanded="false" data-offset="10,20">
@@ -198,7 +215,7 @@
                         <div class="dropdown-menu" style="box-shadow: 0px 2px 40px rgba(0, 0, 0, 0.2);">
                             <button class="dropdown-item view-detail" data-id="${row.id}" data-name="${row.name}" data-email="${row.email}" data-phone="${row.phone}"><strong>Lihat</strong></button>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item"><strong>Hapus</strong></a>
+                            <button class="dropdown-item delete-data"><strong>Hapus</strong></button>
                         </div>
                     </div>
                     `

@@ -34,6 +34,8 @@
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" defer></script>
     <link  href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 </head>
 
