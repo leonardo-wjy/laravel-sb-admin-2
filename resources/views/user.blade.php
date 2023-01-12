@@ -86,7 +86,7 @@
                 </div>
                 <div class="card-footer modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-outline-danger">Batal</button>
-                    <button type="button" class="btn btn-primary btn-submit-form">Simpan</button>
+                    <button type="button" onclick="createForm()" class="btn btn-primary btn-submit-form">Simpan</button>
                 </div>
             </div>
         </div>
@@ -218,9 +218,75 @@
         }
     }
 
-    // Call the dataTables jQuery plugin
     $(document).ready(function () {
+        $(".create-form").validate({
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 5,
+                    maxlength: 30
+                },
+                passwd: {
+                    required: true,
+                    minlength: 5,
+                    maxlength: 30
+                },
+                email: {
+                    required: true
+                },
+                phone: {
+                    required: true
+                }
+            },
+            messages: {
+                name: {
+                    required: "Nama Harus Diisi",
+                    minlength: "Nama Minimal 5 Karakter",
+                    maxlength: "Nama Maksimal 30 Karakter"
+                },
+                passwd: {
+                    required: "Password Harus Diisi",
+                    minlength: "Password Minimal 5 Karakter",
+                    maxlength: "Password Maksimal 30 Karakter"
+                },
+                email: {
+                    required: "Email Harus Diisi"
+                },
+                phone: {
+                    required: "Nomor Telepon Harus Diisi"
+                }
+            },
+            // errorClass: "errors",
+            // invalidHandler: function(form, validator) {
+            //     const errors = validator.numberOfInvalids()
+            //     let errorList = ""
+            //     for (const val in validator.errorMap) {
+            //         errorList += `<li>${validator.errorMap[val]}</li>`
+            //     }
+            //     if (errors > 0) {
+            //         Swal.fire({
+            //             icon: 'error',
+            //             title: 'Data Tidak Boleh Kosong',
+            //             html: `<div class="d-flex justify-content-center"><ul class="w-50 text-left text-danger">${errorList}</ul></div>`,
+            //             confirmButtonColor: '#4e73df',
+            //         })
+            //     }
+            // },
+            errorElement: 'label',
+            errorClass: 'text-danger',
+            errorPlacement: function (error, element) {
+                if (element.parent('.input-group').length) {
+                    error.insertAfter(element.parent());
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            // errorPlacement: function(error, el) {
+            //     return false
+            // }
+        })
 
+        // Call the dataTables jQuery plugin
         const table = $('#dataTable').DataTable({
             dom: "<'row'<'col-sm-12 col-md-6'><'col-sm-12 col-md-6'f>>t<'row align-items-start'<'col-md-4'l><'col-md-4 text-center'i><'col-md-4'p>>",
             processing: true,
@@ -306,6 +372,25 @@
             $("#editModal").modal()
         });
     });
+
+    const createForm = function(status) {
+        if ($(".create-form").valid()) {
+            Swal.fire({
+                icon: 'question',
+                title: 'Simpan Data?',
+                confirmButtonColor: '#4e73df',
+                cancelButtonColor: '#d33',
+                showCancelButton: true,
+                reverseButtons: true,
+                confirmButtonText: 'Simpan',
+                cancelButtonText: 'Batal',
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                }
+            })
+        }
+    }
 </script>
 
 @include('footer')
