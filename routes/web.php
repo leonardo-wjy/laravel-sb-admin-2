@@ -27,4 +27,5 @@ Route::controller(HomeController::class)->group(function () {
 Route::controller(UserController::class)->group(function () {
     Route::get('/user', 'index');
     Route::post('/user/create', 'create');
+    Route::post('/user/update-status', 'updateStatus');
 });

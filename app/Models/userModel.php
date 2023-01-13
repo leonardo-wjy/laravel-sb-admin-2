@@ -29,6 +29,13 @@ class userModel extends Model
         ]);
     }
 
+    public function updateStatus($id, $status)
+    {
+        return DB::table('user')->where('user_id', $id)->update([
+            'status' => $status
+        ]);
+    }
+
     public function checkName($name)
     {
         return DB::table('user')

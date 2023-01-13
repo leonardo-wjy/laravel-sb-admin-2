@@ -373,7 +373,40 @@
                             cancelButtonText: 'Batal',
                         }).then((result) => {
                             if (result.isConfirmed) {
-
+                                $.ajax({
+                                    url : "{{ url('user/update-status') }}",
+                                    type: "POST",
+                                    dataType: "json",
+                                    cache: false,
+                                    data: {
+                                        "id": $(this).data('id'),
+                                        "status": $(this).data('status') === 'NOT ACTIVE' ? 2 : 3,
+                                        "_token": $("meta[name='csrf-token']").attr("content")
+                                    },
+                                    success: function(response) {
+                                        if (response.status) {
+                                            table.ajax.reload();
+                                            Swal.fire({
+                                                icon: 'success',
+                                                title: response.message,
+                                                confirmButtonColor: '#4e73df',
+                                            })
+                                        } else {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: response.message,
+                                                confirmButtonColor: '#4e73df',
+                                            })
+                                        }
+                                    },
+                                    onError: function(err) {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Data Gagal Disimpan',
+                                            confirmButtonColor: '#4e73df',
+                                        })
+                                    }
+                                })
                             }
                         })
                     })
@@ -386,7 +419,7 @@
                         <div class="dropdown-menu" style="box-shadow: 0px 2px 40px rgba(0, 0, 0, 0.2);">
                             <button class="dropdown-item view-detail" data-id="${row.id}" data-name="${row.name}" data-email="${row.email}" data-phone="${row.phone}"><strong>Lihat</strong></button>
                             <div class="dropdown-divider"></div>
-                            <button class="dropdown-item delete-data"><strong>Ubah Status</strong></button>
+                            <button class="dropdown-item delete-data" data-id="${row.id}" data-status="${row.status}"><strong>Ubah Status</strong></button>
                         </div>
                     </div>
                     `
