@@ -14,4 +14,20 @@ class userModel extends Model
         ->where('status', '!=', 3)
         ->get();
     }
+
+    public function create($name, $email, $phone, $password)
+    {
+        return DB::table('user')->insert([
+            'name' => $name,
+            'email' => $email,
+            'phone' => $phone, 
+            'password' => $password
+        ]);
+    }
+
+    public function checkName($name)
+    {
+        return DB::table('user')
+        ->where('name', $name)->get();
+    }
 }

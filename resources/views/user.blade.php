@@ -54,6 +54,7 @@
                 </div>
                 <div class="modal-body card-body">
                     <form class="create-form" role="form" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="control-label font-weight-bold">Nama<span class="text-danger">*</span></label>
@@ -88,7 +89,7 @@
                 </div>
                 <div class="card-footer modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-outline-danger">Batal</button>
-                    <button type="button" onclick="createForm()" class="btn btn-primary btn-submit-form">Simpan</button>
+                    <button type="button" class="btn btn-primary btn-create-form btn-submit-form">Simpan</button>
                 </div>
             </div>
         </div>
@@ -107,6 +108,7 @@
                 </div>
                 <div class="modal-body card-body">
                     <form class="update-form" role="form" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="control-label font-weight-bold">Nama<span class="text-danger">*</span></label>
@@ -400,26 +402,58 @@
             $(".phone-edit").val(data.phone)
             $("#editModal").modal()
         });
-    });
 
-    const createForm = function(status) {
-        if ($(".create-form").valid()) {
-            Swal.fire({
-                icon: 'question',
-                title: 'Simpan Data?',
-                confirmButtonColor: '#4e73df',
-                cancelButtonColor: '#d33',
-                showCancelButton: true,
-                reverseButtons: true,
-                confirmButtonText: 'Simpan',
-                cancelButtonText: 'Batal',
-            }).then((result) => {
-                if (result.isConfirmed) {
-
-                }
-            })
-        }
-    }
+        $(".btn-create-form").click(function() {
+            if ($(".create-form").valid()) {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Simpan Data?',
+                    confirmButtonColor: '#4e73df',
+                    cancelButtonColor: '#d33',
+                    showCancelButton: true,
+                    reverseButtons: true,
+                    confirmButtonText: 'Simpan',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url : "{{ url('user/create') }}",
+                            type: "POST",
+                            dataType: "json",
+                            cache: false,
+                            data: $(".create-form").serialize(),
+                            success: function(response) {
+                                if (response.status) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: response.message,
+                                        confirmButtonColor: '#4e73df',
+                                    }).then((responseSuccess) => {
+                                        if (responseSuccess.isConfirmed) {
+                                            table.ajax.reload();
+                                        }
+                                    })
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: response.message,
+                                        confirmButtonColor: '#4e73df',
+                                    })
+                                }
+                            },
+                            onError: function(err) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Data Gagal Disimpan',
+                                    confirmButtonColor: '#4e73df',
+                                })
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    });    
 
     const updateForm = function(status) {
         if ($(".update-form").valid()) {

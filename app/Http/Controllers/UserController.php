@@ -45,4 +45,41 @@ class UserController extends Controller
 
         return view('user');
     }
+
+    //method post
+	public function create(Request $request)
+    {
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $phone = $request->input('phone');
+        $password = $request->input('password');
+
+        $results = $this->user->checkName($name);
+
+        if(sizeof($results) == 0) {
+			$insert = $this->user->create($name, $email, $phone, $password);
+			if($insert)
+			{
+				$data = [
+                    "status"            => true,
+                    "message"    => "Data Berhasil Disimpan"
+                ];
+                echo json_encode($data);
+			}
+			else
+			{
+				$data = [
+                    "status"            => false,
+                    "message"    => "User Gagal Dibuat"
+                ];
+                echo json_encode($data);
+			}
+        } else {
+            $data = [
+                "status"            => false,
+                "message"    => "User Gagal Dibuat"
+            ];
+            echo json_encode($data);
+        }
+    }
 }
