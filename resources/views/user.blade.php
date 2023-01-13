@@ -26,6 +26,8 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Nomor Telepon</th>
+                                <th>Tanggal Dibuat</th>
+                                <th>Tanggal Diperbarui</th>
                                 <th style="width: 50px;">Aksi</th>
                             </tr>
                         </thead>
@@ -139,7 +141,7 @@
                 </div>
                 <div class="card-footer modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-outline-danger">Batal</button>
-                    <button type="button" class="btn btn-primary btn-submit-form">Ubah</button>
+                    <button type="button" onclick="updateForm()" class="btn btn-primary btn-submit-form">Ubah</button>
                 </div>
             </div>
         </div>
@@ -223,7 +225,7 @@
             rules: {
                 name: {
                     required: true,
-                    minlength: 5,
+                    minlength: 4,
                     maxlength: 30
                 },
                 passwd: {
@@ -241,7 +243,7 @@
             messages: {
                 name: {
                     required: "Nama Harus Diisi",
-                    minlength: "Nama Minimal 5 Karakter",
+                    minlength: "Nama Minimal 4 Karakter",
                     maxlength: "Nama Maksimal 30 Karakter"
                 },
                 passwd: {
@@ -256,22 +258,6 @@
                     required: "Nomor Telepon Harus Diisi"
                 }
             },
-            // errorClass: "errors",
-            // invalidHandler: function(form, validator) {
-            //     const errors = validator.numberOfInvalids()
-            //     let errorList = ""
-            //     for (const val in validator.errorMap) {
-            //         errorList += `<li>${validator.errorMap[val]}</li>`
-            //     }
-            //     if (errors > 0) {
-            //         Swal.fire({
-            //             icon: 'error',
-            //             title: 'Data Tidak Boleh Kosong',
-            //             html: `<div class="d-flex justify-content-center"><ul class="w-50 text-left text-danger">${errorList}</ul></div>`,
-            //             confirmButtonColor: '#4e73df',
-            //         })
-            //     }
-            // },
             errorElement: 'label',
             errorClass: 'text-danger',
             errorPlacement: function (error, element) {
@@ -280,11 +266,46 @@
                 } else {
                     error.insertAfter(element);
                 }
+            }
+        });
+
+        var validator = $(".update-form").validate({
+            rules: {
+                name_edit: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 30
+                },
+                email_edit: {
+                    required: true
+                },
+                phone_edit: {
+                    required: true
+                }
             },
-            // errorPlacement: function(error, el) {
-            //     return false
-            // }
-        })
+            messages: {
+                name_edit: {
+                    required: "Nama Harus Diisi",
+                    minlength: "Nama Minimal 4 Karakter",
+                    maxlength: "Nama Maksimal 30 Karakter"
+                },
+                email_edit: {
+                    required: "Email Harus Diisi"
+                },
+                phone_edit: {
+                    required: "Nomor Telepon Harus Diisi"
+                }
+            },
+            errorElement: 'label',
+            errorClass: 'text-danger',
+            errorPlacement: function (error, element) {
+                if (element.parent('.input-group').length) {
+                    error.insertAfter(element.parent());
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+        });
 
         // Call the dataTables jQuery plugin
         const table = $('#dataTable').DataTable({
@@ -310,6 +331,12 @@
                 className: "text-center"
             }, {
                 data: "phone",
+                className: "text-center"
+            }, {
+                data: "createdAt",
+                className: "text-center"
+            }, {
+                data: "updatedAt",
                 className: "text-center"
             },
             {
@@ -365,6 +392,8 @@
 
         $(".dataTables_info").addClass("pt-0");
         $('#dataTable tbody').on('click', 'tr td:not(.actions):not(.dataTables_empty)', function() {
+            validator.resetForm();
+            validator.reset();
             const data = table.row(this).data();
             $(".name-edit").val(data.name)
             $(".email-edit").val(data.email)
@@ -375,6 +404,25 @@
 
     const createForm = function(status) {
         if ($(".create-form").valid()) {
+            Swal.fire({
+                icon: 'question',
+                title: 'Simpan Data?',
+                confirmButtonColor: '#4e73df',
+                cancelButtonColor: '#d33',
+                showCancelButton: true,
+                reverseButtons: true,
+                confirmButtonText: 'Simpan',
+                cancelButtonText: 'Batal',
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                }
+            })
+        }
+    }
+
+    const updateForm = function(status) {
+        if ($(".update-form").valid()) {
             Swal.fire({
                 icon: 'question',
                 title: 'Simpan Data?',
