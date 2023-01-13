@@ -33,4 +33,10 @@ class userModel extends Model
         return DB::table('user')
         ->where('name', $name)->get();
     }
+
+    public function checkEmail($email)
+    {
+        return DB::table('user')
+        ->where('email', $email)->get();
+    }
 }

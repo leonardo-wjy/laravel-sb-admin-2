@@ -54,17 +54,41 @@ class UserController extends Controller
         $phone = $request->input('phone');
         $password = $request->input('passwd');
 
+        // check user exist
         $results = $this->user->checkName($name);
 
         if(sizeof($results) == 0) {
 			$insert = $this->user->create($name, $email, $phone, $password);
 			if($insert)
 			{
-				$data = [
-                    "status"            => true,
-                    "message"    => "Data Berhasil Disimpan"
-                ];
-                echo json_encode($data);
+				// check email exist
+                $results_email = $this->user->checkEmail($email);
+
+                if(sizeof($results_email) == 0) {
+                    $insert = $this->user->create($name, $email, $phone, $password);
+                    if($insert)
+                    {
+                        $data = [
+                            "status"            => true,
+                            "message"    => "Data Berhasil Disimpan"
+                        ];
+                        echo json_encode($data);
+                    }
+                    else
+                    {
+                        $data = [
+                            "status"            => false,
+                            "message"    => "User Gagal Dibuat"
+                        ];
+                        echo json_encode($data);
+                    }
+                } else {
+                    $data = [
+                        "status"            => false,
+                        "message"    => "Email Sudah Ada"
+                    ];
+                    echo json_encode($data);
+                }
 			}
 			else
 			{
@@ -77,7 +101,7 @@ class UserController extends Controller
         } else {
             $data = [
                 "status"            => false,
-                "message"    => "User Gagal Dibuat"
+                "message"    => "User Sudah Ada"
             ];
             echo json_encode($data);
         }
