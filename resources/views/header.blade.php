@@ -41,6 +41,18 @@
 </head>
 
 <body id="page-top">
+    <script>
+        const setLoading = function() {
+            $(".btn-submit-form").attr("disabled", true)
+            $(".btn-submit-form i").toggleClass("spinner-border")
+        }
+
+        const stopLoading = function() {
+            $(".btn-submit-form").attr("disabled", false)
+            $(".btn-submit-form i").toggleClass("spinner-border").removeClass("spinner-border")
+            $(".btn-submit-form i").addClass("fa-regular spinner-border-sm")
+        }
+    </script>
 
 
     <!-- Page Wrapper -->

@@ -21,7 +21,10 @@ class userModel extends Model
             'name' => $name,
             'email' => $email,
             'phone' => $phone, 
-            'password' => $password
+            'password' => $password,
+            'status' => 1,
+            'createdAt' => '2022-01-13 12:00:00',
+            'updatedAt' => ''
         ]);
     }
 

@@ -52,7 +52,7 @@ class UserController extends Controller
         $name = $request->input('name');
         $email = $request->input('email');
         $phone = $request->input('phone');
-        $password = $request->input('password');
+        $password = $request->input('passwd');
 
         $results = $this->user->checkName($name);
 

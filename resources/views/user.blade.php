@@ -416,6 +416,7 @@
                     cancelButtonText: 'Batal',
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        setLoading()
                         $.ajax({
                             url : "{{ url('user/create') }}",
                             type: "POST",
@@ -430,10 +431,13 @@
                                         confirmButtonColor: '#4e73df',
                                     }).then((responseSuccess) => {
                                         if (responseSuccess.isConfirmed) {
+                                            stopLoading()
                                             table.ajax.reload();
+                                            $("#createModal").modal('toggle');
                                         }
                                     })
                                 } else {
+                                    stopLoading()
                                     Swal.fire({
                                         icon: 'error',
                                         title: response.message,
@@ -442,6 +446,7 @@
                                 }
                             },
                             onError: function(err) {
+                                stopLoading()
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Data Gagal Disimpan',
