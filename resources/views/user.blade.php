@@ -26,6 +26,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Nomor Telepon</th>
+                                <th>Status</th>
                                 <th>Tanggal Dibuat</th>
                                 <th>Tanggal Diperbarui</th>
                                 <th style="width: 50px;">Aksi</th>
@@ -335,6 +336,12 @@
                 data: "phone",
                 className: "text-center"
             }, {
+                data: "status",
+                className: "text-center",
+                render: function(data, type, row) {
+                    return data === "ACTIVE" ? `<label class="text-success">ACTIVE</label>` : `<label class="text-danger">NOT ACTIVE</label>`
+                }
+            }, {
                 data: "createdAt",
                 className: "text-center"
             }, {
@@ -357,12 +364,12 @@
                     $(".delete-data").click(function() {
                         Swal.fire({
                             icon: 'question',
-                            title: 'Hapus Data?',
+                            title: 'Ubah Status?',
                             confirmButtonColor: '#4e73df',
                             cancelButtonColor: '#d33',
                             showCancelButton: true,
                             reverseButtons: true,
-                            confirmButtonText: 'Hapus',
+                            confirmButtonText: 'Ubah',
                             cancelButtonText: 'Batal',
                         }).then((result) => {
                             if (result.isConfirmed) {
@@ -379,7 +386,7 @@
                         <div class="dropdown-menu" style="box-shadow: 0px 2px 40px rgba(0, 0, 0, 0.2);">
                             <button class="dropdown-item view-detail" data-id="${row.id}" data-name="${row.name}" data-email="${row.email}" data-phone="${row.phone}"><strong>Lihat</strong></button>
                             <div class="dropdown-divider"></div>
-                            <button class="dropdown-item delete-data"><strong>Hapus</strong></button>
+                            <button class="dropdown-item delete-data"><strong>Ubah Status</strong></button>
                         </div>
                     </div>
                     `

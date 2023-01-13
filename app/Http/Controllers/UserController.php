@@ -33,9 +33,9 @@ class UserController extends Controller
                     "name" => $data->name,
                     "email" => $data->email,
                     "phone" => $data->phone,
-                    "status" => $data->status,
-                    "createdAt" => $data->createdAt,
-                    "updatedAt" => $data->updatedAt
+                    "status" => $data->status === 3 ? "NOT ACTIVE" : "ACTIVE",
+                    "createdAt" => $data->createdAt ? date("d/m/Y", strtotime($data->createdAt)) : "-",
+                    "updatedAt" => $data->updatedAt ? date("d/m/Y", strtotime($data->updatedAt)) : "-"
                 ]);
             }
 

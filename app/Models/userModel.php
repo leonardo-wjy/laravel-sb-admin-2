@@ -11,7 +11,8 @@ class userModel extends Model
     public function getAll()
     {
         return DB::table('user')
-        ->where('status', '!=', 3)
+        // ->where('status', '!=', 3)
+        ->orderBy('updatedAt', 'DESC')
         ->get();
     }
 
@@ -24,7 +25,7 @@ class userModel extends Model
             'password' => $password,
             'status' => 1,
             'createdAt' => '2022-01-13 12:00:00',
-            'updatedAt' => ''
+            'updatedAt' => '2022-01-13 12:00:00'
         ]);
     }
 
