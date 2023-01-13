@@ -58,46 +58,34 @@ class UserController extends Controller
         $results = $this->user->checkName($name);
 
         if(sizeof($results) == 0) {
-			$insert = $this->user->create($name, $email, $phone, $password);
-			if($insert)
-			{
-				// check email exist
-                $results_email = $this->user->checkEmail($email);
+            // check email exist
+            $results_email = $this->user->checkEmail($email);
 
-                if(sizeof($results_email) == 0) {
-                    $insert = $this->user->create($name, $email, $phone, $password);
-                    if($insert)
-                    {
-                        $data = [
-                            "status"            => true,
-                            "message"    => "Data Berhasil Disimpan"
-                        ];
-                        echo json_encode($data);
-                    }
-                    else
-                    {
-                        $data = [
-                            "status"            => false,
-                            "message"    => "User Gagal Dibuat"
-                        ];
-                        echo json_encode($data);
-                    }
-                } else {
+            if(sizeof($results_email) == 0) {
+                $insert = $this->user->create($name, $email, $phone, $password);
+                if($insert)
+                {
                     $data = [
-                        "status"            => false,
-                        "message"    => "Email Sudah Ada"
+                        "status"            => true,
+                        "message"    => "Data Berhasil Disimpan"
                     ];
                     echo json_encode($data);
                 }
-			}
-			else
-			{
-				$data = [
+                else
+                {
+                    $data = [
+                        "status"            => false,
+                        "message"    => "User Gagal Dibuat"
+                    ];
+                    echo json_encode($data);
+                }
+            } else {
+                $data = [
                     "status"            => false,
-                    "message"    => "User Gagal Dibuat"
+                    "message"    => "Email Sudah Ada"
                 ];
                 echo json_encode($data);
-			}
+            }
         } else {
             $data = [
                 "status"            => false,
