@@ -13,7 +13,7 @@ class bookModel extends Model
         if($category_id && $penerbit_id)
         {
             return DB::table('book')
-            ->select('book.book_id', 'book.name', 'book.tahun_terbit', 'book.createdAt', 'book.updatedAt', 'book.status'
+            ->select('book.book_id', 'book.name', 'book.image', 'book.tahun_terbit', 'book.createdAt', 'book.updatedAt', 'book.status'
             , 'category.name as category_name', 'penerbit.name as penerbit_name')
             ->join('category', 'book.category_id', '=', 'category.category_id', 'left outer')
             ->join('penerbit', 'book.penerbit_id', '=', 'penerbit.penerbit_id', 'right outer')
@@ -26,7 +26,7 @@ class bookModel extends Model
         else if($category_id)
         {
             return DB::table('book')
-            ->select('book.book_id', 'book.name', 'book.tahun_terbit', 'book.createdAt', 'book.updatedAt', 'book.status'
+            ->select('book.book_id', 'book.name', 'book.image', 'book.tahun_terbit', 'book.createdAt', 'book.updatedAt', 'book.status'
             , 'category.name as category_name', 'penerbit.name as penerbit_name')
             ->join('category', 'book.category_id', '=', 'category.category_id', 'left outer')
             ->join('penerbit', 'book.penerbit_id', '=', 'penerbit.penerbit_id', 'right outer')
@@ -38,7 +38,7 @@ class bookModel extends Model
         else if($penerbit_id)
         {
             return DB::table('book')
-            ->select('book.book_id', 'book.name', 'book.tahun_terbit', 'book.createdAt', 'book.updatedAt', 'book.status'
+            ->select('book.book_id', 'book.name', 'book.image', 'book.tahun_terbit', 'book.createdAt', 'book.updatedAt', 'book.status'
             , 'category.name as category_name', 'penerbit.name as penerbit_name')
             ->join('category', 'book.category_id', '=', 'category.category_id', 'left outer')
             ->join('penerbit', 'book.penerbit_id', '=', 'penerbit.penerbit_id', 'right outer')
@@ -50,7 +50,7 @@ class bookModel extends Model
         else
         {
             return DB::table('book')
-            ->select('book.book_id', 'book.name', 'book.tahun_terbit', 'book.createdAt', 'book.updatedAt', 'book.status'
+            ->select('book.book_id', 'book.name', 'book.image', 'book.tahun_terbit', 'book.createdAt', 'book.updatedAt', 'book.status'
             , 'category.name as category_name', 'penerbit.name as penerbit_name')
             ->join('category', 'book.category_id', '=', 'category.category_id', 'left outer')
             ->join('penerbit', 'book.penerbit_id', '=', 'penerbit.penerbit_id', 'right outer')

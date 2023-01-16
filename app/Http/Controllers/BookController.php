@@ -45,6 +45,7 @@ class BookController extends Controller
                         "no" => $no++,
                         "id" => $data->book_id,
                         "name" => $data->name,
+                        "image" => "cover/".$data->image,
                         "category_name" => $data->category_name,
                         "penerbit_name" => $data->penerbit_name,
                         "tahun_terbit" => $data->tahun_terbit,

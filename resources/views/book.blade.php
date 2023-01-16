@@ -53,6 +53,7 @@
                             <tr>
                                 <th style="width: 30px;">No</th>
                                 <th>Nama Buku</th>
+                                <th>Cover Buku</th>
                                 <th>Kategori</th>
                                 <th>Nama Penerbit</th>
                                 <th>Tahun Terbit</th>
@@ -116,6 +117,17 @@
             }, {
                 data: "name",
                 className: "text-center"
+            }, {
+                data: "image",
+                className: "text-center",
+                render: function(data, type, row) {
+                    if(data)
+                    {
+                        return `
+                        <img src="{{URL::asset("`+ data +`")}}" width="50" height="50" alt="" />
+                        `
+                    }
+                }
             }, {
                 data: "category_name",
                 className: "text-center"
