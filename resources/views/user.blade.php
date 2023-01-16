@@ -110,6 +110,7 @@
                 <div class="modal-body card-body">
                     <form class="update-form" role="form" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                        <input type="hidden" name="id" class="id" id="id" />
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="control-label font-weight-bold">Nama<span class="text-danger">*</span></label>
@@ -126,7 +127,7 @@
                                 <input type="text" class="form-control phone-edit" name="phone_edit" id="phone_edit">
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="control-label font-weight-bold">Password></label>
+                                <label class="control-label font-weight-bold">Password</label>
                                 <div class="row">
                                     <div class="col-md-9">
                                         <input type="text" class="form-control password-edit" name="passwd_edit" id="passwd_edit">
@@ -144,7 +145,7 @@
                 </div>
                 <div class="card-footer modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-outline-danger">Batal</button>
-                    <button type="button" onclick="updateForm()" class="btn btn-primary btn-submit-form">Ubah</button>
+                    <button type="button" class="btn btn-primary btn-update-form btn-submit-form">Ubah</button>
                 </div>
             </div>
         </div>
@@ -354,63 +355,6 @@
                 searchable: false,
                 sortable: false,
                 render: function(data, type, row) {
-                    $(".view-detail").click(function() {
-                       $(".name-detail").val($(this).data('name'))
-                       $(".email-detail").val($(this).data('email'))
-                       $(".phone-detail").val($(this).data('phone'))
-                       $("#detailModal").modal()
-                    })
-
-                    $(".delete-data").click(function() {
-                        Swal.fire({
-                            icon: 'question',
-                            title: 'Ubah Status?',
-                            confirmButtonColor: '#4e73df',
-                            cancelButtonColor: '#d33',
-                            showCancelButton: true,
-                            reverseButtons: true,
-                            confirmButtonText: 'Ubah',
-                            cancelButtonText: 'Batal',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({
-                                    url : "{{ url('user/update-status') }}",
-                                    type: "POST",
-                                    dataType: "json",
-                                    cache: false,
-                                    data: {
-                                        "id": $(this).data('id'),
-                                        "status": $(this).data('status') === 'NOT ACTIVE' ? 2 : 3,
-                                        "_token": $("meta[name='csrf-token']").attr("content")
-                                    },
-                                    success: function(response) {
-                                        if (response.status) {
-                                            table.ajax.reload();
-                                            Swal.fire({
-                                                icon: 'success',
-                                                title: response.message,
-                                                confirmButtonColor: '#4e73df',
-                                            })
-                                        } else {
-                                            Swal.fire({
-                                                icon: 'error',
-                                                title: response.message,
-                                                confirmButtonColor: '#4e73df',
-                                            })
-                                        }
-                                    },
-                                    onError: function(err) {
-                                        Swal.fire({
-                                            icon: 'error',
-                                            title: 'Data Gagal Disimpan',
-                                            confirmButtonColor: '#4e73df',
-                                        })
-                                    }
-                                })
-                            }
-                        })
-                    })
-
                     return `
                     <div class="dropleft">
                         <button type="button" class="btn btn-link" data-toggle="dropdown" aria-expanded="false" data-offset="10,20">
@@ -437,6 +381,7 @@
             validator.resetForm();
             validator.reset();
             const data = table.row(this).data();
+            $(".id").val(data.id)
             $(".name-edit").val(data.name)
             $(".email-edit").val(data.email)
             $(".phone-edit").val(data.phone)
@@ -500,7 +445,9 @@
         })
     });    
 
-    const updateForm = function(status) {
+    $(".btn-update-form").click(function() {
+        let id = $(".id").val();
+
         if ($(".update-form").valid()) {
             Swal.fire({
                 icon: 'question',
@@ -509,15 +456,109 @@
                 cancelButtonColor: '#d33',
                 showCancelButton: true,
                 reverseButtons: true,
-                confirmButtonText: 'Simpan',
+                confirmButtonText: 'Ubah',
                 cancelButtonText: 'Batal',
             }).then((result) => {
                 if (result.isConfirmed) {
-
+                    setLoading()
+                    $.ajax({
+                        url : "{{ url('user/update') }}" + "/" + id,
+                        type: "PATCH",
+                        dataType: "json",
+                        cache: false,
+                        data: $(".update-form").serialize(),
+                        success: function(response) {
+                            if (response.status) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: response.message,
+                                    confirmButtonColor: '#4e73df',
+                                }).then((responseSuccess) => {
+                                    if (responseSuccess.isConfirmed) {
+                                        stopLoading()
+                                        table.ajax.reload();
+                                        $("#updateModal").modal('toggle');
+                                    }
+                                })
+                            } else {
+                                stopLoading()
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: response.message,
+                                    confirmButtonColor: '#4e73df',
+                                })
+                            }
+                        },
+                        onError: function(err) {
+                            stopLoading()
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Data Gagal Diubah',
+                                confirmButtonColor: '#4e73df',
+                            })
+                        }
+                    })
                 }
             })
         }
-    }
+    })
+
+    $(document).on('click', '.view-detail', function() {
+        $(".name-detail").val($(this).data('name'))
+        $(".email-detail").val($(this).data('email'))
+        $(".phone-detail").val($(this).data('phone'))
+        $("#detailModal").modal()
+    })
+
+    $(document).on('click', '.delete-data', function() {
+        Swal.fire({
+            icon: 'question',
+            title: 'Ubah Status?',
+            confirmButtonColor: '#4e73df',
+            cancelButtonColor: '#d33',
+            showCancelButton: true,
+            reverseButtons: true,
+            confirmButtonText: 'Ubah',
+            cancelButtonText: 'Batal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url : "{{ url('user/update-status') }}",
+                    type: "POST",
+                    dataType: "json",
+                    cache: false,
+                    data: {
+                        "id": $(this).data('id'),
+                        "status": $(this).data('status') === 'NOT ACTIVE' ? 2 : 3,
+                        "_token": $("meta[name='csrf-token']").attr("content")
+                    },
+                    success: function(response) {
+                        if (response.status) {
+                            $('#dataTable').DataTable().ajax.reload();
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.message,
+                                confirmButtonColor: '#4e73df',
+                            })
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: response.message,
+                                confirmButtonColor: '#4e73df',
+                            })
+                        }
+                    },
+                    onError: function(err) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Data Gagal Disimpan',
+                            confirmButtonColor: '#4e73df',
+                        })
+                    }
+                })
+            }
+        })
+    });
 </script>
 
 @include('footer')

@@ -16,6 +16,7 @@ class UserController extends Controller
         $this->user = new userModel();
     }
 
+    //get page user
     public function index() 
     {
         $results = array();
@@ -46,7 +47,7 @@ class UserController extends Controller
         return view('user');
     }
 
-    //method post
+    //create user
 	public function create(Request $request)
     {
         $name = $request->input('name');
@@ -95,7 +96,56 @@ class UserController extends Controller
         }
     }
 
-    //method patch status
+    //update user
+	public function update(Request $request, $id)
+    {
+        $name = $request->input('name_edit');
+        $email = $request->input('email_edit');
+        $phone = $request->input('phone_edit');
+        $password = $request->input('passwd_edit');
+
+        // check user exist
+        $results = $this->user->checkNameExceptId($name, $id);
+
+        if(sizeof($results) == 0) {
+            // check email exist
+            $results_email = $this->user->checkEmailExceptId($email, $id);
+
+            if(sizeof($results_email) == 0) {
+                $update = $this->user->updateData($id, $name, $email, $phone, $password);
+                if($update)
+                {
+                    $data = [
+                        "status"            => true,
+                        "message"    => "Data Berhasil Diubah"
+                    ];
+                    echo json_encode($data);
+                }
+                else
+                {
+                    $data = [
+                        "status"            => false,
+                        "message"    => "Data User Gagal Diubah"
+                    ];
+                    echo json_encode($data);
+                }
+            } else {
+                $data = [
+                    "status"            => false,
+                    "message"    => "Email Sudah Ada"
+                ];
+                echo json_encode($data);
+            }
+        } else {
+            $data = [
+                "status"            => false,
+                "message"    => "User Sudah Ada"
+            ];
+            echo json_encode($data);
+        }
+    }
+
+    //update status user
 	public function updateStatus(Request $request)
     {
         $id = $request->input('id');

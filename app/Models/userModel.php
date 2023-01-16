@@ -29,6 +29,30 @@ class userModel extends Model
         ]);
     }
 
+    public function updateData($id, $name, $email, $phone, $password)
+    {
+        //check exist password
+        if($password)
+        {
+            return DB::table('user')->where('user_id', $id)->update([
+                'name' => $name,
+                'email' => $email,
+                'phone' => $phone, 
+                'password' => $password,
+                'updatedAt' => '2022-01-13 12:00:00'
+            ]);
+        }
+        else
+        {
+            return DB::table('user')->insert([
+                'name' => $name,
+                'email' => $email,
+                'phone' => $phone, 
+                'updatedAt' => '2022-01-13 12:00:00'
+            ]);
+        }
+    }
+
     public function updateStatus($id, $status)
     {
         return DB::table('user')->where('user_id', $id)->update([
@@ -46,5 +70,21 @@ class userModel extends Model
     {
         return DB::table('user')
         ->where('email', $email)->get();
+    }
+
+    public function checkNameExceptId($name, $id)
+    {
+        return DB::table('user')
+        ->where('name', $name)
+        ->where('id', '!=', $id)
+        ->get();
+    }
+
+    public function checkEmailExceptId($email, $id)
+    {
+        return DB::table('user')
+        ->where('email', $email)
+        ->where('id', '!=', $id)
+        ->get();
     }
 }
