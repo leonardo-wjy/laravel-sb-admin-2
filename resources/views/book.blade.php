@@ -165,6 +165,55 @@
             table.ajax.reload();
         })
     })
+
+    $(document).on('click', '.delete-data', function() {
+        Swal.fire({
+            icon: 'question',
+            title: 'Hapus Data?',
+            confirmButtonColor: '#4e73df',
+            cancelButtonColor: '#d33',
+            showCancelButton: true,
+            reverseButtons: true,
+            confirmButtonText: 'Hapus',
+            cancelButtonText: 'Batal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url : "{{ url('book') }}",
+                    type: "DELETE",
+                    dataType: "json",
+                    cache: false,
+                    data: {
+                        "id": $(this).data('id'),
+                        "_token": $("meta[name='csrf-token']").attr("content")
+                    },
+                    success: function(response) {
+                        if (response.status) {
+                            $('#dataTable').DataTable().ajax.reload();
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.message,
+                                confirmButtonColor: '#4e73df',
+                            })
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: response.message,
+                                confirmButtonColor: '#4e73df',
+                            })
+                        }
+                    },
+                    onError: function(err) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Data Gagal Dihapus!',
+                            confirmButtonColor: '#4e73df',
+                        })
+                    }
+                })
+            }
+        })
+    });
 </script>
 
 @include('footer')

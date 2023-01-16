@@ -34,6 +34,7 @@ Route::controller(LoginController::class)->group(function () {
 
 Route::controller(BookController::class)->group(function () {
     Route::get('/book', 'index');
+    Route::delete('/book', 'updateStatus');
 });
 
 Route::controller(UserController::class)->group(function () {

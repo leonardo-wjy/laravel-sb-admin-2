@@ -59,4 +59,15 @@ class bookModel extends Model
             ->get();
         }
     }
+
+    public function updateStatus($id)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d h:i:s', time());
+
+        return DB::table('book')->where('book_id', $id)->update([
+            'status' => 3,
+            'updatedAt' => $date
+        ]);
+    }
 }

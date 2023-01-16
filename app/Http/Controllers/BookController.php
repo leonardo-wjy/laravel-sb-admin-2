@@ -64,4 +64,28 @@ class BookController extends Controller
 			return redirect('/login');
 		}
     }
+
+    //delete book
+	public function updateStatus(Request $request)
+    {
+        $id = $request->input('id');
+
+        $query = $this->book->updateStatus($id);
+        if($query)
+        {
+            $data = [
+                "status"            => true,
+                "message"    => "Data Berhasil Dihapus"
+            ];
+            echo json_encode($data);
+        }
+        else
+        {
+            $data = [
+                "status"            => false,
+                "message"    => "Data Gagal Dihapus!"
+            ];
+            echo json_encode($data);
+        }
+    }
 }
