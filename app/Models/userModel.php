@@ -44,7 +44,7 @@ class userModel extends Model
         }
         else
         {
-            return DB::table('user')->insert([
+            return DB::table('user')->where('user_id', $id)->update([
                 'name' => $name,
                 'email' => $email,
                 'phone' => $phone, 
@@ -76,7 +76,7 @@ class userModel extends Model
     {
         return DB::table('user')
         ->where('name', $name)
-        ->where('id', '!=', $id)
+        ->where('user_id', '!=', $id)
         ->get();
     }
 
@@ -84,7 +84,7 @@ class userModel extends Model
     {
         return DB::table('user')
         ->where('email', $email)
-        ->where('id', '!=', $id)
+        ->where('user_id', '!=', $id)
         ->get();
     }
 }

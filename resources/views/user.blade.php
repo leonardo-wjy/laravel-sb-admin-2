@@ -477,7 +477,7 @@
                                     if (responseSuccess.isConfirmed) {
                                         stopLoading()
                                         table.ajax.reload();
-                                        $("#updateModal").modal('toggle');
+                                        $("#editModal").modal('toggle');
                                     }
                                 })
                             } else {
