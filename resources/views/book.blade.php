@@ -97,6 +97,7 @@
                 dataSrc: "data",
                 data: function(data) {
                     data.kategori = $(".filter-kategori-buku option:selected").val();
+                    data.penerbit = $(".filter-penerbit-buku option:selected").val();
                 },
                 onError: function(err) {
                     alert("Eror")
@@ -160,7 +161,7 @@
 
         $(".dataTables_info").addClass("pt-0");
 
-        $('.filter-kategori-buku').on('change', function() {
+        $('.filter-kategori-buku, .filter-penerbit-buku').on('change', function() {
             table.ajax.reload();
         })
     })

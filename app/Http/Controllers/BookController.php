@@ -9,6 +9,7 @@ use Session;
 
 use App\Models\bookModel;
 use App\Models\categoryModel;
+use App\Models\penerbitModel;
 
 // php artisan make:controller DosenController
 class BookController extends Controller
@@ -16,6 +17,7 @@ class BookController extends Controller
     public function __construct(){
         $this->book = new bookModel();
         $this->category = new categoryModel();
+        $this->penerbit = new penerbitModel();
     }
 
     //get page user
@@ -26,13 +28,16 @@ class BookController extends Controller
             $results = array();
             $dataBook = array();
             $dataKategoriBuku = array();
+            $dataPenerbitBuku = array();
 
             $dataKategoriBuku = $this->category->getDropdown();
+            $dataPenerbitBuku = $this->penerbit->getDropdown();
 
             if (request()->ajax()) {
                 $category_id = $request->input('kategori');
+                $penerbit_id = $request->input('penerbit');
 
-                $results = $this->book->getAll($category_id);
+                $results = $this->book->getAll($category_id, $penerbit_id);
 
                 $no = 1;
                 foreach ($results as $data) {
@@ -52,7 +57,7 @@ class BookController extends Controller
                 return DataTables::of($dataBook)->make();
             }
 
-            return view('book', ['title' => 'Book', 'dataKategoriBuku' => $dataKategoriBuku, 'dataPenerbitBuku' => array()]);
+            return view('book', ['title' => 'Book', 'dataKategoriBuku' => $dataKategoriBuku, 'dataPenerbitBuku' => $dataPenerbitBuku]);
 		}
 		else
 		{
