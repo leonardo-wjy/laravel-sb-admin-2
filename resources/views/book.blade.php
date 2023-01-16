@@ -159,6 +159,10 @@
         });
 
         $(".dataTables_info").addClass("pt-0");
+
+        $('.filter-kategori-buku').on('change', function() {
+            table.ajax.reload();
+        })
     })
 </script>
 

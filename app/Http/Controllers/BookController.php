@@ -8,12 +8,14 @@ use Yajra\DataTables\Facades\DataTables;
 use Session;
 
 use App\Models\bookModel;
+use App\Models\categoryModel;
 
 // php artisan make:controller DosenController
 class BookController extends Controller
 {
     public function __construct(){
         $this->book = new bookModel();
+        $this->category = new categoryModel();
     }
 
     //get page user
@@ -23,6 +25,9 @@ class BookController extends Controller
 		{
             $results = array();
             $dataBook = array();
+            $dataKategoriBuku = array();
+
+            $dataKategoriBuku = $this->category->getDropdown();
 
             if (request()->ajax()) {
 
@@ -46,7 +51,7 @@ class BookController extends Controller
                 return DataTables::of($dataBook)->make();
             }
 
-            return view('book', ['title' => 'Book', 'dataKategoriBuku' => array(), 'dataPenerbitBuku' => array()]);
+            return view('book', ['title' => 'Book', 'dataKategoriBuku' => $dataKategoriBuku, 'dataPenerbitBuku' => array()]);
 		}
 		else
 		{
