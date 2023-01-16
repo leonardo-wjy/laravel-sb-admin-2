@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
@@ -29,6 +30,10 @@ Route::controller(LoginController::class)->group(function () {
     Route::get('/login', 'index');
     Route::post('/login', 'login');
     Route::get('/logout', 'logout');
+});
+
+Route::controller(BookController::class)->group(function () {
+    Route::get('/book', 'index');
 });
 
 Route::controller(UserController::class)->group(function () {
