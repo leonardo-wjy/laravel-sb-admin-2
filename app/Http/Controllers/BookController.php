@@ -19,7 +19,7 @@ class BookController extends Controller
     }
 
     //get page user
-    public function index() 
+    public function index(Request $request) 
     {
         if(Session::has('email'))
 		{
@@ -30,8 +30,9 @@ class BookController extends Controller
             $dataKategoriBuku = $this->category->getDropdown();
 
             if (request()->ajax()) {
+                $category_id = $request->input('kategori');
 
-                $results = $this->book->getAll();
+                $results = $this->book->getAll($category_id);
 
                 $no = 1;
                 foreach ($results as $data) {
