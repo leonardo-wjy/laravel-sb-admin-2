@@ -15,6 +15,12 @@
     <!-- Custom styles for this template-->
     <link href="{{ URL::asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('css/style.css') }}" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js" defer></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js" defer integrity="sha512-jTgBq4+dMYh73dquskmUFEgMY5mptcbqSw2rmhOZZSJjZbD2wMt0H5nhqWtleVkyBEjmzid5nyERPSNBafG4GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" defer integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/imask"></script>
 </head>
 
 <body class="bg-login-register">
@@ -40,15 +46,15 @@
                                     </svg>
                                         <!-- <h4 class="text-dark font-weight-bold">SB Admin 2</h4> -->
                                     </div>
-                                    <form class="user" method="POST"  autocomplete="off">
+                                    <form class="login-form" method="POST"  autocomplete="off">
                                         <div class="form-group mb-3">
                                             <label class="control-label">Email<span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="exampleInputEmail" name="email" aria-describedby="emailHelp" placeholder="Email" maxlength="15">
+                                            <input type="text" class="form-control email" id="exampleInputEmail" name="email" aria-describedby="emailHelp" placeholder="Email" maxlength="15">
                                         </div>
 
                                         <div class="form-group mb-5">
                                             <label class="control-label">Password<span class="text-danger">*</span></label>
-                                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" maxlength="30">
+                                            <input type="password" class="form-control password" id="password" name="password" placeholder="Password" maxlength="30">
                                         </div>
                                         <button class="btn btn-login-register btn-block">
                                             Login
@@ -74,8 +80,45 @@
     <script src="{{ URL::asset('_vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="{{ URL::asset('_vendor/js/sb-admin-2.min.js') }}"></script>
+    <script src="{{ URL::asset('js/sb-admin-2.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            var validator = $(".login-form").validate({
+                rules: {
+                    email: {
+                        required: true
+                    },
+                    password: {
+                        required: true
+                    }
+                },
+                messages: {
+                    email: {
+                        required: "Email Harus Diisi"
+                    },
+                    password: {
+                        required: "Password Harus Diisi"
+                    }
+                },
+                errorElement: 'label',
+                errorClass: 'text-danger',
+                errorPlacement: function (error, element) {
+                    if (element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+
+            $(".btn-login-register").click(function() {
+                if ($(".login-form").valid()) {
+                    alert("sedang dalam maintenance")
+                }
+            })
+        })
+    </script>
 </body>
 
 </html>
