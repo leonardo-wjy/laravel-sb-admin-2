@@ -18,19 +18,25 @@ class userModel extends Model
 
     public function create($name, $email, $phone, $password)
     {
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d h:i:s', time());
+
         return DB::table('user')->insert([
             'name' => $name,
             'email' => $email,
             'phone' => $phone, 
-            'password' => $password,
+            'password' => md5($password),
             'status' => 1,
-            'createdAt' => '2022-01-13 12:00:00',
-            'updatedAt' => '2022-01-13 12:00:00'
+            'createdAt' => $date,
+            'updatedAt' => $date
         ]);
     }
 
     public function updateData($id, $name, $email, $phone, $password)
     {
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d h:i:s', time());
+
         //check exist password
         if($password)
         {
@@ -38,8 +44,8 @@ class userModel extends Model
                 'name' => $name,
                 'email' => $email,
                 'phone' => $phone, 
-                'password' => $password,
-                'updatedAt' => '2022-01-13 12:00:00'
+                'password' => md5($password),
+                'updatedAt' => $date
             ]);
         }
         else
@@ -48,15 +54,19 @@ class userModel extends Model
                 'name' => $name,
                 'email' => $email,
                 'phone' => $phone, 
-                'updatedAt' => '2022-01-13 12:00:00'
+                'updatedAt' => $date
             ]);
         }
     }
 
     public function updateStatus($id, $status)
     {
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d h:i:s', time());
+
         return DB::table('user')->where('user_id', $id)->update([
-            'status' => $status
+            'status' => $status, 
+            'updatedAt' => $date
         ]);
     }
 

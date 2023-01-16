@@ -69,7 +69,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="control-label font-weight-bold">Nomor Telepon<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="phone" id="phone">
+                                <input type="text" class="form-control phone" name="phone" id="phone">
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="control-label font-weight-bold">Password<span class="text-danger">*</span></label>
@@ -225,6 +225,8 @@
     }
 
     $(document).ready(function () {
+        $(".phone, .phone-edit").mask("000000000000000")
+
         $(".create-form").validate({
             rules: {
                 name: {
@@ -443,65 +445,65 @@
                 })
             }
         })
-    });    
 
-    $(".btn-update-form").click(function() {
-        let id = $(".id").val();
+        $(".btn-update-form").click(function() {
+            let id = $(".id").val();
 
-        if ($(".update-form").valid()) {
-            Swal.fire({
-                icon: 'question',
-                title: 'Simpan Data?',
-                confirmButtonColor: '#4e73df',
-                cancelButtonColor: '#d33',
-                showCancelButton: true,
-                reverseButtons: true,
-                confirmButtonText: 'Ubah',
-                cancelButtonText: 'Batal',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    setLoading()
-                    $.ajax({
-                        url : "{{ url('user/update') }}" + "/" + id,
-                        type: "PATCH",
-                        dataType: "json",
-                        cache: false,
-                        data: $(".update-form").serialize(),
-                        success: function(response) {
-                            if (response.status) {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: response.message,
-                                    confirmButtonColor: '#4e73df',
-                                }).then((responseSuccess) => {
-                                    if (responseSuccess.isConfirmed) {
-                                        stopLoading()
-                                        table.ajax.reload();
-                                        $("#editModal").modal('toggle');
-                                    }
-                                })
-                            } else {
+            if ($(".update-form").valid()) {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Simpan Data?',
+                    confirmButtonColor: '#4e73df',
+                    cancelButtonColor: '#d33',
+                    showCancelButton: true,
+                    reverseButtons: true,
+                    confirmButtonText: 'Ubah',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        setLoading()
+                        $.ajax({
+                            url : "{{ url('user/update') }}" + "/" + id,
+                            type: "PATCH",
+                            dataType: "json",
+                            cache: false,
+                            data: $(".update-form").serialize(),
+                            success: function(response) {
+                                if (response.status) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: response.message,
+                                        confirmButtonColor: '#4e73df',
+                                    }).then((responseSuccess) => {
+                                        if (responseSuccess.isConfirmed) {
+                                            stopLoading()
+                                            table.ajax.reload();
+                                            $("#editModal").modal('toggle');
+                                        }
+                                    })
+                                } else {
+                                    stopLoading()
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: response.message,
+                                        confirmButtonColor: '#4e73df',
+                                    })
+                                }
+                            },
+                            onError: function(err) {
                                 stopLoading()
                                 Swal.fire({
                                     icon: 'error',
-                                    title: response.message,
+                                    title: 'Data Gagal Diubah',
                                     confirmButtonColor: '#4e73df',
                                 })
                             }
-                        },
-                        onError: function(err) {
-                            stopLoading()
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Data Gagal Diubah',
-                                confirmButtonColor: '#4e73df',
-                            })
-                        }
-                    })
-                }
-            })
-        }
-    })
+                        })
+                    }
+                })
+            }
+        })
+    });   
 
     $(document).on('click', '.view-detail', function() {
         $(".name-detail").val($(this).data('name'))
