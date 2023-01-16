@@ -1,3 +1,165 @@
+/* register form */
+.bg-login-register {
+  background-color: #4e73df;
+  background-image: linear-gradient(180deg, #a0e5cf 10%, #4e73df 100%);
+  background-size: cover;
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Poppins", sans-serif !important;
+}
+
+.bg-login-register .card.card-login-register {
+  border-radius: 6px !important;
+  border: 0px #4e73df solid;
+}
+
+.bg-login-register .card.card-login-register .card-body h4 {
+  color: #657c74 !important;
+  margin-left: 15px;
+  margin-bottom: 0px;
+}
+
+.bg-login-register
+  .card.card-login-register
+  .card-body
+  form.user
+  .form-group
+  .control-label {
+  font-size: 14px;
+  font-weight: 400;
+  color: #98b0a8 !important;
+}
+
+.bg-login-register
+  .card.card-login-register
+  .card-body
+  form.user
+  .form-group
+  .control-label
+  span.text-danger {
+  margin-left: 5px;
+  color: #c35355 !important;
+}
+
+.bg-login-register
+  .card.card-login-register
+  .card-body
+  form.user
+  .form-group
+  .form-control {
+  font-size: 14px;
+  font-weight: 500;
+  color: #657c74 !important;
+  border-radius: 6px;
+  height: 40px;
+  border: 1px #98b0a8 solid;
+  padding: 0.375rem 1rem;
+}
+
+.bg-login-register
+  .card.card-login-register
+  .card-body
+  form.user
+  .form-group
+  .form-control::placeholder {
+  font-size: 14px;
+  font-weight: 400;
+  color: #98b0a8 !important;
+}
+
+.bg-login-register
+  .card.card-login-register
+  .card-body
+  form.user
+  .form-group
+  .input-group
+  .form-control {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.bg-login-register
+  .card.card-login-register
+  .card-body
+  form.user
+  .form-group
+  .input-group-append
+  .input-group-text {
+  border-radius: 0px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-left: 0px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4e73df !important;
+}
+
+.bg-login-register
+  .card.card-login-register
+  .card-body
+  form.user
+  .form-group
+  .form-control:focus {
+  box-shadow: none !important;
+  border: 1px #4e73df solid !important;
+}
+
+.bg-login-register
+  .card.card-login-register
+  .card-body
+  form.user
+  .form-group
+  .input-group
+  .form-control,
+.bg-login-register
+  .card.card-login-register
+  .card-body
+  form.user
+  .form-group
+  .input-group
+  .form-control:focus {
+  border-right: 0px !important;
+}
+
+.bg-login-register
+  .card.card-login-register
+  .card-body
+  form.user
+  .btn.btn-login-register {
+  background-color: #4e73df;
+  border-radius: 6px;
+  height: 40px;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 600;
+  box-shadow: none !important;
+  border: 0px #4e73df solid;
+}
+
+.bg-login-register
+  .card.card-login-register
+  .card-body
+  form.user
+  .btn.btn-login-register:hover,
+.bg-login-register
+  .card.card-login-register
+  .card-body
+  form.user
+  .btn.btn-login-register:focus,
+.bg-login-register
+  .card.card-login-register
+  .card-body
+  form.user
+  .btn.btn-login-register:active {
+  opacity: 0.82;
+  transition: 0.3s ease-in;
+}
+
 /* sweetalert */
 .swal2-popup {
     border-radius: 6px !important;

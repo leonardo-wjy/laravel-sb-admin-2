@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -22,6 +23,10 @@ Route::get('/', function () {
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/home', 'index');
+});
+
+Route::controller(LoginController::class)->group(function () {
+    Route::get('/login', 'index');
 });
 
 Route::controller(UserController::class)->group(function () {
