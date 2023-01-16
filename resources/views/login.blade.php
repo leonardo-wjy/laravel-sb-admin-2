@@ -88,6 +88,7 @@
             var validator = $(".login-form").validate({
                 rules: {
                     email: {
+                        email: true,
                         required: true
                     },
                     password: {
@@ -96,6 +97,7 @@
                 },
                 messages: {
                     email: {
+                        email: "Email Tidak Valid",
                         required: "Email Harus Diisi"
                     },
                     password: {

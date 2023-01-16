@@ -63,7 +63,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="control-label font-weight-bold">Email<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="email" id="email">
+                                <input type="email" class="form-control" name="email" id="email">
                             </div>
                         </div>
                         <div class="form-row">
@@ -118,7 +118,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="control-label font-weight-bold">Email<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control email-edit" name="email_edit" id="email_edit">
+                                <input type="email" class="form-control email-edit" name="email_edit" id="email_edit">
                             </div>
                         </div>
                         <div class="form-row">
@@ -240,6 +240,7 @@
                     maxlength: 30
                 },
                 email: {
+                    email: true,
                     required: true
                 },
                 phone: {
@@ -258,6 +259,7 @@
                     maxlength: "Password Maksimal 30 Karakter"
                 },
                 email: {
+                    email: "Email Tidak Valid",
                     required: "Email Harus Diisi"
                 },
                 phone: {
@@ -283,6 +285,7 @@
                     maxlength: 30
                 },
                 email_edit: {
+                    email: true,
                     required: true
                 },
                 phone_edit: {
@@ -296,6 +299,7 @@
                     maxlength: "Nama Maksimal 30 Karakter"
                 },
                 email_edit: {
+                    email: "Email Tidak Valid",
                     required: "Email Harus Diisi"
                 },
                 phone_edit: {
