@@ -266,15 +266,24 @@
                     required: "Nomor Telepon Harus Diisi"
                 }
             },
-            errorElement: 'label',
+            highlight: function(element) {
+                $(element).addClass("is-invalid").removeClass("is-valid");
+            },
+            unhighlight: function(element) {
+                $(element).addClass("is-valid").removeClass("is-invalid");
+            },
+
+            //add
+            errorElement: 'span',
             errorClass: 'text-danger',
-            errorPlacement: function (error, element) {
-                if (element.parent('.input-group').length) {
+            errorPlacement: function(error, element) {
+                if(element.parent('.form-control').length) {
                     error.insertAfter(element.parent());
                 } else {
                     error.insertAfter(element);
                 }
             }
+            // end add
         });
 
         var validator = $(".update-form").validate({
@@ -290,7 +299,11 @@
                 },
                 phone_edit: {
                     required: true
-                }
+                },
+                passwd_edit: {
+                    minlength: 5,
+                    maxlength: 30
+                },
             },
             messages: {
                 name_edit: {
@@ -304,17 +317,30 @@
                 },
                 phone_edit: {
                     required: "Nomor Telepon Harus Diisi"
+                },
+                passwd_edit: {
+                    minlength: "Password Minimal 5 Karakter",
+                    maxlength: "Password Maksimal 30 Karakter"
                 }
             },
-            errorElement: 'label',
+            highlight: function(element) {
+                $(element).addClass("is-invalid").removeClass("is-valid");
+            },
+            unhighlight: function(element) {
+                $(element).addClass("is-valid").removeClass("is-invalid");
+            },
+
+            //add
+            errorElement: 'span',
             errorClass: 'text-danger',
-            errorPlacement: function (error, element) {
-                if (element.parent('.input-group').length) {
+            errorPlacement: function(error, element) {
+                if(element.parent('.form-control').length) {
                     error.insertAfter(element.parent());
                 } else {
                     error.insertAfter(element);
                 }
             }
+            // end add
         });
 
         // Call the dataTables jQuery plugin
