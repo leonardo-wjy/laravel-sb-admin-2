@@ -17,7 +17,7 @@ class HomeController extends Controller
     {
         if(Session::has('email'))
 		{
-            return view('home');
+            return view('home', ['title' => 'Home']);
 		}
 		else
 		{

@@ -46,7 +46,7 @@ class UserController extends Controller
                 return DataTables::of($dataUser)->make();
             }
 
-            return view('user');
+            return view('user', ['title' => 'User']);
 		}
 		else
 		{
