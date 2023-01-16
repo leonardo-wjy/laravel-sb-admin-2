@@ -47,6 +47,7 @@
                                         <!-- <h4 class="text-dark font-weight-bold">SB Admin 2</h4> -->
                                     </div>
                                     <form class="login-form" method="POST"  autocomplete="off">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                         <div class="form-group mb-3">
                                             <label class="control-label">Email<span class="text-danger">*</span></label>
                                             <input type="text" class="form-control email" id="exampleInputEmail" name="email" aria-describedby="emailHelp" placeholder="Email" maxlength="15">
@@ -56,7 +57,7 @@
                                             <label class="control-label">Password<span class="text-danger">*</span></label>
                                             <input type="password" class="form-control password" id="password" name="password" placeholder="Password" maxlength="30">
                                         </div>
-                                        <button class="btn btn-login-register btn-block">
+                                        <button class="btn btn-login-register btn-block" type="button">
                                             Login
                                         </button>
                                     </form>
@@ -114,7 +115,39 @@
 
             $(".btn-login-register").click(function() {
                 if ($(".login-form").valid()) {
-                    alert("sedang dalam maintenance")
+                    $.ajax({
+                        url : "{{ url('login') }}",
+                        type: "POST",
+                        dataType: "json",
+                        cache: false,
+                        data: $(".login-form").serialize(),
+                        success: function(response) {
+                            if (response.status) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: response.message,
+                                    confirmButtonColor: '#4e73df',
+                                }).then((responseSuccess) => {
+                                    if (responseSuccess.isConfirmed) {
+                                        window.location.href = "/home";
+                                    }
+                                })
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: response.message,
+                                    confirmButtonColor: '#4e73df',
+                                })
+                            }
+                        },
+                        onError: function(err) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Data Gagal Disimpan',
+                                confirmButtonColor: '#4e73df',
+                            })
+                        }
+                    })
                 }
             })
         })

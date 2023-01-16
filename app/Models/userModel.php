@@ -16,6 +16,14 @@ class userModel extends Model
         ->get();
     }
 
+    public function login($email, $password)
+    {
+        return DB::table('user')
+		->where('email', $email)
+        ->where('password', $password)
+        ->get();
+    }
+
     public function create($name, $email, $phone, $password)
     {
         date_default_timezone_set('Asia/Jakarta');

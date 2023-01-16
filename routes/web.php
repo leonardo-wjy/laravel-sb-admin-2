@@ -27,6 +27,8 @@ Route::controller(HomeController::class)->group(function () {
 
 Route::controller(LoginController::class)->group(function () {
     Route::get('/login', 'index');
+    Route::post('/login', 'login');
+    Route::get('/logout', 'logout');
 });
 
 Route::controller(UserController::class)->group(function () {

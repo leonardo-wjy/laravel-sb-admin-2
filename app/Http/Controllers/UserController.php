@@ -19,32 +19,39 @@ class UserController extends Controller
     //get page user
     public function index() 
     {
-        $results = array();
-        $dataUser = array();
+        if(Session::has('email'))
+		{
+			$results = array();
+            $dataUser = array();
 
-        if (request()->ajax()) {
+            if (request()->ajax()) {
 
-            $results = $this->user->getAll();
+                $results = $this->user->getAll();
 
-            $no = 1;
-            foreach ($results as $data) {
-                array_push($dataUser, [
-                    "no" => $no++,
-                    "id" => $data->user_id,
-                    "name" => $data->name,
-                    "email" => $data->email,
-                    "phone" => $data->phone,
-                    "status" => $data->status === 3 ? "NOT ACTIVE" : "ACTIVE",
-                    "createdAt" => $data->createdAt ? date("d/m/Y", strtotime($data->createdAt)) : "-",
-                    "updatedAt" => $data->updatedAt ? date("d/m/Y", strtotime($data->updatedAt)) : "-"
-                ]);
+                $no = 1;
+                foreach ($results as $data) {
+                    array_push($dataUser, [
+                        "no" => $no++,
+                        "id" => $data->user_id,
+                        "name" => $data->name,
+                        "email" => $data->email,
+                        "phone" => $data->phone,
+                        "status" => $data->status === 3 ? "NOT ACTIVE" : "ACTIVE",
+                        "createdAt" => $data->createdAt ? date("d/m/Y", strtotime($data->createdAt)) : "-",
+                        "updatedAt" => $data->updatedAt ? date("d/m/Y", strtotime($data->updatedAt)) : "-"
+                    ]);
+                }
+
+                // $users = User::query();
+                return DataTables::of($dataUser)->make();
             }
 
-            // $users = User::query();
-            return DataTables::of($dataUser)->make();
-        }
-
-        return view('user');
+            return view('user');
+		}
+		else
+		{
+			return redirect('/login');
+		}
     }
 
     //create user

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Session;
+
 // php artisan make:controller DosenController
 //composer create-project laravel/laravel laravel-datatable
 //composer require yajra/laravel-datatables-oracle
@@ -13,6 +15,13 @@ class HomeController extends Controller
 {
     public function index() 
     {
-        return view('home');
+        if(Session::has('email'))
+		{
+            return view('home');
+		}
+		else
+		{
+			return redirect('/login');
+		}
     }
 }
