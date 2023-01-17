@@ -138,7 +138,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label class="control-label font-weight-bold">Cover Buku</label>
-                                <input type="file" class="form-control" name="image" id="image">
+                                <input type="file" class="form-control" name="image" id="image" accept="image/png, image/jpg, image/jpeg">
                             </div>
                         </div>
                     </form>
@@ -268,7 +268,7 @@
                         <div class="form-group col-md-12">
                             <label class="control-label font-weight-bold">Cover Buku</label>
                             <div>
-                                <img class="image-detail" src="" width="200" height="200" alt="" />
+                                <img class="image-detail" src="" width="200" height="200" alt="" accept="image/png, image/jpg, image/jpeg" />
                             </div>
                         </div>
                     </div>
@@ -303,7 +303,6 @@
 
         $(".penerbit").select2({
             placeholder: "Penerbit Buku",
-            allowClear: true,
             theme: "bootstrap-5"
         })
 
@@ -315,7 +314,6 @@
 
         $(".penerbit-edit").select2({
             placeholder: "Penerbit Buku",
-            allowClear: true,
             theme: "bootstrap-5"
         })
 
@@ -368,12 +366,12 @@
                     required: "Tahun Terbit Harus Diisi"
                 }
             },
-            highlight: function(element) {
-                $(element).addClass("is-invalid").removeClass("is-valid");
-            },
-            unhighlight: function(element) {
-                $(element).addClass("is-valid").removeClass("is-invalid");
-            },
+            // highlight: function(element) {
+            //     $(element).addClass("is-invalid").removeClass("is-valid");
+            // },
+            // unhighlight: function(element) {
+            //     $(element).addClass("is-valid").removeClass("is-invalid");
+            // },
 
             //add
             errorElement: 'span',
@@ -531,43 +529,43 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // setLoading()
-                        // $.ajax({
-                        //     url : "{{ url('user/create') }}",
-                        //     type: "POST",
-                        //     dataType: "json",
-                        //     cache: false,
-                        //     data: $(".create-form").serialize(),
-                        //     success: function(response) {
-                        //         if (response.status) {
-                        //             Swal.fire({
-                        //                 icon: 'success',
-                        //                 title: response.message,
-                        //                 confirmButtonColor: '#4e73df',
-                        //             }).then((responseSuccess) => {
-                        //                 if (responseSuccess.isConfirmed) {
-                        //                     stopLoading()
-                        //                     table.ajax.reload();
-                        //                     $("#createModal").modal('toggle');
-                        //                 }
-                        //             })
-                        //         } else {
-                        //             stopLoading()
-                        //             Swal.fire({
-                        //                 icon: 'error',
-                        //                 title: response.message,
-                        //                 confirmButtonColor: '#4e73df',
-                        //             })
-                        //         }
-                        //     },
-                        //     onError: function(err) {
-                        //         stopLoading()
-                        //         Swal.fire({
-                        //             icon: 'error',
-                        //             title: 'Data Gagal Disimpan',
-                        //             confirmButtonColor: '#4e73df',
-                        //         })
-                        //     }
-                        // })
+                        $.ajax({
+                            url : "{{ url('book/create') }}",
+                            type: "POST",
+                            dataType: "json",
+                            cache: false,
+                            data: $(".create-form").serialize(),
+                            success: function(response) {
+                                if (response.status) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: response.message,
+                                        confirmButtonColor: '#4e73df',
+                                    }).then((responseSuccess) => {
+                                        if (responseSuccess.isConfirmed) {
+                                            stopLoading()
+                                            table.ajax.reload();
+                                            $("#createModal").modal('toggle');
+                                        }
+                                    })
+                                } else {
+                                    stopLoading()
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: response.message,
+                                        confirmButtonColor: '#4e73df',
+                                    })
+                                }
+                            },
+                            onError: function(err) {
+                                stopLoading()
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Data Gagal Disimpan',
+                                    confirmButtonColor: '#4e73df',
+                                })
+                            }
+                        })
                     }
                 })
             }

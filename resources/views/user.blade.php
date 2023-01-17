@@ -266,12 +266,12 @@
                     required: "Nomor Telepon Harus Diisi"
                 }
             },
-            highlight: function(element) {
-                $(element).addClass("is-invalid").removeClass("is-valid");
-            },
-            unhighlight: function(element) {
-                $(element).addClass("is-valid").removeClass("is-invalid");
-            },
+            // highlight: function(element) {
+            //     $(element).addClass("is-invalid").removeClass("is-valid");
+            // },
+            // unhighlight: function(element) {
+            //     $(element).addClass("is-valid").removeClass("is-invalid");
+            // },
 
             //add
             errorElement: 'span',
@@ -332,12 +332,12 @@
                     maxlength: "Password Maksimal 30 Karakter"
                 }
             },
-            highlight: function(element) {
-                $(element).addClass("is-invalid").removeClass("is-valid");
-            },
-            unhighlight: function(element) {
-                $(element).addClass("is-valid").removeClass("is-invalid");
-            },
+            // highlight: function(element) {
+            //     $(element).addClass("is-invalid").removeClass("is-valid");
+            // },
+            // unhighlight: function(element) {
+            //     $(element).addClass("is-valid").removeClass("is-invalid");
+            // },
 
             //add
             errorElement: 'span',
@@ -446,7 +446,7 @@
                     if (result.isConfirmed) {
                         setLoading()
                         $.ajax({
-                            url : "{{ url('book/create') }}",
+                            url : "{{ url('user/create') }}",
                             type: "POST",
                             dataType: "json",
                             cache: false,

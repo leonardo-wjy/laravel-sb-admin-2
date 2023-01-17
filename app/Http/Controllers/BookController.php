@@ -110,6 +110,36 @@ class BookController extends Controller
 		}
     }
 
+    //create book
+	public function create(Request $request)
+    {
+        $name = $request->input('name');
+        $kategori = $request->input('kategori');
+        $penerbit = $request->input('penerbit');
+        $tahun = $request->input('tahun');
+        $image = $request->input('image');
+
+        echo json_encode($tahun);
+
+        // $insert = $this->book->create($name);
+        // if($insert)
+        // {
+        //     $data = [
+        //         "status"            => true,
+        //         "message"    => "Data Berhasil Disimpan"
+        //     ];
+        //     echo json_encode($data);
+        // }
+        // else
+        // {
+        //     $data = [
+        //         "status"            => false,
+        //         "message"    => "User Gagal Dibuat"
+        //     ];
+        //     echo json_encode($data);
+        // }
+    }
+
     //delete book
 	public function updateStatus(Request $request)
     {
