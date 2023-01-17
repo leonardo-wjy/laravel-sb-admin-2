@@ -64,6 +64,8 @@ class BookController extends Controller
                             array_push($dataBook, [
                                 "no" => $no++,
                                 "id" => $data->book_id,
+                                "category_id" => $myNewArray,
+                                "penerbit_id" => $data->penerbit_id,
                                 "name" => $data->name,
                                 "image" => $data->image ? "cover/".$data->image : "",
                                 "category_name" =>$arrCategoryName,
@@ -87,6 +89,8 @@ class BookController extends Controller
                         array_push($dataBook, [
                             "no" => $no++,
                             "id" => $data->book_id,
+                            "category_id" => $myNewArray,
+                            "penerbit_id" => $data->penerbit_id,
                             "name" => $data->name,
                             "image" => $data->image ? "cover/".$data->image : "",
                             "category_name" =>$arrCategoryName,
@@ -176,6 +180,58 @@ class BookController extends Controller
             $data = [
                 "status"            => false,
                 "message"    => "Data Gagal Disimpan!"
+            ];
+            echo json_encode($data);
+        }
+    }
+
+    //update book
+	public function update(Request $request, $id)
+    {
+        $name = $request->input('name_edit');
+        $kategori =implode(",", $request->input('kategori_edit'));
+        $penerbit = $request->input('penerbit_edit');
+        $tahun = $request->input('tahun_edit');
+        $image = $request->file('image_edit');
+
+      	// isi dengan nama folder tempat kemana file diupload
+		$tujuan_upload = 'cover';
+
+        $name_file = "";
+
+        if($image)
+        {
+            $name_file = $image->getClientOriginalName();
+
+            // check user exist
+            $results = $this->book->checkFileName($name_file);
+
+            if(sizeof($results) != 0) 
+            {
+                $name_file = sizeof($results) + 1 .'-'. $image->getClientOriginalName();
+            } 
+        }
+
+        $update = $this->book->updateData($id, $name, $kategori, $penerbit, $tahun, $name_file);
+        if($update)
+        {
+            if($image)
+            {
+                // upload file
+		        $image->move($tujuan_upload, $name_file);
+            }
+
+            $data = [
+                "status"            => true,
+                "message"    => "Data Berhasil Diubah"
+            ];
+            echo json_encode($data);
+        }
+        else
+        {
+            $data = [
+                "status"            => false,
+                "message"    => "Data Gagal Diubah!"
             ];
             echo json_encode($data);
         }

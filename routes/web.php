@@ -35,12 +35,13 @@ Route::controller(LoginController::class)->group(function () {
 Route::controller(BookController::class)->group(function () {
     Route::get('/book', 'index');
     Route::post('/book/create', 'create');
+    Route::patch('/book/update/{id}', 'update');
     Route::delete('/book', 'updateStatus');
 });
 
 Route::controller(UserController::class)->group(function () {
     Route::get('/user', 'index');
     Route::post('/user/create', 'create');
-    Route::patch('user/update/{id}', 'update');
+    Route::patch('/user/update/{id}', 'update');
     Route::post('/user/update-status', 'updateStatus');
 });
