@@ -138,7 +138,10 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label class="control-label font-weight-bold">Cover Buku</label>
-                                <input type="file" class="form-control" name="image" id="image" accept="image/png, image/jpg, image/jpeg">
+                                <div>
+                                    <img width="200" style="display: none;" id="preview_photo" height="200" src="" alt="" />
+                                </div>
+                                <input type="file" class="form-control" onchange="previewPhoto();" name="image" id="image" accept="image/png, image/jpg, image/jpeg">
                             </div>
                         </div>
                     </form>
@@ -215,6 +218,9 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label class="control-label font-weight-bold">Cover Buku</label>
+                                <div>
+                                    <img width="200" style="display: none;" id="preview_photo_edit" height="200" src="" alt="" />
+                                </div>
                                 <input type="file" class="form-control" name="image_edit" id="image_edit">
                             </div>
                         </div>
@@ -507,6 +513,8 @@
             $(".kategori-edit").val(data.category_id).trigger('change')
             $(".penerbit-edit").val(data.penerbit_id).trigger('change')
             $(".tahun-edit").val(data.tahun_terbit)
+            document.getElementById("preview_photo_edit").style = data.image ? "" : "display: none;";
+            document.getElementById("preview_photo_edit").src = `{{URL::asset("`+ data.image +`")}}`;
             $("#editModal").modal()
         });
 
@@ -701,6 +709,19 @@
             }
         })
     });
+
+    //change picture
+    const previewPhoto = function() {
+        let file = document.getElementById("image").files[0];
+        document.getElementById("preview_photo").style = "";
+        document.getElementById("preview_photo").src = window.URL.createObjectURL(file);
+    }
+
+    const previewPhotoEdit = function() {
+        let file = document.getElementById("image_edit").files[0];
+        document.getElementById("preview_photo_edit").style = "";
+        document.getElementById("preview_photo_edit").src = window.URL.createObjectURL(file);
+    }
 </script>
 
 @include('footer')
