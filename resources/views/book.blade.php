@@ -73,6 +73,58 @@
 </div>
 <!-- /.container-fluid -->
 
+<!-- Detail Modal-->
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card shadow">
+                <div class="modal-header card-header py-3 d-flex justify-content-between align-items-center">
+                    <div class="col px-0">
+                        <h6 class="font-weight-bold text-primary">Detail Buku</h6>
+                    </div>
+                </div>
+                <div class="modal-body card-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label font-weight-bold">Nama Buku</label>
+                            <input type="text" readonly class="form-control name-book-detail">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label font-weight-bold">Kategori Buku</label>
+                            <input type="text" readonly class="form-control category-book-detail">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label font-weight-bold">Nama Penerbit</label>
+                            <input type="text" readonly class="form-control name-penerbit-detail">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label font-weight-bold">Tahun Terbit</label>
+                            <input type="text" readonly class="form-control tahun-terbit-detail">
+                        </div>
+                    </div>
+                    <div class="form-row tab-image-detail">
+                        <div class="form-group col-md-12">
+                            <label class="control-label font-weight-bold">Cover Buku</label>
+                            <div>
+                                <img class="image-detail" src="" width="200" height="200" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-outline-danger">Batal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function () {
         $(".filter-kategori-buku").select2({
@@ -121,12 +173,10 @@
                 data: "image",
                 className: "text-center",
                 render: function(data, type, row) {
-                    if(data)
-                    {
-                        return `
-                        <img src="{{URL::asset("`+ data +`")}}" width="50" height="50" alt="" />
-                        `
-                    }
+                    return data ? `
+                    <div style="cursor: pointer;"><a target="_blank" href="{{URL::asset("`+ data +`")}}">
+                    <img src="{{URL::asset("`+ data +`")}}" width="50" height="50" alt="" />
+                    </a></div>` : '-'
                 }
             }, {
                 data: "category_name",
@@ -150,18 +200,44 @@
                 searchable: false,
                 sortable: false,
                 render: function(data, type, row) {
-                    return `
-                    <div class="dropleft">
-                        <button type="button" class="btn btn-link" data-toggle="dropdown" aria-expanded="false" data-offset="10,20">
-                            <i class="fa fa-ellipsis-v"></i>
-                        </button>
-                        <div class="dropdown-menu" style="box-shadow: 0px 2px 40px rgba(0, 0, 0, 0.2);">
-                            <button class="dropdown-item view-detail" data-id="${row.id}"><strong>Lihat</strong></button>
-                            <div class="dropdown-divider"></div>
-                            <button class="dropdown-item delete-data" data-id="${row.id}"><strong>Hapus</strong></button>
+                    return row.image ?  `
+                        <div class="dropleft">
+                            <button type="button" class="btn btn-link" data-toggle="dropdown" aria-expanded="false" data-offset="10,20">
+                                <i class="fa fa-ellipsis-v"></i>
+                            </button>
+                            <div class="dropdown-menu" style="box-shadow: 0px 2px 40px rgba(0, 0, 0, 0.2);">
+                                <button class="dropdown-item view-detail" 
+                                    data-id="${row.id}" 
+                                    data-name="${row.name}"
+                                    data-category="${row.category_name}"
+                                    data-penerbit="${row.penerbit_name}"
+                                    data-tahun="${row.tahun_terbit}"
+                                    data-image="{{URL::asset("`+ row.image +`")}}"
+                                ><strong>Lihat</strong></button>
+                                <div class="dropdown-divider"></div>
+                                <button class="dropdown-item delete-data" data-id="${row.id}"><strong>Hapus</strong></button>
+                            </div>
                         </div>
-                    </div>
-                    `
+                        `
+                    :   `
+                        <div class="dropleft">
+                            <button type="button" class="btn btn-link" data-toggle="dropdown" aria-expanded="false" data-offset="10,20">
+                                <i class="fa fa-ellipsis-v"></i>
+                            </button>
+                            <div class="dropdown-menu" style="box-shadow: 0px 2px 40px rgba(0, 0, 0, 0.2);">
+                                <button class="dropdown-item view-detail" 
+                                    data-id="${row.id}" 
+                                    data-name="${row.name}"
+                                    data-category="${row.category_name}"
+                                    data-penerbit="${row.penerbit_name}"
+                                    data-tahun="${row.tahun_terbit}"
+                                    data-image=""
+                                ><strong>Lihat</strong></button>
+                                <div class="dropdown-divider"></div>
+                                <button class="dropdown-item delete-data" data-id="${row.id}"><strong>Hapus</strong></button>
+                            </div>
+                        </div>
+                        `
                 }
             }],
             language: {
@@ -176,6 +252,16 @@
         $('.filter-kategori-buku, .filter-penerbit-buku').on('change', function() {
             table.ajax.reload();
         })
+    })
+
+    $(document).on('click', '.view-detail', function() {
+        $(".name-book-detail").val($(this).data('name'))
+        $(".category-book-detail").val($(this).data('category'))
+        $(".name-penerbit-detail").val($(this).data('penerbit'))
+        $(".tahun-terbit-detail").val($(this).data('tahun'))
+        $(".image-detail").attr("src", $(this).data('image'));
+        $(this).data('image') ? $(".tab-image-detail").css("display",  "") : $(".tab-image-detail").css("display",  "none");
+        $("#detailModal").modal()
     })
 
     $(document).on('click', '.delete-data', function() {
