@@ -76,6 +76,159 @@
 </div>
 <!-- /.container-fluid -->
 
+<!-- Create Modal-->
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card shadow">
+                <div class="modal-header card-header py-3 d-flex justify-content-between align-items-center">
+                    <div class="col px-0">
+                        <h6 class="font-weight-bold text-primary">Tambah Buku</h6>
+                    </div>
+                </div>
+                <div class="modal-body card-body">
+                    <form class="create-form" role="form" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label font-weight-bold">Nama Buku<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="name" id="name">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label font-weight-bold">Kategori Buku<span class="text-danger">*</span></label>
+                                <select class="form-control kategori" name="kategori" id="kategori">
+                                    <option value=""></option>
+                                    <?php
+                                    if (!empty($dataKategoriBuku)) {
+                                        foreach ($dataKategoriBuku as $kategori_buku) {
+                                    ?>
+                                            <option value="<?= $kategori_buku->id; ?>"><?= $kategori_buku->value; ?></option>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label font-weight-bold">Nama Penerbit<span class="text-danger">*</span></label>
+                                <select class="form-control penerbit" name="penerbit" id="penerbit">
+                                    <option value=""></option>
+                                    <?php
+                                    if (!empty($dataPenerbitBuku)) {
+                                        foreach ($dataPenerbitBuku as $penerbit_buku) {
+                                    ?>
+                                            <option value="<?= $penerbit_buku->id; ?>"><?= $penerbit_buku->value; ?></option>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label font-weight-bold">Tahun Terbit<span class="text-danger">*</span></label>
+                                <input class="form-control tahun" name="tahun" id="tahun">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label font-weight-bold">Cover Buku</label>
+                                <input type="file" class="form-control" name="image" id="image">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-outline-danger">Batal</button>
+                    <button type="button" class="btn btn-primary btn-create-form btn-submit-form">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal-->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card shadow">
+                <div class="modal-header card-header py-3 d-flex justify-content-between align-items-center">
+                    <div class="col px-0">
+                        <h6 class="font-weight-bold text-primary">Edit Buku</h6>
+                    </div>
+                </div>
+                <div class="modal-body card-body">
+                    <form class="update-form" role="form" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                        <input type="hidden" name="id" class="id" id="id" />
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label font-weight-bold">Nama Buku<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control name-edit" name="name_edit" id="name_edit">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label font-weight-bold">Kategori Buku<span class="text-danger">*</span></label>
+                                <select class="form-control kategori-edit" name="kategori_edit" id="kategori_edit">
+                                    <option value=""></option>
+                                    <?php
+                                    if (!empty($dataKategoriBuku)) {
+                                        foreach ($dataKategoriBuku as $kategori_buku) {
+                                    ?>
+                                            <option value="<?= $kategori_buku->id; ?>"><?= $kategori_buku->value; ?></option>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label font-weight-bold">Nama Penerbit<span class="text-danger">*</span></label>
+                                <select class="form-control penerbit-edit" name="penerbit_edit" id="penerbit_edit">
+                                    <option value=""></option>
+                                    <?php
+                                    if (!empty($dataPenerbitBuku)) {
+                                        foreach ($dataPenerbitBuku as $penerbit_buku) {
+                                    ?>
+                                            <option value="<?= $penerbit_buku->id; ?>"><?= $penerbit_buku->value; ?></option>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label font-weight-bold">Tahun Terbit<span class="text-danger">*</span></label>
+                                <input class="form-control tahun-edit" name="tahun_edit" id="tahun_edit">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label font-weight-bold">Cover Buku</label>
+                                <input type="file" class="form-control" name="image_edit" id="image_edit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-outline-danger">Batal</button>
+                    <button type="button" class="btn btn-primary btn-update-form btn-submit-form">Ubah</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Detail Modal-->
 <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -140,6 +293,46 @@
             placeholder: "Filter: Penerbit",
             allowClear: true,
             theme: "bootstrap-5"
+        })
+
+        $(".kategori").select2({
+            placeholder: "Kategori Buku",
+            allowClear: true,
+            theme: "bootstrap-5"
+        })
+
+        $(".penerbit").select2({
+            placeholder: "Penerbit Buku",
+            allowClear: true,
+            theme: "bootstrap-5"
+        })
+
+        $(".kategori-edit").select2({
+            placeholder: "Kategori Buku",
+            allowClear: true,
+            theme: "bootstrap-5"
+        })
+
+        $(".penerbit-edit").select2({
+            placeholder: "Penerbit Buku",
+            allowClear: true,
+            theme: "bootstrap-5"
+        })
+
+        $(".tahun").datepicker({
+            todayHighlight: true,
+            format: "yyyy",
+            minViewMode: 2,
+            orientation: "bottom auto",
+            autoclose: true
+        })
+
+        $(".tahun-edit").datepicker({
+            todayHighlight: true,
+            format: "yyyy",
+            minViewMode: 2,
+            orientation: "bottom auto",
+            autoclose: true
         })
 
         // Call the dataTables jQuery plugin
@@ -252,6 +445,14 @@
         });
 
         $(".dataTables_info").addClass("pt-0");
+        $('#dataTable tbody').on('click', 'tr td:not(.actions):not(.dataTables_empty)', function() {
+            // validator.resetForm();
+            // validator.reset();
+            const data = table.row(this).data();
+            $(".id").val(data.id)
+            $(".name-edit").val(data.name)
+            $("#editModal").modal()
+        });
 
         $('.filter-kategori-buku, .filter-penerbit-buku').on('change', function() {
             table.ajax.reload();
