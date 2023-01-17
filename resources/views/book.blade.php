@@ -91,14 +91,14 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label class="control-label font-weight-bold">Nama Buku<span class="text-danger">*</span></label>
+                                <label class="control-label font-weight-bold">Nama Buku<label class="text-danger">*</label></label>
                                 <input type="text" class="form-control" name="name" id="name">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label class="control-label font-weight-bold">Kategori Buku<span class="text-danger">*</span></label>
-                                <select class="form-control kategori" name="kategori" id="kategori">
+                                <label class="control-label font-weight-bold">Kategori Buku<label class="text-danger">*</label></label>
+                                <select class="form-control kategori" name="kategori[]" id="kategori" multiple>
                                     <option value=""></option>
                                     <?php
                                     if (!empty($dataKategoriBuku)) {
@@ -114,7 +114,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label class="control-label font-weight-bold">Nama Penerbit<span class="text-danger">*</span></label>
+                                <label class="control-label font-weight-bold">Nama Penerbit<label class="text-danger">*</label></label>
                                 <select class="form-control penerbit" name="penerbit" id="penerbit">
                                     <option value=""></option>
                                     <?php
@@ -131,7 +131,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label class="control-label font-weight-bold">Tahun Terbit<span class="text-danger">*</span></label>
+                                <label class="control-label font-weight-bold">Tahun Terbit<label class="text-danger">*</label></label>
                                 <input class="form-control tahun" name="tahun" id="tahun">
                             </div>
                         </div>
@@ -168,14 +168,14 @@
                         <input type="hidden" name="id" class="id" id="id" />
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label class="control-label font-weight-bold">Nama Buku<span class="text-danger">*</span></label>
+                                <label class="control-label font-weight-bold">Nama Buku<label class="text-danger">*</label></label>
                                 <input type="text" class="form-control name-edit" name="name_edit" id="name_edit">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label class="control-label font-weight-bold">Kategori Buku<span class="text-danger">*</span></label>
-                                <select class="form-control kategori-edit" name="kategori_edit" id="kategori_edit">
+                                <label class="control-label font-weight-bold">Kategori Buku<label class="text-danger">*</label></label>
+                                <select class="form-control kategori-edit" name="kategori_edit[]" id="kategori_edit" multiple>
                                     <option value=""></option>
                                     <?php
                                     if (!empty($dataKategoriBuku)) {
@@ -191,7 +191,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label class="control-label font-weight-bold">Nama Penerbit<span class="text-danger">*</span></label>
+                                <label class="control-label font-weight-bold">Nama Penerbit<label class="text-danger">*</label></label>
                                 <select class="form-control penerbit-edit" name="penerbit_edit" id="penerbit_edit">
                                     <option value=""></option>
                                     <?php
@@ -208,7 +208,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label class="control-label font-weight-bold">Tahun Terbit<span class="text-danger">*</span></label>
+                                <label class="control-label font-weight-bold">Tahun Terbit<label class="text-danger">*</label></label>
                                 <input class="form-control tahun-edit" name="tahun_edit" id="tahun_edit">
                             </div>
                         </div>
@@ -297,7 +297,7 @@
 
         $(".kategori").select2({
             placeholder: "Kategori Buku",
-            allowClear: true,
+            width: "100%",
             theme: "bootstrap-5"
         })
 
@@ -309,7 +309,7 @@
 
         $(".kategori-edit").select2({
             placeholder: "Kategori Buku",
-            allowClear: true,
+            width: "100%",
             theme: "bootstrap-5"
         })
 
@@ -334,6 +334,61 @@
             orientation: "bottom auto",
             autoclose: true
         })
+
+        $(".create-form").validate({
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 30
+                },
+                "kategori[]": {
+                    required: true
+                },
+                penerbit: {
+                    required: true
+                },
+                tahun: {
+                    required: true
+                }
+            },
+            messages: {
+                name: {
+                    required: "Nama Harus Diisi",
+                    minlength: "Nama Minimal 4 Karakter",
+                    maxlength: "Nama Maksimal 30 Karakter"
+                },
+                "kategori[]": {
+                    required: "Kategori Harus Diisi"
+                },
+                penerbit: {
+                    required: "Penerbit Harus Diisi"
+                },
+                tahun: {
+                    required: "Tahun Terbit Harus Diisi"
+                }
+            },
+            highlight: function(element) {
+                $(element).addClass("is-invalid").removeClass("is-valid");
+            },
+            unhighlight: function(element) {
+                $(element).addClass("is-valid").removeClass("is-invalid");
+            },
+
+            //add
+            errorElement: 'span',
+            errorClass: 'text-danger',
+            errorPlacement: function(error, element) {
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    element = $("#select2-" + elem.attr("id") + "-container").parent(); 
+                    error.insertAfter(element);
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+            // end add
+        });
 
         // Call the dataTables jQuery plugin
         const table = $('#dataTable').DataTable({
@@ -460,6 +515,62 @@
 
         $('.filter-nama-buku').on('keyup', function() {
             table.ajax.reload();
+        })
+
+        $(".btn-create-form").click(function() {
+            if ($(".create-form").valid()) {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Simpan Data?',
+                    confirmButtonColor: '#4e73df',
+                    cancelButtonColor: '#d33',
+                    showCancelButton: true,
+                    reverseButtons: true,
+                    confirmButtonText: 'Simpan',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // setLoading()
+                        // $.ajax({
+                        //     url : "{{ url('user/create') }}",
+                        //     type: "POST",
+                        //     dataType: "json",
+                        //     cache: false,
+                        //     data: $(".create-form").serialize(),
+                        //     success: function(response) {
+                        //         if (response.status) {
+                        //             Swal.fire({
+                        //                 icon: 'success',
+                        //                 title: response.message,
+                        //                 confirmButtonColor: '#4e73df',
+                        //             }).then((responseSuccess) => {
+                        //                 if (responseSuccess.isConfirmed) {
+                        //                     stopLoading()
+                        //                     table.ajax.reload();
+                        //                     $("#createModal").modal('toggle');
+                        //                 }
+                        //             })
+                        //         } else {
+                        //             stopLoading()
+                        //             Swal.fire({
+                        //                 icon: 'error',
+                        //                 title: response.message,
+                        //                 confirmButtonColor: '#4e73df',
+                        //             })
+                        //         }
+                        //     },
+                        //     onError: function(err) {
+                        //         stopLoading()
+                        //         Swal.fire({
+                        //             icon: 'error',
+                        //             title: 'Data Gagal Disimpan',
+                        //             confirmButtonColor: '#4e73df',
+                        //         })
+                        //     }
+                        // })
+                    }
+                })
+            }
         })
     })
 

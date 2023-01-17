@@ -58,30 +58,30 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label class="control-label font-weight-bold">Nama<span class="text-danger">*</span></label>
+                                <label class="control-label font-weight-bold">Nama<label class="text-danger">*</label></label>
                                 <input type="text" class="form-control" name="name" id="name">
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="control-label font-weight-bold">Email<span class="text-danger">*</span></label>
+                                <label class="control-label font-weight-bold">Email<label class="text-danger">*</label></label>
                                 <input type="email" class="form-control" name="email" id="email">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label class="control-label font-weight-bold">Nomor Telepon<span class="text-danger">*</span></label>
+                                <label class="control-label font-weight-bold">Nomor Telepon<label class="text-danger">*</label></label>
                                 <input type="text" class="form-control phone" name="phone" id="phone">
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="control-label font-weight-bold">Password<span class="text-danger">*</span></label>
+                                <label class="control-label font-weight-bold">Password<label class="text-danger">*</label></label>
                                 <div class="row">
                                     <div class="col-md-9">
                                         <input type="text" class="form-control" name="passwd" id="passwd">
                                     </div>
                                     <div class="col-md-3">
-                                        <span class="input-group-text bg-white" id="basic-addon2" onclick="change_password_show_hide()">
+                                        <label class="input-group-text bg-white" id="basic-addon2" onclick="change_password_show_hide()">
                                             <i class="fas fa-eye" id="change_show_eye"></i>
                                             <i class="fas fa-eye-slash d-none" id="change_hide_eye"></i>
-                                        </span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -113,17 +113,17 @@
                         <input type="hidden" name="id" class="id" id="id" />
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label class="control-label font-weight-bold">Nama<span class="text-danger">*</span></label>
+                                <label class="control-label font-weight-bold">Nama<label class="text-danger">*</label></label>
                                 <input type="text" class="form-control name-edit" name="name_edit" id="name_edit">
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="control-label font-weight-bold">Email<span class="text-danger">*</span></label>
+                                <label class="control-label font-weight-bold">Email<label class="text-danger">*</label></label>
                                 <input type="email" class="form-control email-edit" name="email_edit" id="email_edit">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label class="control-label font-weight-bold">Nomor Telepon<span class="text-danger">*</span></label>
+                                <label class="control-label font-weight-bold">Nomor Telepon<label class="text-danger">*</label></label>
                                 <input type="text" class="form-control phone-edit" name="phone_edit" id="phone_edit">
                             </div>
                             <div class="form-group col-md-6">
@@ -133,10 +133,10 @@
                                         <input type="text" class="form-control password-edit" name="passwd_edit" id="passwd_edit">
                                     </div>
                                     <div class="col-md-3">
-                                        <span class="input-group-text bg-white" id="basic-addon2" onclick="edit_change_password_show_hide()">
+                                        <label class="input-group-text bg-white" id="basic-addon2" onclick="edit_change_password_show_hide()">
                                             <i class="fas fa-eye" id="edit_change_show_eye"></i>
                                             <i class="fas fa-eye-slash d-none" id="edit_change_hide_eye"></i>
-                                        </span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -277,12 +277,21 @@
             errorElement: 'span',
             errorClass: 'text-danger',
             errorPlacement: function(error, element) {
-                if(element.parent('.form-control').length) {
-                    error.insertAfter(element.parent());
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    element = $("#select2-" + elem.attr("id") + "-container").parent(); 
+                    error.insertAfter(element);
                 } else {
                     error.insertAfter(element);
                 }
             }
+            // errorPlacement: function(error, element) {
+            //     if(element.parent('.form-control').length) {
+            //         error.insertAfter(element.parent());
+            //     } else {
+            //         error.insertAfter(element);
+            //     }
+            // }
             // end add
         });
 
@@ -334,8 +343,10 @@
             errorElement: 'span',
             errorClass: 'text-danger',
             errorPlacement: function(error, element) {
-                if(element.parent('.form-control').length) {
-                    error.insertAfter(element.parent());
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    element = $("#select2-" + elem.attr("id") + "-container").parent(); 
+                    error.insertAfter(element);
                 } else {
                     error.insertAfter(element);
                 }
@@ -435,7 +446,7 @@
                     if (result.isConfirmed) {
                         setLoading()
                         $.ajax({
-                            url : "{{ url('user/create') }}",
+                            url : "{{ url('book/create') }}",
                             type: "POST",
                             dataType: "json",
                             cache: false,
