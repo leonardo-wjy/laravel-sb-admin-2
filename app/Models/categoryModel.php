@@ -16,4 +16,13 @@ class categoryModel extends Model
         ->orderBy('name', 'ASC')
         ->get();
     }
+
+    public function getNameById($id)
+    {
+        return DB::table('category')
+        ->where('category_id', $id)
+        ->where('status', '!=', 3)
+        ->orderBy('name', 'ASC')
+        ->first();
+    }
 }

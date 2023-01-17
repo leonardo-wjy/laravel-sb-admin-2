@@ -37,21 +37,64 @@ class BookController extends Controller
                 $category_id = $request->input('kategori');
                 $penerbit_id = $request->input('penerbit');
 
-                $results = $this->book->getAll($category_id, $penerbit_id);
+                $results = $this->book->getAll($penerbit_id);
 
                 $no = 1;
                 foreach ($results as $data) {
-                    array_push($dataBook, [
-                        "no" => $no++,
-                        "id" => $data->book_id,
-                        "name" => $data->name,
-                        "image" => $data->image ? "cover/".$data->image : "",
-                        "category_name" => $data->category_name,
-                        "penerbit_name" => $data->penerbit_name,
-                        "tahun_terbit" => $data->tahun_terbit,
-                        "createdAt" => $data->createdAt ? date("d/m/Y", strtotime($data->createdAt)) : "-",
-                        "updatedAt" => $data->updatedAt ? date("d/m/Y", strtotime($data->updatedAt)) : "-"
-                    ]);
+                    $myNewArray = array();
+                    if($data->category_book_id)
+                    {
+                        $myNewArray = explode(',', $data->category_book_id);
+                    }
+                    $arrCategoryName = array();
+
+                    //check category id inserted 
+                    if($category_id)
+                    {
+                        foreach ($myNewArray as $category_value) {
+                            $result_category = $this->category->getNameById($category_value);
+                            if($result_category)
+                            {
+                                array_push($arrCategoryName, $result_category->name); 
+                            }
+                        }
+                        if(in_array($category_id, $myNewArray))
+                        {
+                            array_push($dataBook, [
+                                "no" => $no++,
+                                "id" => $data->book_id,
+                                "name" => $data->name,
+                                "image" => $data->image ? "cover/".$data->image : "",
+                                "category_name" =>$arrCategoryName,
+                                "penerbit_name" => $data->penerbit_name,
+                                "tahun_terbit" => $data->tahun_terbit,
+                                "createdAt" => $data->createdAt ? date("d/m/Y", strtotime($data->createdAt)) : "-",
+                                "updatedAt" => $data->updatedAt ? date("d/m/Y", strtotime($data->updatedAt)) : "-"
+                            ]);
+                        }
+                    }
+                    else
+                    {
+                        foreach ($myNewArray as $category_value) {
+                            $result_category = $this->category->getNameById($category_value);
+                            if($result_category)
+                            {
+                                array_push($arrCategoryName, $result_category->name); 
+                            }
+                        }
+
+                        array_push($dataBook, [
+                            "no" => $no++,
+                            "id" => $data->book_id,
+                            "name" => $data->name,
+                            "image" => $data->image ? "cover/".$data->image : "",
+                            "category_name" =>$arrCategoryName,
+                            "penerbit_name" => $data->penerbit_name,
+                            "tahun_terbit" => $data->tahun_terbit,
+                            "createdAt" => $data->createdAt ? date("d/m/Y", strtotime($data->createdAt)) : "-",
+                            "updatedAt" => $data->updatedAt ? date("d/m/Y", strtotime($data->updatedAt)) : "-"
+                        ]);
+                    }
                 }
 
                 // $users = User::query();
