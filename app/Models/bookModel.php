@@ -91,7 +91,7 @@ class bookModel extends Model
     public function checkFileName($name)
     {
         return DB::table('book')
-        ->where('name', $name)
+        ->where('image','LIKE','%'.$name.'%')
         ->get();
     }
 }

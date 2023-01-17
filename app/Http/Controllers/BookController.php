@@ -159,8 +159,11 @@ class BookController extends Controller
         $insert = $this->book->create($name, $penerbit, $tahun, $name_file);
         if($insert)
         {
-            // upload file
-		    $image->move($tujuan_upload, $name_file);
+            if($image)
+            {
+                // upload file
+		        $image->move($tujuan_upload, $name_file);
+            }
 
             $data = [
                 "status"            => true,
