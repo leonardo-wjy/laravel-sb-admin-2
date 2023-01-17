@@ -60,6 +60,23 @@ class bookModel extends Model
         }
     }
 
+    public function create($name, $penerbit, $tahun, $file_name)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d h:i:s', time());
+
+        return DB::table('book')->insert([
+            'name' => $name,
+            'category_id' => '',
+            'penerbit_id' => $penerbit,
+            'tahun_terbit' => $tahun,
+            'image' => $file_name,
+            'status' => 1,
+            'createdAt' => $date,
+            'updatedAt' => $date
+        ]);
+    }
+
     public function updateStatus($id)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -69,5 +86,12 @@ class bookModel extends Model
             'status' => 3,
             'updatedAt' => $date
         ]);
+    }
+
+    public function checkFileName($name)
+    {
+        return DB::table('book')
+        ->where('name', $name)
+        ->get();
     }
 }

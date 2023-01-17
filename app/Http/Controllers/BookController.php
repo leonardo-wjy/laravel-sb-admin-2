@@ -117,27 +117,65 @@ class BookController extends Controller
         $kategori = $request->input('kategori');
         $penerbit = $request->input('penerbit');
         $tahun = $request->input('tahun');
-        $image = $request->input('image');
+        $image = $request->file('image');
 
-        echo json_encode($tahun);
+        // // nama file
+		// echo 'File Name: '.$file->getClientOriginalName();
+		// echo '<br>';
+ 
+      	// // ekstensi file
+		// echo 'File Extension: '.$file->getClientOriginalExtension();
+		// echo '<br>';
+ 
+      	// // real path
+		// echo 'File Real Path: '.$file->getRealPath();
+		// echo '<br>';
+ 
+      	// // ukuran file
+		// echo 'File Size: '.$file->getSize();
+		// echo '<br>';
+ 
+      	// // tipe mime
+		// echo 'File Mime Type: '.$file->getMimeType();
+ 
+      	// isi dengan nama folder tempat kemana file diupload
+		$tujuan_upload = 'cover';
 
-        // $insert = $this->book->create($name);
-        // if($insert)
-        // {
-        //     $data = [
-        //         "status"            => true,
-        //         "message"    => "Data Berhasil Disimpan"
-        //     ];
-        //     echo json_encode($data);
-        // }
-        // else
-        // {
-        //     $data = [
-        //         "status"            => false,
-        //         "message"    => "User Gagal Dibuat"
-        //     ];
-        //     echo json_encode($data);
-        // }
+        $name_file = "";
+
+        if($image)
+        {
+            $name_file = $image->getClientOriginalName();
+
+            // check user exist
+            $results = $this->book->checkFileName($name_file);
+
+            if(sizeof($results) != 0) 
+            {
+                $name_file = sizeof($results) + 1 .'-'. $image->getClientOriginalName();
+            } 
+        }
+
+        $insert = $this->book->create($name, $penerbit, $tahun, $name_file);
+        if($insert)
+        {
+            // upload file
+		    $image->move($tujuan_upload, $name_file);
+
+            $data = [
+                "status"            => true,
+                "message"    => "Data Berhasil Disimpan"
+            ];
+            echo json_encode($data);
+        }
+        else
+        {
+            $data = [
+                "status"            => false,
+                "message"    => "User Gagal Dibuat"
+            ];
+            echo json_encode($data);
+        }
     }
 
     //delete book

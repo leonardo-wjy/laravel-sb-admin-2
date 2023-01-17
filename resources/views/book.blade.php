@@ -529,12 +529,16 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // setLoading()
+                        let data = new FormData(document.querySelector(".create-form"));
+                        
                         $.ajax({
                             url : "{{ url('book/create') }}",
                             type: "POST",
-                            dataType: "json",
                             cache: false,
-                            data: $(".create-form").serialize(),
+                            data: data,
+                            dataType: "json",
+                            processData: false,
+                            contentType: false,
                             success: function(response) {
                                 if (response.status) {
                                     Swal.fire({
