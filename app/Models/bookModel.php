@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\DB;
 
 class bookModel extends Model
 {
-    public function getAll($penerbit_id)
+    public function getAll($penerbit_id, $nama)
     {
-        if($penerbit_id)
+        if($penerbit_id && $nama)
         {
             return DB::table('book')
             ->select('book.book_id', 'book.name', 'book.image', 'book.tahun_terbit', 'book.createdAt', 'book.updatedAt', 'book.status'
@@ -19,6 +19,31 @@ class bookModel extends Model
             ->join('penerbit', 'book.penerbit_id', '=', 'penerbit.penerbit_id', 'right outer')
             ->where('book.status', '!=', 3)
             ->where('book.penerbit_id', $penerbit_id)
+            ->where('book.name','LIKE','%'.$nama.'%')
+            ->orderBy('book.updatedAt', 'DESC')
+            ->get();
+        }
+        else if($penerbit_id)
+        {
+            return DB::table('book')
+            ->select('book.book_id', 'book.name', 'book.image', 'book.tahun_terbit', 'book.createdAt', 'book.updatedAt', 'book.status'
+            , 'book.category_id as category_book_id', 'penerbit.name as penerbit_name')
+            ->join('category', 'book.category_id', '=', 'category.category_id', 'left outer')
+            ->join('penerbit', 'book.penerbit_id', '=', 'penerbit.penerbit_id', 'right outer')
+            ->where('book.status', '!=', 3)
+            ->where('book.penerbit_id', $penerbit_id)
+            ->orderBy('book.updatedAt', 'DESC')
+            ->get();
+        }
+        else if($nama)
+        {
+            return DB::table('book')
+            ->select('book.book_id', 'book.name', 'book.image', 'book.tahun_terbit', 'book.createdAt', 'book.updatedAt', 'book.status'
+            , 'book.category_id as category_book_id', 'penerbit.name as penerbit_name')
+            ->join('category', 'book.category_id', '=', 'category.category_id', 'left outer')
+            ->join('penerbit', 'book.penerbit_id', '=', 'penerbit.penerbit_id', 'right outer')
+            ->where('book.status', '!=', 3)
+            ->where('book.name','LIKE','%'.$nama.'%')
             ->orderBy('book.updatedAt', 'DESC')
             ->get();
         }

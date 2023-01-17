@@ -46,6 +46,9 @@
                             ?>
                         </select>
                     </div>
+                    <div class="form-group col-md-3">
+                        <input type="text" placeholder="Cari Nama Buku" class="form-control filter-nama-buku" />
+                    </div>
                 </div>
                 <div class="table-responsive">
                     <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -151,6 +154,7 @@
                 data: function(data) {
                     data.kategori = $(".filter-kategori-buku option:selected").val();
                     data.penerbit = $(".filter-penerbit-buku option:selected").val();
+                    data.nama = $(".filter-nama-buku").val();
                 },
                 onError: function(err) {
                     alert("Eror")
@@ -250,6 +254,10 @@
         $(".dataTables_info").addClass("pt-0");
 
         $('.filter-kategori-buku, .filter-penerbit-buku').on('change', function() {
+            table.ajax.reload();
+        })
+
+        $('.filter-nama-buku').on('keyup', function() {
             table.ajax.reload();
         })
     })

@@ -36,8 +36,9 @@ class BookController extends Controller
             if (request()->ajax()) {
                 $category_id = $request->input('kategori');
                 $penerbit_id = $request->input('penerbit');
+                $nama = $request->input('nama');
 
-                $results = $this->book->getAll($penerbit_id);
+                $results = $this->book->getAll($penerbit_id, $nama);
 
                 $no = 1;
                 foreach ($results as $data) {
