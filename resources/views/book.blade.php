@@ -338,7 +338,7 @@
                 name: {
                     required: true,
                     minlength: 4,
-                    maxlength: 30
+                    maxlength: 500
                 },
                 "kategori[]": {
                     required: true
@@ -354,7 +354,7 @@
                 name: {
                     required: "Nama Harus Diisi",
                     minlength: "Nama Minimal 4 Karakter",
-                    maxlength: "Nama Maksimal 30 Karakter"
+                    maxlength: "Nama Maksimal 500 Karakter"
                 },
                 "kategori[]": {
                     required: "Kategori Harus Diisi"
@@ -528,9 +528,9 @@
                     cancelButtonText: 'Batal',
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // setLoading()
+                        setLoading()
                         let data = new FormData(document.querySelector(".create-form"));
-                        
+
                         $.ajax({
                             url : "{{ url('book/create') }}",
                             type: "POST",
@@ -549,6 +549,9 @@
                                         if (responseSuccess.isConfirmed) {
                                             stopLoading()
                                             table.ajax.reload();
+                                            $('.kategori').val([]).trigger("change")
+                                            $('.penerbit').val("").trigger("change")
+                                            $(".create-form")[0].reset();
                                             $("#createModal").modal('toggle');
                                         }
                                     })

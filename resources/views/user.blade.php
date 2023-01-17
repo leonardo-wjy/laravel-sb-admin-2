@@ -461,6 +461,7 @@
                                         if (responseSuccess.isConfirmed) {
                                             stopLoading()
                                             table.ajax.reload();
+                                            $(".create-form")[0].reset();
                                             $("#createModal").modal('toggle');
                                         }
                                     })
@@ -519,6 +520,7 @@
                                         if (responseSuccess.isConfirmed) {
                                             stopLoading()
                                             table.ajax.reload();
+                                            $(".update-form")[0].reset();
                                             $("#editModal").modal('toggle');
                                         }
                                     })
