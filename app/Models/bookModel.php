@@ -60,14 +60,14 @@ class bookModel extends Model
         }
     }
 
-    public function create($name, $penerbit, $tahun, $file_name)
+    public function create($name, $kategori, $penerbit, $tahun, $file_name)
     {
         date_default_timezone_set('Asia/Jakarta');
         $date = date('Y-m-d h:i:s', time());
 
         return DB::table('book')->insert([
             'name' => $name,
-            'category_id' => '',
+            'category_id' => $kategori,
             'penerbit_id' => $penerbit,
             'tahun_terbit' => $tahun,
             'image' => $file_name,

@@ -114,7 +114,7 @@ class BookController extends Controller
 	public function create(Request $request)
     {
         $name = $request->input('name');
-        $kategori = $request->input('kategori');
+        $kategori =implode(",", $request->input('kategori'));
         $penerbit = $request->input('penerbit');
         $tahun = $request->input('tahun');
         $image = $request->file('image');
@@ -156,7 +156,7 @@ class BookController extends Controller
             } 
         }
 
-        $insert = $this->book->create($name, $penerbit, $tahun, $name_file);
+        $insert = $this->book->create($name, $kategori, $penerbit, $tahun, $name_file);
         if($insert)
         {
             if($image)
@@ -175,7 +175,7 @@ class BookController extends Controller
         {
             $data = [
                 "status"            => false,
-                "message"    => "User Gagal Dibuat"
+                "message"    => "Data Gagal Disimpan!"
             ];
             echo json_encode($data);
         }
