@@ -16,7 +16,7 @@
                 <h6 style="padding-top: 8px;" class="m-0 font-weight-bold text-primary float-sm-left">Daftar Buku</h6>
                 <div class="col px-0 text-right">
                     <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#createModal"><i class="fas fa-plus">&nbsp;</i>Tambah</a>
-                    <a class="btn btn-primary" href="{{ url('book/print') }}" target="_blank"><i class="fas fa-print">&nbsp;</i>Print</a>
+                    <a class="btn btn-primary btn-print"><i class="fas fa-print">&nbsp;</i>Print</a>
                 </div>
             </div>
             <div class="card-body">
@@ -292,6 +292,25 @@
 
 <script>
     $(document).ready(function () {
+        $(".btn-print").click(function() {
+            var data = '';
+            $.ajax({
+                type: 'GET',
+                url : "{{ url('book/print') }}",
+                data: data,
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                success: function(response){
+                    var blob = new Blob([response], {
+                        type: 'application/pdf'
+                    });
+                    var fileURL = window.URL.createObjectURL(blob);
+                    window.open(fileURL);
+                },
+            });
+        })
+
         $(".filter-kategori-buku").select2({
             placeholder: "Filter: Kategori",
             allowClear: true,

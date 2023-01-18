@@ -63,7 +63,14 @@ class BookController extends Controller
 
         // return view('print_book', ['buku'=>$buku]);
     	$pdf = PDF::loadview('print_book', ['buku'=>$buku]);
-    	return $pdf->download('daftar_buku.pdf');
+    	//return $pdf->download('daftar_buku.pdf');
+
+        $path = public_path('pdf/');
+        $fileName =  time().'.'. 'pdf' ;
+        $pdf->save($path . '/' . $fileName);
+
+        $pdf = public_path('pdf/'.$fileName);
+        return response()->download($pdf);
     }
 
     //get page user

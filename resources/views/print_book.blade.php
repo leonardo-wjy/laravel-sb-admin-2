@@ -18,36 +18,36 @@
 <table width="100%" class="mb-3">
 <tr>
 <td width="10"><img class="mr-3" src="{{ public_path() . '/img/logo.png' }}" style="width: 130pxpx; height: 130pxpx;"></td>
-<td><h3 class="mr-3">Laporan Data Buku</h3></td>
+<td><h1 class="mr-3">Laporan Data Buku</h1></td>
 </tr>
 </table>
 
-  <table class="table table-bordered mt-3" width="100%">
+  <table class="table table-bordered mt-3" width="100%" style="border: 1px solid black;">
     <thead>
       <tr style="font-size: 18px; text-align: center; padding: 5px 0;">
-        <th style="width: 30px !important;">No</th>
-        <th style="width: 30px !important;">Nama Buku</th>
-        <th style="width: 30px !important;">Kategori</th>
-        <th style="width: 30px !important;">Nama Penerbit</th>
-        <th style="width: 30px !important;">Tahun Terbit</th>
+        <th style="width: 30px !important;border: 1px solid black;">No</th>
+        <th style="width: 30px !important;border: 1px solid black;">Nama Buku</th>
+        <th style="width: 30px !important;border: 1px solid black;">Kategori</th>
+        <th style="width: 30px !important;border: 1px solid black;">Nama Penerbit</th>
+        <th style="width: 30px !important;border: 1px solid black;">Tahun Terbit</th>
       </tr>
     </thead>
     <tbody>
         @foreach($buku as $p)
         <tr style="text-align: center;">
-            <td width="30px">{{$p['no']}}</td>
-            <td width="30px">{{$p['name']}}</td>
-            <td width="30px">{{$p['category_name']}}</td>
-            <td width="30px">{{$p['penerbit_name']}}</td>
-            <td width="30px">{{$p['tahun_terbit']}}</td>
+            <td style="border: 1px solid black;" width="30px">{{$p['no']}}</td>
+            <td style="border: 1px solid black;" width="30px">{{$p['name']}}</td>
+            <td style="border: 1px solid black;" width="30px">{{$p['category_name']}}</td>
+            <td style="border: 1px solid black;" width="30px">{{$p['penerbit_name']}}</td>
+            <td style="border: 1px solid black;" width="30px">{{$p['tahun_terbit']}}</td>
         </tr>
         @endforeach
     </tbody>
   </table>
 <!-- </div> -->
 
-</body>
-</html>
+<!-- </body>
+</html> -->
 
 <script type="text/javascript">
 	//window.print();
