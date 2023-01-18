@@ -23,11 +23,15 @@ class BookController extends Controller
     }
 
     //print
-    public function print()
+    public function print(Request $request)
     {
+        $category_id = $request->input('kategori');
+        $penerbit_id = $request->input('penerbit');
+        $nama = $request->input('nama');
+
         $buku = array();
 
-        $results = $this->book->getAll('', '');
+        $results = $this->book->getAll($penerbit_id, $nama);
 
         $no = 1;
         foreach ($results as $data) {
@@ -46,19 +50,42 @@ class BookController extends Controller
                 }
             }
 
-            array_push($buku, [
-                "no" => $no++,
-                "id" => $data->book_id,
-                "category_id" => $myNewArray,
-                "penerbit_id" => $data->penerbit_id,
-                "name" => $data->name,
-                "image" => $data->image ? "cover/".$data->image : "",
-                "category_name" =>implode(',', $arrCategoryName),
-                "penerbit_name" => $data->penerbit_name,
-                "tahun_terbit" => $data->tahun_terbit,
-                "createdAt" => $data->createdAt ? date("d/m/Y", strtotime($data->createdAt)) : "-",
-                "updatedAt" => $data->updatedAt ? date("d/m/Y", strtotime($data->updatedAt)) : "-"
-            ]);
+            //check category id inserted 
+            if($category_id)
+            {
+                if(in_array($category_id, $myNewArray))
+                {
+                    array_push($buku, [
+                        "no" => $no++,
+                        "id" => $data->book_id,
+                        "category_id" => $myNewArray,
+                        "penerbit_id" => $data->penerbit_id,
+                        "name" => $data->name,
+                        "image" => $data->image ? "cover/".$data->image : "",
+                        "category_name" =>implode(',',$arrCategoryName),
+                        "penerbit_name" => $data->penerbit_name,
+                        "tahun_terbit" => $data->tahun_terbit,
+                        "createdAt" => $data->createdAt ? date("d/m/Y", strtotime($data->createdAt)) : "-",
+                        "updatedAt" => $data->updatedAt ? date("d/m/Y", strtotime($data->updatedAt)) : "-"
+                    ]);
+                }
+            }
+            else
+            {
+                array_push($buku, [
+                    "no" => $no++,
+                    "id" => $data->book_id,
+                    "category_id" => $myNewArray,
+                    "penerbit_id" => $data->penerbit_id,
+                    "name" => $data->name,
+                    "image" => $data->image ? "cover/".$data->image : "",
+                    "category_name" =>implode(',',$arrCategoryName),
+                    "penerbit_name" => $data->penerbit_name,
+                    "tahun_terbit" => $data->tahun_terbit,
+                    "createdAt" => $data->createdAt ? date("d/m/Y", strtotime($data->createdAt)) : "-",
+                    "updatedAt" => $data->updatedAt ? date("d/m/Y", strtotime($data->updatedAt)) : "-"
+                ]);
+            }
         }
 
         // return view('print_book', ['buku'=>$buku]);
@@ -102,16 +129,17 @@ class BookController extends Controller
                     }
                     $arrCategoryName = array();
 
+                    foreach ($myNewArray as $category_value) {
+                        $result_category = $this->category->getNameById($category_value);
+                        if($result_category)
+                        {
+                            array_push($arrCategoryName, $result_category->name); 
+                        }
+                    }
+
                     //check category id inserted 
                     if($category_id)
                     {
-                        foreach ($myNewArray as $category_value) {
-                            $result_category = $this->category->getNameById($category_value);
-                            if($result_category)
-                            {
-                                array_push($arrCategoryName, $result_category->name); 
-                            }
-                        }
                         if(in_array($category_id, $myNewArray))
                         {
                             array_push($dataBook, [
@@ -131,14 +159,6 @@ class BookController extends Controller
                     }
                     else
                     {
-                        foreach ($myNewArray as $category_value) {
-                            $result_category = $this->category->getNameById($category_value);
-                            if($result_category)
-                            {
-                                array_push($arrCategoryName, $result_category->name); 
-                            }
-                        }
-
                         array_push($dataBook, [
                             "no" => $no++,
                             "id" => $data->book_id,

@@ -293,11 +293,14 @@
 <script>
     $(document).ready(function () {
         $(".btn-print").click(function() {
-            var data = '';
             $.ajax({
                 type: 'GET',
                 url : "{{ url('book/print') }}",
-                data: data,
+                data: {
+                    kategori: $(".filter-kategori-buku option:selected").val(),
+                    penerbit: $(".filter-penerbit-buku option:selected").val(),
+                    nama: $(".filter-nama-buku").val()
+                },
                 xhrFields: {
                     responseType: 'blob'
                 },
