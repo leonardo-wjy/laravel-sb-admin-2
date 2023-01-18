@@ -299,6 +299,8 @@
                 data: {
                     kategori: $(".filter-kategori-buku option:selected").val(),
                     penerbit: $(".filter-penerbit-buku option:selected").val(),
+                    nama_kategori: $(".filter-kategori-buku option:selected").text(),
+                    nama_penerbit: $(".filter-penerbit-buku option:selected").text(),
                     nama: $(".filter-nama-buku").val()
                 },
                 xhrFields: {

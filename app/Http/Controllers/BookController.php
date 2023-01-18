@@ -27,6 +27,8 @@ class BookController extends Controller
     {
         $category_id = $request->input('kategori');
         $penerbit_id = $request->input('penerbit');
+        $category_name = $request->input('nama_kategori');
+        $penerbit_name = $request->input('nama_penerbit');
         $nama = $request->input('nama');
 
         $buku = array();
@@ -89,7 +91,7 @@ class BookController extends Controller
         }
 
         // return view('print_book', ['buku'=>$buku]);
-    	$pdf = PDF::loadview('print_book', ['buku'=>$buku]);
+    	$pdf = PDF::loadview('print_book', ['buku' => $buku, 'nama' => $nama, 'category_name' => $category_name, 'penerbit_name' => $penerbit_name]);
     	//return $pdf->download('daftar_buku.pdf');
 
         $path = public_path('pdf/');

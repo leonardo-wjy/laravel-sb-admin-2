@@ -21,6 +21,29 @@
 <td><h1 class="mr-3">Laporan Data Buku</h1></td>
 </tr>
 </table>
+<hr/>
+
+<div class="mb-3"">
+    <table class="mb-3">
+      <tr class="fs12">
+        <td class="fs12" nowrap > <strong>Filter Nama Buku</strong> </td>
+        <td>: </td>
+        <td>{{ $nama }}</td>
+      </tr>
+
+      <tr class="fs12">
+        <td class="fs12" nowrap > <strong>Filter Penerbit Buku</strong> </td>
+        <td>: </td>
+        <td>{{ $penerbit_name }}</td>
+      </tr>
+
+      <tr class="fs12">
+        <td class="fs12" nowrap> <strong>Filter Kategori Buku</strong> </td>
+        <td>: </td>
+        <td>{{ $category_name }}</td>
+      </tr>
+
+    </table>
 
   <table class="table table-bordered mt-3" width="100%" style="border: 1px solid black;">
     <thead>
@@ -44,6 +67,8 @@
         @endforeach
     </tbody>
   </table>
+
+  </div>
 <!-- </div> -->
 
 <!-- </body>
