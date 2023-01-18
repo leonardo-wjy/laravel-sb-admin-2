@@ -14,7 +14,10 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 style="padding-top: 8px;" class="m-0 font-weight-bold text-primary float-sm-left">Daftar Buku</h6>
-                <a class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#createModal"><i class="fas fa-plus">&nbsp;</i>Tambah</a>
+                <div class="col px-0 text-right">
+                    <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#createModal"><i class="fas fa-plus">&nbsp;</i>Tambah</a>
+                    <a class="btn btn-primary"><i class="fas fa-print">&nbsp;</i>Print</a>
+                </div>
             </div>
             <div class="card-body">
                 <div class="form-row justify-content-end mx-0">

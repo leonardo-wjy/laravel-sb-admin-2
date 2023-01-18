@@ -10,6 +10,10 @@ use Session;
 use App\Models\userModel;
 
 // php artisan make:controller DosenController
+
+// php artisan make:middleware SessionExpired             app/http/middleware/sessionexpired.php app/http/kernel.php
+
+// composer require barryvdh/laravel-dompdf
 class UserController extends Controller
 {
     public function __construct(){
