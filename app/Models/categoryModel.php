@@ -8,6 +8,25 @@ use Illuminate\Support\Facades\DB;
 
 class categoryModel extends Model
 {
+    public function getAll($nama)
+    {
+        if($nama)
+        {
+            return DB::table('category')
+            ->where('status', '!=', 3)
+            ->where('name','LIKE','%'.$nama.'%')
+            ->orderBy('updatedAt', 'DESC')
+            ->get();
+        }
+        else
+        {
+            return DB::table('category')
+            ->where('status', '!=', 3)
+            ->orderBy('updatedAt', 'DESC')
+            ->get();
+        }
+    }
+
     public function getDropdown()
     {
         return DB::table('category')
@@ -24,5 +43,16 @@ class categoryModel extends Model
         ->where('status', '!=', 3)
         ->orderBy('name', 'ASC')
         ->first();
+    }
+
+    public function updateStatus($id)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d h:i:s', time());
+
+        return DB::table('category')->where('category_id', $id)->update([
+            'status' => 3,
+            'updatedAt' => $date
+        ]);
     }
 }

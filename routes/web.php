@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
@@ -38,6 +39,11 @@ Route::controller(BookController::class)->group(function () {
     Route::patch('/book/update/{id}', 'update');
     Route::delete('/book', 'updateStatus');
     Route::get('/book/print', 'print');
+});
+
+Route::controller(CategoryController::class)->group(function () {
+    Route::get('/category', 'index');
+    Route::delete('/category', 'updateStatus');
 });
 
 Route::controller(UserController::class)->group(function () {
