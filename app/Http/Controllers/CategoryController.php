@@ -56,6 +56,79 @@ class CategoryController extends Controller
 		}
     }
 
+    //create category
+	public function create(Request $request)
+    {
+        $name = $request->input('name');
+        $description = $request->input('description');
+
+        // check user exist
+        $results = $this->category->checkName($name);
+
+        if(sizeof($results) == 0) {
+
+            $insert = $this->category->create($name, $description);
+            if($insert)
+            {
+                $data = [
+                    "status"            => true,
+                    "message"    => "Data Berhasil Disimpan"
+                ];
+                echo json_encode($data);
+            }
+            else
+            {
+                $data = [
+                    "status"            => false,
+                    "message"    => "Kategori Gagal Dibuat"
+                ];
+                echo json_encode($data);
+            }
+        } else {
+            $data = [
+                "status"            => false,
+                "message"    => "Nama Kategori Sudah Ada"
+            ];
+            echo json_encode($data);
+        }
+    }
+
+    //update category
+	public function update(Request $request, $id)
+    {
+        $name = $request->input('name_edit');
+        $description = $request->input('description_edit');
+
+        // check category exist
+        $results = $this->category->checkNameExceptId($name, $id);
+
+        if(sizeof($results) == 0) {
+            $update = $this->category->updateData($id, $name, $description);
+            if($update)
+            {
+                $data = [
+                    "status"            => true,
+                    "message"    => "Data Berhasil Diubah"
+                ];
+                echo json_encode($data);
+            }
+            else
+            {
+                $data = [
+                    "status"            => false,
+                    "message"    => "Data Gagal Diubah"
+                ];
+                echo json_encode($data);
+            }
+        } else {
+            $data = [
+                "status"            => false,
+                "message"    => "Kategori Sudah Ada"
+            ];
+            echo json_encode($data);
+        }
+    }
+
     //delete category
 	public function updateStatus(Request $request)
     {

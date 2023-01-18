@@ -111,6 +111,7 @@
                     <form class="update-form" role="form" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <input type="hidden" name="id" class="id" id="id" />
+                        <input type="hidden" name="status_edit" class="status-edit" id="status_edit" />
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="control-label font-weight-bold">Nama<label class="text-danger">*</label></label>
@@ -425,6 +426,7 @@
             validator.reset();
             const data = table.row(this).data();
             $(".id").val(data.id)
+            $(".status-edit").val(data.status_id)
             $(".name-edit").val(data.name)
             $(".email-edit").val(data.email)
             $(".phone-edit").val(data.phone)

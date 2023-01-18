@@ -45,6 +45,33 @@ class categoryModel extends Model
         ->first();
     }
 
+    public function create($name, $description)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d h:i:s', time());
+
+        return DB::table('user')->insert([
+            'name' => $name,
+            'description' => $description,
+            'status' => 1,
+            'createdAt' => $date,
+            'updatedAt' => $date
+        ]);
+    }
+
+    public function updateData($id, $name, $description)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d h:i:s', time());
+
+        return DB::table('category')->where('category_id', $id)->update([
+            'name' => $name,
+            'description' => $description,
+            'status' => 2,
+            'updatedAt' => $date
+        ]);
+    }
+
     public function updateStatus($id)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -54,5 +81,19 @@ class categoryModel extends Model
             'status' => 3,
             'updatedAt' => $date
         ]);
+    }
+
+    public function checkName($name)
+    {
+        return DB::table('category')
+        ->where('name', $name)->get();
+    }
+
+    public function checkNameExceptId($name, $id)
+    {
+        return DB::table('category')
+        ->where('name', $name)
+        ->where('category_id', '!=', $id)
+        ->get();
     }
 }

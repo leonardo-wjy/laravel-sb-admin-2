@@ -40,6 +40,7 @@ class UserController extends Controller
                         "name" => $data->name,
                         "email" => $data->email,
                         "phone" => $data->phone,
+                        "status_id" => $data->status,
                         "status" => $data->status === 3 ? "NOT ACTIVE" : "ACTIVE",
                         "createdAt" => $data->createdAt ? date("d/m/Y", strtotime($data->createdAt)) : "-",
                         "updatedAt" => $data->updatedAt ? date("d/m/Y", strtotime($data->updatedAt)) : "-"
@@ -114,6 +115,7 @@ class UserController extends Controller
         $email = $request->input('email_edit');
         $phone = $request->input('phone_edit');
         $password = $request->input('passwd_edit');
+        $status = $request->input('status_edit');
 
         // check user exist
         $results = $this->user->checkNameExceptId($name, $id);
@@ -123,7 +125,7 @@ class UserController extends Controller
             $results_email = $this->user->checkEmailExceptId($email, $id);
 
             if(sizeof($results_email) == 0) {
-                $update = $this->user->updateData($id, $name, $email, $phone, $password);
+                $update = $this->user->updateData($id, $name, $email, $phone, $password, $status);
                 if($update)
                 {
                     $data = [

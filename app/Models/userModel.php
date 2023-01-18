@@ -40,7 +40,7 @@ class userModel extends Model
         ]);
     }
 
-    public function updateData($id, $name, $email, $phone, $password)
+    public function updateData($id, $name, $email, $phone, $password, $status)
     {
         date_default_timezone_set('Asia/Jakarta');
         $date = date('Y-m-d h:i:s', time());
@@ -53,6 +53,7 @@ class userModel extends Model
                 'email' => $email,
                 'phone' => $phone, 
                 'password' => md5($password),
+                'status' => $status == 1 ? 2 : $status,
                 'updatedAt' => $date
             ]);
         }
@@ -62,6 +63,7 @@ class userModel extends Model
                 'name' => $name,
                 'email' => $email,
                 'phone' => $phone, 
+                'status' => $status == 1 ? 2 : $status,
                 'updatedAt' => $date
             ]);
         }
