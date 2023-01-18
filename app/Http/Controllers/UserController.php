@@ -21,7 +21,7 @@ class UserController extends Controller
     }
 
     //get page user
-    public function index() 
+    public function index(request $request) 
     {
         if(Session::has('email'))
 		{
@@ -29,8 +29,8 @@ class UserController extends Controller
             $dataUser = array();
 
             if (request()->ajax()) {
-
-                $results = $this->user->getAll();
+                $search = $request->input('search');
+                $results = $this->user->getAll($search);
 
                 $no = 1;
                 foreach ($results as $data) {

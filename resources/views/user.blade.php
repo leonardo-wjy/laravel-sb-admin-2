@@ -17,7 +17,11 @@
                 <a class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#createModal"><i class="fas fa-plus">&nbsp;</i>Tambah</a>
             </div>
             <div class="card-body">
-
+                <div class="form-row justify-content-end mx-0">
+                    <div class="form-group col-md-3">
+                        <input type="text" placeholder="Cari Email/Name/Phone" class="form-control filter-search" />
+                    </div>
+                </div>
                 <div class="table-responsive">
                     <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
@@ -361,9 +365,19 @@
             processing: true,
             serverSide: true,
             ordering: false,
-            ajax: '{{ url()->current() }}',
+            ajax: {
+                url: '{{ url()->current() }}',
+                dataSrc: "data",
+                data: function(data) {
+                    data.search = $(".filter-search").val();
+                },
+                onError: function(err) {
+                    alert("Error")
+                }
+            },
             responsive: true,
             display: "stripe",
+            searching: false,
             columnDefs: [{
                 defaultContent: "-",
                 targets: "_all"
@@ -421,6 +435,11 @@
         });
 
         $(".dataTables_info").addClass("pt-0");
+
+        $('.filter-search').on('keyup', function() {
+            table.ajax.reload();
+        })
+
         $('#dataTable tbody').on('click', 'tr td:not(.actions):not(.dataTables_empty)', function() {
             validator.resetForm();
             validator.reset();

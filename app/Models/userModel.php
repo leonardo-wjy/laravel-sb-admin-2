@@ -8,10 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class userModel extends Model
 {
-    public function getAll()
+    public function getAll($search)
     {
         return DB::table('user')
         // ->where('status', '!=', 3)
+        ->where('name','LIKE','%'.$search.'%')
+        ->orWhere('email','LIKE','%'.$search.'%')
+        ->orWhere('phone','LIKE','%'.$search.'%')
         ->orderBy('updatedAt', 'DESC')
         ->get();
     }
