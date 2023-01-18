@@ -14,7 +14,7 @@
 
     <title>SB Admin 2 - {{ $title }}</title>
 
-    <link rel="shortcut icon" href="{{ URL::asset('img/undraw_profile.svg') }}" type="image/png" />
+    <link rel="shortcut icon" href="{{ URL::asset('img/logo.png') }}" type="image/png" />
 
     <!-- Custom fonts for this template-->
     <link href="{{ URL::asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">

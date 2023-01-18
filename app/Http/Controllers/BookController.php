@@ -11,6 +11,8 @@ use App\Models\bookModel;
 use App\Models\categoryModel;
 use App\Models\penerbitModel;
 
+use PDF;
+
 // php artisan make:controller DosenController
 class BookController extends Controller
 {
@@ -18,6 +20,50 @@ class BookController extends Controller
         $this->book = new bookModel();
         $this->category = new categoryModel();
         $this->penerbit = new penerbitModel();
+    }
+
+    //print
+    public function print()
+    {
+        $buku = array();
+
+        $results = $this->book->getAll('', '');
+
+        $no = 1;
+        foreach ($results as $data) {
+            $myNewArray = array();
+            if($data->category_book_id)
+            {
+                $myNewArray = explode(',', $data->category_book_id);
+            }
+            $arrCategoryName = array();
+
+            foreach ($myNewArray as $category_value) {
+                $result_category = $this->category->getNameById($category_value);
+                if($result_category)
+                {
+                    array_push($arrCategoryName, $result_category->name); 
+                }
+            }
+
+            array_push($buku, [
+                "no" => $no++,
+                "id" => $data->book_id,
+                "category_id" => $myNewArray,
+                "penerbit_id" => $data->penerbit_id,
+                "name" => $data->name,
+                "image" => $data->image ? "cover/".$data->image : "",
+                "category_name" =>implode(',', $arrCategoryName),
+                "penerbit_name" => $data->penerbit_name,
+                "tahun_terbit" => $data->tahun_terbit,
+                "createdAt" => $data->createdAt ? date("d/m/Y", strtotime($data->createdAt)) : "-",
+                "updatedAt" => $data->updatedAt ? date("d/m/Y", strtotime($data->updatedAt)) : "-"
+            ]);
+        }
+
+        // return view('print_book', ['buku'=>$buku]);
+    	$pdf = PDF::loadview('print_book', ['buku'=>$buku]);
+    	return $pdf->download('daftar_buku.pdf');
     }
 
     //get page user

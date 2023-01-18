@@ -37,6 +37,7 @@ Route::controller(BookController::class)->group(function () {
     Route::post('/book/create', 'create');
     Route::patch('/book/update/{id}', 'update');
     Route::delete('/book', 'updateStatus');
+    Route::get('/book/print', 'print');
 });
 
 Route::controller(UserController::class)->group(function () {
