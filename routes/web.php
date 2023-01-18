@@ -43,6 +43,8 @@ Route::controller(BookController::class)->group(function () {
 
 Route::controller(CategoryController::class)->group(function () {
     Route::get('/category', 'index');
+    Route::post('/category/create', 'create');
+    Route::patch('/category/update/{id}', 'update');
     Route::delete('/category', 'updateStatus');
 });
 

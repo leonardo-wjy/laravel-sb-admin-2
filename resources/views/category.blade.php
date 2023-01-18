@@ -44,6 +44,79 @@
 </div>
 <!-- /.container-fluid -->
 
+<!-- Create Modal-->
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card shadow">
+                <div class="modal-header card-header py-3 d-flex justify-content-between align-items-center">
+                    <div class="col px-0">
+                        <h6 class="font-weight-bold text-primary">Tambah Kategori</h6>
+                    </div>
+                </div>
+                <div class="modal-body card-body">
+                    <form class="create-form" role="form" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label font-weight-bold">Nama<label class="text-danger">*</label></label>
+                                <input type="text" class="form-control" name="name" id="name">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label font-weight-bold">Deskripsi</label>
+                                <input type="text" class="form-control" name="description" id="description">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-outline-danger">Batal</button>
+                    <button type="button" class="btn btn-primary btn-create-form btn-submit-form">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal-->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card shadow">
+                <div class="modal-header card-header py-3 d-flex justify-content-between align-items-center">
+                    <div class="col px-0">
+                        <h6 class="font-weight-bold text-primary">Edit Kategori</h6>
+                    </div>
+                </div>
+                <div class="modal-body card-body">
+                    <form class="update-form" role="form" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                        <input type="hidden" name="id" class="id" id="id" />
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label font-weight-bold">Nama<label class="text-danger">*</label></label>
+                                <input type="text" class="form-control name-edit" name="name_edit" id="name_edit">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label font-weight-bold">Deskripsi</label>
+                                <input type="text" class="form-control" name="description_edit" id="description_edit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-outline-danger">Batal</button>
+                    <button type="button" class="btn btn-primary btn-update-form btn-submit-form">Ubah</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Detail Modal-->
 <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -78,6 +151,81 @@
 
 <script>
     $(document).ready(function () {
+
+        $(".create-form").validate({
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 100
+                },
+                description: {
+                    minlength: 5,
+                    maxlength: 255
+                }
+            },
+            messages: {
+                name: {
+                    required: "Nama Harus Diisi",
+                    minlength: "Nama Minimal 3 Karakter",
+                    maxlength: "Nama Maksimal 199 Karakter"
+                },
+                description: {
+                    minlength: "Deskripsi Minimal 5 Karakter",
+                    maxlength: "Deskripsi Maksimal 255 Karakter"
+                },
+            },
+            //add
+            errorElement: 'span',
+            errorClass: 'text-danger',
+            errorPlacement: function(error, element) {
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    element = $("#select2-" + elem.attr("id") + "-container").parent(); 
+                    error.insertAfter(element);
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+        });
+
+        var validator = $(".update-form").validate({
+            rules: {
+                name_edit: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 100
+                },
+                description_edit: {
+                    minlength: 5,
+                    maxlength: 255
+                }
+            },
+            messages: {
+                name_edit: {
+                    required: "Nama Harus Diisi",
+                    minlength: "Nama Minimal 3 Karakter",
+                    maxlength: "Nama Maksimal 199 Karakter"
+                },
+                description_edit: {
+                    minlength: "Deskripsi Minimal 5 Karakter",
+                    maxlength: "Deskripsi Maksimal 255 Karakter"
+                },
+            },
+            errorElement: 'span',
+            errorClass: 'text-danger',
+            errorPlacement: function(error, element) {
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    element = $("#select2-" + elem.attr("id") + "-container").parent(); 
+                    error.insertAfter(element);
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+            // end add
+        });
+
         // Call the dataTables jQuery plugin
         const table = $('#dataTable').DataTable({
             dom: "<'row'<'col-sm-12 col-md-6'><'col-sm-12 col-md-6'f>>t<'row align-items-start'<'col-md-4'l><'col-md-4 text-center'i><'col-md-4'p>>",
@@ -145,6 +293,132 @@
         $('.filter-nama').on('keyup', function() {
             table.ajax.reload();
         })
+
+        $('#dataTable tbody').on('click', 'tr td:not(.actions):not(.dataTables_empty)', function() {
+            validator.resetForm();
+            validator.reset();
+            const data = table.row(this).data();
+            $(".id").val(data.id)
+            $(".name-edit").val(data.name)
+            $(".description-edit").val(data.description)
+            $("#editModal").modal()
+        });
+
+        $(".btn-create-form").click(function() {
+            if ($(".create-form").valid()) {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Simpan Data?',
+                    confirmButtonColor: '#4e73df',
+                    cancelButtonColor: '#d33',
+                    showCancelButton: true,
+                    reverseButtons: true,
+                    confirmButtonText: 'Simpan',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        setLoading()
+                        $.ajax({
+                            url : "{{ url('category/create') }}",
+                            type: "POST",
+                            dataType: "json",
+                            cache: false,
+                            data: $(".create-form").serialize(),
+                            success: function(response) {
+                                if (response.status) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: response.message,
+                                        confirmButtonColor: '#4e73df',
+                                    }).then((responseSuccess) => {
+                                        if (responseSuccess.isConfirmed) {
+                                            stopLoading()
+                                            table.ajax.reload();
+                                            $(".create-form")[0].reset();
+                                            $("#createModal").modal('toggle');
+                                        }
+                                    })
+                                } else {
+                                    stopLoading()
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: response.message,
+                                        confirmButtonColor: '#4e73df',
+                                    })
+                                }
+                            },
+                            onError: function(err) {
+                                stopLoading()
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Data Gagal Disimpan',
+                                    confirmButtonColor: '#4e73df',
+                                })
+                            }
+                        })
+                    }
+                })
+            }
+        })
+
+        $(".btn-update-form").click(function() {
+            let id = $(".id").val();
+
+            if ($(".update-form").valid()) {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Simpan Data?',
+                    confirmButtonColor: '#4e73df',
+                    cancelButtonColor: '#d33',
+                    showCancelButton: true,
+                    reverseButtons: true,
+                    confirmButtonText: 'Ubah',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        setLoading()
+                        $.ajax({
+                            url : "{{ url('category/update') }}" + "/" + id,
+                            type: "PATCH",
+                            dataType: "json",
+                            cache: false,
+                            data: $(".update-form").serialize(),
+                            success: function(response) {
+                                if (response.status) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: response.message,
+                                        confirmButtonColor: '#4e73df',
+                                    }).then((responseSuccess) => {
+                                        if (responseSuccess.isConfirmed) {
+                                            stopLoading()
+                                            table.ajax.reload();
+                                            $(".update-form")[0].reset();
+                                            $("#editModal").modal('toggle');
+                                        }
+                                    })
+                                } else {
+                                    stopLoading()
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: response.message,
+                                        confirmButtonColor: '#4e73df',
+                                    })
+                                }
+                            },
+                            onError: function(err) {
+                                stopLoading()
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Data Gagal Diubah',
+                                    confirmButtonColor: '#4e73df',
+                                })
+                            }
+                        })
+                    }
+                })
+            }
+        })  
     })
 
     $(document).on('click', '.view-detail', function() {
