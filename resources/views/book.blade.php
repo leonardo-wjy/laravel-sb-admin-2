@@ -313,6 +313,9 @@
                     var fileURL = window.URL.createObjectURL(blob);
                     window.open(fileURL);
                 },
+                onError: function(err) {
+                    alert("Error")
+                }
             });
         })
 
@@ -436,7 +439,7 @@
                     data.nama = $(".filter-nama-buku").val();
                 },
                 onError: function(err) {
-                    alert("Eror")
+                    alert("Error")
                 }
             },
             responsive: true,
