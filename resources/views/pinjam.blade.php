@@ -220,6 +220,55 @@
         $(".tgl-pengembalian-detail").val($(this).data('tglpengembalian'))
         $("#detailModal").modal()
     })
+
+    $(document).on('click', '.delete-data', function() {
+        Swal.fire({
+            icon: 'question',
+            title: 'Ubah Status?',
+            confirmButtonColor: '#4e73df',
+            cancelButtonColor: '#d33',
+            showCancelButton: true,
+            reverseButtons: true,
+            confirmButtonText: 'Ubah',
+            cancelButtonText: 'Batal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url : "{{ url('pinjam/update-status') }}",
+                    type: "POST",
+                    dataType: "json",
+                    cache: false,
+                    data: {
+                        "id": $(this).data('id'),
+                        "_token": $("meta[name='csrf-token']").attr("content")
+                    },
+                    success: function(response) {
+                        if (response.status) {
+                            $('#dataTable').DataTable().ajax.reload();
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.message,
+                                confirmButtonColor: '#4e73df',
+                            })
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: response.message,
+                                confirmButtonColor: '#4e73df',
+                            })
+                        }
+                    },
+                    onError: function(err) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Data Gagal Disimpan',
+                            confirmButtonColor: '#4e73df',
+                        })
+                    }
+                })
+            }
+        })
+    });
 </script>
 
 @include('footer')

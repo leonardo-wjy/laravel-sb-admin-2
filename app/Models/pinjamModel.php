@@ -19,4 +19,15 @@ class pinjamModel extends Model
         ->orderBy('pinjam.batas_pengembalian', 'DESC')
         ->get();
     }
+
+    public function updateStatus($id)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d h:i:s', time());
+
+        return DB::table('pinjam')->where('pinjam_id', $id)->update([
+            'status' => 3, 
+            'updatedAt' => $date
+        ]);
+    }
 }

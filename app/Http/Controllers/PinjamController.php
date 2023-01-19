@@ -57,4 +57,28 @@ class PinjamController extends Controller
 			return redirect('/login');
 		}
     }
+
+    //update status peminjman buku
+	public function updateStatus(Request $request)
+    {
+        $id = $request->input('id');
+
+        $query = $this->pinjam->updateStatus($id);
+        if($query)
+        {
+            $data = [
+                "status"            => true,
+                "message"    => "Status Berhasil Diubah"
+            ];
+            echo json_encode($data);
+        }
+        else
+        {
+            $data = [
+                "status"            => false,
+                "message"    => "Status Gagal Diubah"
+            ];
+            echo json_encode($data);
+        }
+    }
 }
