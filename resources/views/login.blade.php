@@ -115,6 +115,48 @@
                 }
             });
 
+            $('.email, .password').keypress(function (e) {
+                var key = e.which;
+                if(key == 13)  // the enter key code
+                {
+                    if ($(".login-form").valid()) {
+                        $.ajax({
+                            url : "{{ url('login') }}",
+                            type: "POST",
+                            dataType: "json",
+                            cache: false,
+                            data: $(".login-form").serialize(),
+                            success: function(response) {
+                                if (response.status) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: response.message,
+                                        confirmButtonColor: '#4e73df',
+                                    }).then((responseSuccess) => {
+                                        if (responseSuccess.isConfirmed) {
+                                            window.location.href = "/home";
+                                        }
+                                    })
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: response.message,
+                                        confirmButtonColor: '#4e73df',
+                                    })
+                                }
+                            },
+                            onError: function(err) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Data Gagal Disimpan',
+                                    confirmButtonColor: '#4e73df',
+                                })
+                            }
+                        })
+                    }
+                }
+            }); 
+
             $(".btn-login-register").click(function() {
                 if ($(".login-form").valid()) {
                     $.ajax({
