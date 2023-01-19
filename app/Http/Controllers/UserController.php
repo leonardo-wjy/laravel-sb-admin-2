@@ -37,6 +37,7 @@ class UserController extends Controller
                     array_push($dataUser, [
                         "no" => $no++,
                         "id" => $data->user_id,
+                        "role" => $data->role,
                         "name" => $data->name,
                         "email" => $data->email,
                         "phone" => $data->phone,
@@ -63,6 +64,7 @@ class UserController extends Controller
 	public function create(Request $request)
     {
         $name = $request->input('name');
+        $role = $request->input('role');
         $email = $request->input('email');
         $phone = $request->input('phone');
         $password = $request->input('passwd');
@@ -75,7 +77,7 @@ class UserController extends Controller
             $results_email = $this->user->checkEmail($email);
 
             if(sizeof($results_email) == 0) {
-                $insert = $this->user->create($name, $email, $phone, $password);
+                $insert = $this->user->create($name, $role, $email, $phone, $password);
                 if($insert)
                 {
                     $data = [
@@ -112,6 +114,7 @@ class UserController extends Controller
 	public function update(Request $request, $id)
     {
         $name = $request->input('name_edit');
+        $role = $request->input('role_edit');
         $email = $request->input('email_edit');
         $phone = $request->input('phone_edit');
         $password = $request->input('passwd_edit');
@@ -125,7 +128,7 @@ class UserController extends Controller
             $results_email = $this->user->checkEmailExceptId($email, $id);
 
             if(sizeof($results_email) == 0) {
-                $update = $this->user->updateData($id, $name, $email, $phone, $password, $status);
+                $update = $this->user->updateData($id, $name, $role, $email, $phone, $password, $status);
                 if($update)
                 {
                     $data = [

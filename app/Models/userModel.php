@@ -27,13 +27,14 @@ class userModel extends Model
         ->get();
     }
 
-    public function create($name, $email, $phone, $password)
+    public function create($name, $role, $email, $phone, $password)
     {
         date_default_timezone_set('Asia/Jakarta');
         $date = date('Y-m-d h:i:s', time());
 
         return DB::table('user')->insert([
             'name' => $name,
+            'role' => $role,
             'email' => $email,
             'phone' => $phone, 
             'password' => md5($password),
@@ -43,7 +44,7 @@ class userModel extends Model
         ]);
     }
 
-    public function updateData($id, $name, $email, $phone, $password, $status)
+    public function updateData($id, $name, $role, $email, $phone, $password, $status)
     {
         date_default_timezone_set('Asia/Jakarta');
         $date = date('Y-m-d h:i:s', time());
@@ -53,6 +54,7 @@ class userModel extends Model
         {
             return DB::table('user')->where('user_id', $id)->update([
                 'name' => $name,
+                'role' => $role,
                 'email' => $email,
                 'phone' => $phone, 
                 'password' => md5($password),
@@ -64,6 +66,7 @@ class userModel extends Model
         {
             return DB::table('user')->where('user_id', $id)->update([
                 'name' => $name,
+                'role' => $role,
                 'email' => $email,
                 'phone' => $phone, 
                 'status' => $status == 1 ? 2 : $status,

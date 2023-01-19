@@ -28,6 +28,7 @@
                             <tr>
                                 <th style="width: 30px;">No</th>
                                 <th>Name</th>
+                                <th>Role</th>
                                 <th>Email</th>
                                 <th>Nomor Telepon</th>
                                 <th>Status</th>
@@ -72,9 +73,19 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
+                                <label class="control-label font-weight-bold">Role<label class="text-danger">*</label></label>
+                                <select class="form-control role" name="role" id="role">
+                                    <option value=""></option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Peminjam">Peminjam</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
                                 <label class="control-label font-weight-bold">Nomor Telepon<label class="text-danger">*</label></label>
                                 <input type="text" class="form-control phone" name="phone" id="phone">
                             </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="control-label font-weight-bold">Password<label class="text-danger">*</label></label>
                                 <div class="row">
@@ -128,9 +139,19 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
+                                <label class="control-label font-weight-bold">Role<label class="text-danger">*</label></label>
+                                <select class="form-control role-edit" name="role_edit" id="role_edit">
+                                    <option value=""></option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Peminjam">Peminjam</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
                                 <label class="control-label font-weight-bold">Nomor Telepon<label class="text-danger">*</label></label>
                                 <input type="text" class="form-control phone-edit" name="phone_edit" id="phone_edit">
                             </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="control-label font-weight-bold">Password</label>
                                 <div class="row">
@@ -178,6 +199,12 @@
                         <div class="form-group col-md-12">
                             <label class="control-label font-weight-bold">Email</label>
                             <input type="text" readonly class="form-control email-detail">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label font-weight-bold">Role</label>
+                            <input type="text" readonly class="form-control role-detail">
                         </div>
                     </div>
                     <div class="form-row">
@@ -232,6 +259,18 @@
     $(document).ready(function () {
         $(".phone, .phone-edit").mask("000000000000000")
 
+        $(".role").select2({
+            placeholder: "Role",
+            allowClear: true,
+            theme: "bootstrap-5"
+        })
+
+        $(".role-edit").select2({
+            placeholder: "Role",
+            allowClear: true,
+            theme: "bootstrap-5"
+        })
+
         $(".create-form").validate({
             rules: {
                 name: {
@@ -249,6 +288,9 @@
                     required: true
                 },
                 phone: {
+                    required: true
+                },
+                role: {
                     required: true
                 }
             },
@@ -269,6 +311,9 @@
                 },
                 phone: {
                     required: "Nomor Telepon Harus Diisi"
+                },
+                role: {
+                    required: "Role Harus Diisi"
                 }
             },
             // highlight: function(element) {
@@ -318,6 +363,9 @@
                     minlength: 5,
                     maxlength: 30
                 },
+                role_edit: {
+                    required: true
+                },
             },
             messages: {
                 name_edit: {
@@ -335,6 +383,9 @@
                 passwd_edit: {
                     minlength: "Password Minimal 5 Karakter",
                     maxlength: "Password Maksimal 30 Karakter"
+                },
+                role_edit: {
+                    required: "Role Harus Diisi"
                 }
             },
             // highlight: function(element) {
@@ -389,6 +440,9 @@
                 data: "name",
                 className: "text-center"
             }, {
+                data: "role",
+                className: "text-center"
+            }, {
                 data: "email",
                 className: "text-center"
             }, {
@@ -419,7 +473,7 @@
                             <i class="fa fa-ellipsis-v"></i>
                         </button>
                         <div class="dropdown-menu" style="box-shadow: 0px 2px 40px rgba(0, 0, 0, 0.2);">
-                            <button class="dropdown-item view-detail" data-id="${row.id}" data-name="${row.name}" data-email="${row.email}" data-phone="${row.phone}"><strong>Lihat</strong></button>
+                            <button class="dropdown-item view-detail" data-id="${row.id}" data-role="${row.role}" data-name="${row.name}" data-email="${row.email}" data-phone="${row.phone}"><strong>Lihat</strong></button>
                             <div class="dropdown-divider"></div>
                             <button class="dropdown-item delete-data" data-id="${row.id}" data-status="${row.status}"><strong>Ubah Status</strong></button>
                         </div>
@@ -446,6 +500,7 @@
             const data = table.row(this).data();
             $(".id").val(data.id)
             $(".status-edit").val(data.status_id)
+            $(".role-edit").val(data.role)
             $(".name-edit").val(data.name)
             $(".email-edit").val(data.email)
             $(".phone-edit").val(data.phone)
