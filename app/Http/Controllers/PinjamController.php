@@ -34,6 +34,7 @@ class PinjamController extends Controller
                         array_push($dataPinjam, [
                             "no" => $no++,
                             "id" => $data->pinjam_id,
+                            "batas_pengembalian" => $data->batas_pengembalian ? date("d/m/Y", strtotime($data->batas_pengembalian)) : "-",
                             "penerbit_name" => $data->penerbit_name,
                             "peminjam_name" => $data->peminjam_name,
                             "email" => $data->email,

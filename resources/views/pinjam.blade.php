@@ -28,8 +28,9 @@
                                 <th>Email Peminjam</th>
                                 <th>Nomor Telepon Peminjam</th>
                                 <th>Status Pinjaman</th>
-                                <th>Tanggal Dibuat</th>
-                                <th>Tanggal Diperbarui</th>
+                                <th>Batas Pengembalian</th>
+                                <th>Tanggal Peminjaman</th>
+                                <th>Tanggal Pengembalian</th>
                                 <th style="width: 50px;">Aksi</th>
                             </tr>
                         </thead>
@@ -93,6 +94,9 @@
                 render: function(data, type, row) {
                     return data === 3 ? `<label class="text-success">Sudah Mengembalikan</label>` : `<label class="text-danger">Belum Mengembalikan</label>`
                 }
+            }, {
+                data: "batas_pengembalian",
+                className: "text-center"
             }, {
                 data: "createdAt",
                 className: "text-center"
