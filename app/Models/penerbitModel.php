@@ -45,28 +45,26 @@ class penerbitModel extends Model
         ->first();
     }
 
-    public function create($name, $description)
+    public function create($name)
     {
         date_default_timezone_set('Asia/Jakarta');
         $date = date('Y-m-d h:i:s', time());
 
         return DB::table('penerbit')->insert([
             'name' => $name,
-            'description' => $description,
             'status' => 1,
             'createdAt' => $date,
             'updatedAt' => $date
         ]);
     }
 
-    public function updateData($id, $name, $description)
+    public function updateData($id, $name)
     {
         date_default_timezone_set('Asia/Jakarta');
         $date = date('Y-m-d h:i:s', time());
 
         return DB::table('penerbit')->where('penerbit_id', $id)->update([
             'name' => $name,
-            'description' => $description,
             'status' => 2,
             'updatedAt' => $date
         ]);
