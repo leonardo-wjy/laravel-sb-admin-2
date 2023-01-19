@@ -95,10 +95,25 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
+            <div class="sidebar-heading">
+                Pinjam Buku
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ url('pinjam') }}"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    <i class="fas fa-fw fa-book"></i>
+                    <span>Pinjam Buku</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
             <!-- Heading -->
             <?php if(Session::get('role') == 'Admin'){ ?>
             <div class="sidebar-heading">
-                 System Management
+                System Management
             </div>
 
             <li class="nav-item">

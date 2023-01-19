@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenerbitController;
+use App\Http\Controllers\PinjamController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -54,6 +55,10 @@ Route::controller(PenerbitController::class)->group(function () {
     Route::post('/penerbit/create', 'create');
     Route::patch('/penerbit/update/{id}', 'update');
     Route::delete('/penerbit', 'updateStatus');
+});
+
+Route::controller(PinjamController::class)->group(function () {
+    Route::get('/pinjam', 'index');
 });
 
 Route::controller(UserController::class)->group(function () {
