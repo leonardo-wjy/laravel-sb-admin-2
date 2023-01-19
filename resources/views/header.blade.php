@@ -98,8 +98,8 @@
             <!-- Heading -->
             <?php if(Session::get('role') == 'Admin'){ ?>
             <div class="sidebar-heading">
-                 System
-            </div>Management
+                 System Management
+            </div>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
