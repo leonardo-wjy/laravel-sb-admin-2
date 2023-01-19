@@ -34,6 +34,7 @@ class PinjamController extends Controller
                         array_push($dataPinjam, [
                             "no" => $no++,
                             "id" => $data->pinjam_id,
+                            "penerbit_name" => $data->penerbit_name,
                             "peminjam_name" => $data->peminjam_name,
                             "email" => $data->email,
                             "phone" => $data->phone,

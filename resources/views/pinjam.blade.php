@@ -23,6 +23,7 @@
                             <tr>
                                 <th style="width: 30px;">No</th>
                                 <th>Nama Buku</th>
+                                <th>Nama Penerbit</th>
                                 <th>Nama Peminjam</th>
                                 <th>Email Peminjam</th>
                                 <th>Nomor Telepon Peminjam</th>
@@ -73,6 +74,9 @@
                 className: "text-center actions"
             }, {
                 data: "name",
+                className: "text-center"
+            }, {
+                data: "penerbit_name",
                 className: "text-center"
             }, {
                 data: "peminjam_name",
