@@ -25,8 +25,6 @@
                                 <th>Nama Buku</th>
                                 <th>Nama Penerbit</th>
                                 <th>Nama Peminjam</th>
-                                <th>Email Peminjam</th>
-                                <th>Nomor Telepon Peminjam</th>
                                 <th>Status Pinjaman</th>
                                 <th>Batas Pengembalian</th>
                                 <th>Tanggal Peminjaman</th>
@@ -38,6 +36,72 @@
 
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Detail Modal-->
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card shadow">
+                <div class="modal-header card-header py-3 d-flex justify-content-between align-items-center">
+                    <div class="col px-0">
+                        <h6 class="font-weight-bold text-primary">Detail Peminjaman Buku</h6>
+                    </div>
+                </div>
+                <div class="modal-body card-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label font-weight-bold">Nama Buku</label>
+                            <input type="text" readonly class="form-control name-detail">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label font-weight-bold">Penerbit Buku</label>
+                            <input type="text" readonly class="form-control penerbit-detail">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label font-weight-bold">Nama Peminjam</label>
+                            <input type="text" readonly class="form-control peminjam-detail">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label font-weight-bold">Email Peminjam</label>
+                            <input type="text" readonly class="form-control email-detail">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label font-weight-bold">Nomor Telepon Peminjam</label>
+                            <input type="text" readonly class="form-control phone-detail">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label font-weight-bold">Status Pinjaman</label>
+                            <input type="text" readonly class="form-control status-detail">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label font-weight-bold">Batas Pengembalian</label>
+                            <input type="text" readonly class="form-control batas-detail">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label font-weight-bold">Tanggal Peminjaman</label>
+                            <input type="text" readonly class="form-control tgl-peminjaman-detail">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label font-weight-bold">Tanggal Pengembalian</label>
+                            <input type="text" readonly class="form-control tgl-pengembalian-detail">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-outline-danger">Batal</button>
                 </div>
             </div>
         </div>
@@ -83,12 +147,6 @@
                 data: "peminjam_name",
                 className: "text-center"
             }, {
-                data: "email",
-                className: "text-center"
-            }, {
-                data: "phone",
-                className: "text-center"
-            }, {
                 data: "status",
                 className: "text-center",
                 render: function(data, type, row) {
@@ -110,13 +168,30 @@
                 searchable: false,
                 sortable: false,
                 render: function(data, type, row) {
-                    return `
+                    return row.status == 1 ? `
                     <div class="dropleft">
                         <button type="button" class="btn btn-link" data-toggle="dropdown" aria-expanded="false" data-offset="10,20">
                             <i class="fa fa-ellipsis-v"></i>
                         </button>
                         <div class="dropdown-menu" style="box-shadow: 0px 2px 40px rgba(0, 0, 0, 0.2);">
-
+                            <button class="dropdown-item view-detail" data-id="${row.id}" data-name="${row.name}" 
+                            data-penerbit="${row.penerbit_name}" data-peminjam="${row.peminjam_name}" data-email="${row.email}" 
+                            data-phone="${row.phone}" data-status="${row.status}" data-batas="${row.batas_pengembalian}"
+                            data-tglpeminjaman="${row.createdAt}" data-tglpengembalian="${row.updatedAt}"><strong>Lihat</strong></button>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item delete-data" data-id="${row.id}"><strong>Ubah Status</strong></button>
+                        </div>
+                    </div>` :
+                    `
+                    <div class="dropleft">
+                        <button type="button" class="btn btn-link" data-toggle="dropdown" aria-expanded="false" data-offset="10,20">
+                            <i class="fa fa-ellipsis-v"></i>
+                        </button>
+                        <div class="dropdown-menu" style="box-shadow: 0px 2px 40px rgba(0, 0, 0, 0.2);">
+                            <button class="dropdown-item view-detail" data-id="${row.id}" data-name="${row.name}" 
+                            data-penerbit="${row.penerbit_name}" data-peminjam="${row.peminjam_name}" data-email="${row.email}" 
+                            data-phone="${row.phone}" data-status="${row.status}" data-batas="${row.batas_pengembalian}"
+                            data-tglpeminjaman="${row.createdAt}" data-tglpengembalian="${row.updatedAt}"><strong>Lihat</strong></button>
                         </div>
                     </div>`
                 }
@@ -131,6 +206,19 @@
         $(".dataTables_info").addClass("pt-0");
 
 
+    })
+
+    $(document).on('click', '.view-detail', function() {
+        $(".name-detail").val($(this).data('name'))
+        $(".penerbit-detail").val($(this).data('penerbit'))
+        $(".peminjam-detail").val($(this).data('peminjam'))
+        $(".email-detail").val($(this).data('email'))
+        $(".phone-detail").val($(this).data('phone'))
+        $(".status-detail").val($(this).data('status') == 3 ? 'Sudah Mengembalikan' : 'Belum Mengembalikan')
+        $(".batas-detail").val($(this).data('batas'))
+        $(".tgl-peminjaman-detail").val($(this).data('tglpeminjaman'))
+        $(".tgl-pengembalian-detail").val($(this).data('tglpengembalian'))
+        $("#detailModal").modal()
     })
 </script>
 
