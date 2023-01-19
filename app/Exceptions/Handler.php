@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Closure;
 
 class Handler extends ExceptionHandler
 {
@@ -46,5 +47,16 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function handle($request, Closure $next)
+    {
+        if(!Auth::check() && $request->route()->named('logout')) {
+        
+            $this->except[] = route('logout');
+            
+        }
+        
+        return parent::handle($request, $next);
     }
 }
