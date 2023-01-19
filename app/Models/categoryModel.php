@@ -50,7 +50,7 @@ class categoryModel extends Model
         date_default_timezone_set('Asia/Jakarta');
         $date = date('Y-m-d h:i:s', time());
 
-        return DB::table('user')->insert([
+        return DB::table('category')->insert([
             'name' => $name,
             'description' => $description,
             'status' => 1,
