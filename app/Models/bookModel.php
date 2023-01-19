@@ -124,4 +124,13 @@ class bookModel extends Model
         ->where('image','LIKE','%'.$name.'%')
         ->get();
     }
+
+    public function getDropdown()
+    {
+        return DB::table('book')
+        ->select('book_id as id', 'name')
+        ->where('status', '!=', 3)
+        ->orderBy('name', 'ASC')
+        ->get();
+    }
 }

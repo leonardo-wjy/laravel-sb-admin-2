@@ -7,6 +7,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 use Session;
 
+use App\Models\bookModel;
 use App\Models\pinjamModel;
 
 // php artisan make:controller DosenController
@@ -17,15 +18,20 @@ use App\Models\pinjamModel;
 class PinjamController extends Controller
 {
     public function __construct(){
+        $this->book = new bookModel();
         $this->pinjam = new pinjamModel();
     }
 
-    //get page user
+    //get page peminjaman buku
     public function index(request $request) 
     {
         $dataPinjam = array();
         if(Session::has('email'))
 		{
+            $dataBuku = array();
+
+            $dataBuku = $this->book->getDropdown();
+
             if (request()->ajax()) {
                 $results = $this->pinjam->getAll();
 
@@ -50,7 +56,7 @@ class PinjamController extends Controller
                 return DataTables::of($dataPinjam)->make();
             }
 
-            return view('pinjam', ['title' => 'peminjaman buku']);
+            return view('pinjam', ['title' => 'peminjaman buku', 'dataBuku' => $dataBuku]);
 		}
 		else
 		{

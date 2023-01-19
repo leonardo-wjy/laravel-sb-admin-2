@@ -14,7 +14,7 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 style="padding-top: 8px;" class="m-0 font-weight-bold text-primary float-sm-left">Daftar Peminjaman Buku</h6>
-                <a class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#createModal"><i class="fas fa-plus">&nbsp;</i>Tambah</a>
+                <a class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#createModal"><i class="fas fa-book">&nbsp;</i>Pinjam</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -36,6 +36,47 @@
 
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create Modal-->
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="card shadow">
+                <div class="modal-header card-header py-3 d-flex justify-content-between align-items-center">
+                    <div class="col px-0">
+                        <h6 class="font-weight-bold text-primary">Pinjam Buku</h6>
+                    </div>
+                </div>
+                <div class="modal-body card-body">
+                    <form class="create-form" role="form" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label font-weight-bold">Nama Buku<label class="text-danger">*</label></label>
+                                <select class="form-control buku" name="buku" id="buku">
+                                    <option value=""></option>
+                                    <?php
+                                    if (!empty($dataBuku)) {
+                                        foreach ($dataBuku as $buku) {
+                                    ?>
+                                            <option value="<?= $buku->id; ?>"><?= $buku->name; ?></option>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-outline-danger">Batal</button>
+                    <button type="button" class="btn btn-primary btn-create-form btn-submit-form">Simpan</button>
                 </div>
             </div>
         </div>
@@ -110,6 +151,11 @@
 
 <script>
     $(document).ready(function () {
+        $(".buku").select2({
+            placeholder: "Buku",
+            width: "100%",
+            theme: "bootstrap-5"
+        })
 
         // Call the dataTables jQuery plugin
         const table = $('#dataTable').DataTable({
