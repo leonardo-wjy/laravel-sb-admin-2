@@ -75,7 +75,6 @@
                             <div class="form-group col-md-6">
                                 <label class="control-label font-weight-bold">Role<label class="text-danger">*</label></label>
                                 <select class="form-control role" name="role" id="role">
-                                    <option value=""></option>
                                     <option value="Admin">Admin</option>
                                     <option value="Peminjam">Peminjam</option>
                                 </select>
@@ -141,7 +140,6 @@
                             <div class="form-group col-md-6">
                                 <label class="control-label font-weight-bold">Role<label class="text-danger">*</label></label>
                                 <select class="form-control role-edit" name="role_edit" id="role_edit">
-                                    <option value=""></option>
                                     <option value="Admin">Admin</option>
                                     <option value="Peminjam">Peminjam</option>
                                 </select>
@@ -261,13 +259,11 @@
 
         $(".role").select2({
             placeholder: "Role",
-            allowClear: true,
             theme: "bootstrap-5"
         })
 
         $(".role-edit").select2({
             placeholder: "Role",
-            allowClear: true,
             theme: "bootstrap-5"
         })
 
@@ -289,9 +285,6 @@
                 },
                 phone: {
                     required: true
-                },
-                role: {
-                    required: true
                 }
             },
             messages: {
@@ -311,9 +304,6 @@
                 },
                 phone: {
                     required: "Nomor Telepon Harus Diisi"
-                },
-                role: {
-                    required: "Role Harus Diisi"
                 }
             },
             // highlight: function(element) {
@@ -362,10 +352,7 @@
                 passwd_edit: {
                     minlength: 5,
                     maxlength: 30
-                },
-                role_edit: {
-                    required: true
-                },
+                }
             },
             messages: {
                 name_edit: {
@@ -383,9 +370,6 @@
                 passwd_edit: {
                     minlength: "Password Minimal 5 Karakter",
                     maxlength: "Password Maksimal 30 Karakter"
-                },
-                role_edit: {
-                    required: "Role Harus Diisi"
                 }
             },
             // highlight: function(element) {
@@ -626,6 +610,7 @@
 
     $(document).on('click', '.view-detail', function() {
         $(".name-detail").val($(this).data('name'))
+        $(".role-detail").val($(this).data('role'))
         $(".email-detail").val($(this).data('email'))
         $(".phone-detail").val($(this).data('phone'))
         $("#detailModal").modal()
