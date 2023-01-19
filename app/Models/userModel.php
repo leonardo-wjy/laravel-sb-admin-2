@@ -24,7 +24,8 @@ class userModel extends Model
         return DB::table('user')
 		->where('email', $email)
         ->where('password', $password)
-        ->get();
+        ->where('status', '!=', 3)
+        ->first();
     }
 
     public function create($name, $role, $email, $phone, $password)

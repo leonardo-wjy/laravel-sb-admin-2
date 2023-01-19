@@ -36,8 +36,11 @@ class LoginController extends Controller
 
         $results = $this->user->login($email, md5($password));
 
-        if(sizeof($results) != 0) {
+        if($results) {
             $request->session()->put('email', $email);
+            $request->session()->put('name', $results->name);
+            $request->session()->put('role', $results->role);
+
             $data = [
                 "status"            => true,
                 "message"    => "Login Berhasil"
