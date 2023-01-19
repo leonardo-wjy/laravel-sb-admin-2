@@ -103,7 +103,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label class="control-label font-weight-bold">Deskripsi</label>
-                                <input type="text" class="form-control" name="description_edit" id="description_edit">
+                                <input type="text" class="form-control description-edit" name="description_edit" id="description_edit">
                             </div>
                         </div>
                     </form>
