@@ -13,7 +13,7 @@
     <div class="collapse collapse-list show" id="collapseList">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 style="padding-top: 8px;" class="m-0 font-weight-bold text-primary float-sm-left">Daftar User</h6>
+                <h6 style="padding-top: 8px;" class="m-0 font-weight-bold text-primary float-sm-left">Daftar Pengguna</h6>
                 <a class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#createModal"><i class="fas fa-plus">&nbsp;</i>Tambah</a>
             </div>
             <div class="card-body">

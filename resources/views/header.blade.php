@@ -104,13 +104,13 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
                     aria-expanded="true" aria-controls="collapseOne">
                     <i class="fas fa-fw fa-book"></i>
-                    <span>Book</span>
+                    <span>Buku</span>
                 </a>
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ url('book') }}">Book</a>
-                        <a class="collapse-item" href="{{ url('category') }}">Category</a>
-                        <a class="collapse-item" href="{{ url('publisher') }}">Publisher</a>
+                        <a class="collapse-item" href="{{ url('book') }}">Daftar Buku</a>
+                        <a class="collapse-item" href="{{ url('category') }}">Kategori Buku</a>
+                        <a class="collapse-item" href="{{ url('penerbit') }}">Penerbit Buku</a>
                     </div>
                 </div>
             </li>
@@ -120,11 +120,11 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Settings</span>
+                    <span>Pengaturan</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ url('user') }}">User</a>
+                        <a class="collapse-item" href="{{ url('user') }}">Pengguna</a>
                     </div>
                 </div>
             </li>
