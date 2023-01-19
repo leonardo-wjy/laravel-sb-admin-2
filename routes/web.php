@@ -48,6 +48,13 @@ Route::controller(CategoryController::class)->group(function () {
     Route::delete('/category', 'updateStatus');
 });
 
+Route::controller(PenerbitController::class)->group(function () {
+    Route::get('/penerbit', 'index');
+    Route::post('/penerbit/create', 'create');
+    Route::patch('/penerbit/update/{id}', 'update');
+    Route::delete('/penerbit', 'updateStatus');
+});
+
 Route::controller(UserController::class)->group(function () {
     Route::get('/user', 'index');
     Route::post('/user/create', 'create');
