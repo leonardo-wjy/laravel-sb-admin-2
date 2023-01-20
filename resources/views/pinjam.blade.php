@@ -283,7 +283,7 @@
                             data-phone="${row.phone}" data-status="${row.status}" data-batas="${row.batas_pengembalian}"
                             data-tglpeminjaman="${row.createdAt}" data-tglpengembalian="${row.updatedAt}"><strong>Lihat</strong></button>
                             <div class="dropdown-divider"></div>
-                            <button class="dropdown-item delete-data" data-id="${row.id}"><strong>Ubah Status</strong></button>
+                            <button class="dropdown-item delete-data" data-id="${row.id}" data-bookid="${row.book_id}"><strong>Ubah Status</strong></button>
                         </div>
                     </div>` :
                     `
@@ -427,6 +427,7 @@
                     cache: false,
                     data: {
                         "id": $(this).data('id'),
+                        "book_id": $(this).data('bookid'),
                         "_token": $("meta[name='csrf-token']").attr("content")
                     },
                     success: function(response) {
