@@ -49,20 +49,20 @@
     <thead>
       <tr style="font-size: 18px; text-align: center; padding: 5px 0;">
         <th style="width: 30px !important;border: 1px solid black;">No</th>
-        <th style="width: 30px !important;border: 1px solid black;">Nama Buku</th>
+        <th style="width: 30px !important;border: 1px solid black;">Nama Buku (Penerbit / Tahun)</th>
+        <th style="width: 30px !important;border: 1px solid black;">Jumlah Buku</th>
+        <th style="width: 30px !important;border: 1px solid black;">Jumlah Pinjaman</th>
         <th style="width: 30px !important;border: 1px solid black;">Kategori</th>
-        <th style="width: 30px !important;border: 1px solid black;">Nama Penerbit</th>
-        <th style="width: 30px !important;border: 1px solid black;">Tahun Terbit</th>
       </tr>
     </thead>
     <tbody>
         @foreach($buku as $p)
         <tr style="text-align: center;">
             <td style="border: 1px solid black;" width="30px">{{$p['no']}}</td>
-            <td style="border: 1px solid black;" width="30px">{{$p['name']}}</td>
+            <td style="border: 1px solid black;" width="30px">{{$p['name']}} ({{$p['penerbit_name']}}/{{$p['tahun_terbit']}})</td>
+            <td style="border: 1px solid black;" width="30px">{{$p['jumlah'].' Unit'}}</td>
+            <td style="border: 1px solid black;" width="30px">{{$p['jumlah_dipinjam'].' Unit'}}</td>
             <td style="border: 1px solid black;" width="30px">{{$p['category_name']}}</td>
-            <td style="border: 1px solid black;" width="30px">{{$p['penerbit_name']}}</td>
-            <td style="border: 1px solid black;" width="30px">{{$p['tahun_terbit']}}</td>
         </tr>
         @endforeach
     </tbody>

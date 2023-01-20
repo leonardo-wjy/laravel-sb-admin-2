@@ -61,6 +61,8 @@
                                 <th>Nama Buku</th>
                                 <th>Cover Buku</th>
                                 <th>Kategori</th>
+                                <th>Jumlah Buku</th>
+                                <th>Jumlah Pinjaman</th>
                                 <th>Nama Penerbit</th>
                                 <th>Tahun Terbit</th>
                                 <th>Tanggal Dibuat</th>
@@ -522,6 +524,22 @@
             }, {
                 data: "category_name",
                 className: "text-center"
+            }, {
+                data: "jumlah",
+                className: "text-center",
+                render: function(data, type, row) {
+                    return `
+                    <label>`+ data +` Unit
+                    </label>`
+                }
+            }, {
+                data: "jumlah_dipinjam",
+                className: "text-center",
+                render: function(data, type, row) {
+                    return `
+                    <label>`+ data +` Unit
+                    </label>`
+                }
             }, {
                 data: "penerbit_name",
                 className: "text-center"
