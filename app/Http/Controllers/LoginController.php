@@ -37,6 +37,7 @@ class LoginController extends Controller
         $results = $this->user->login($email, md5($password));
 
         if($results) {
+            $request->session()->put('user_id', $results->user_id);
             $request->session()->put('email', $email);
             $request->session()->put('name', $results->name);
             $request->session()->put('role', $results->role);

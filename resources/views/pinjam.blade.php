@@ -14,7 +14,9 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 style="padding-top: 8px;" class="m-0 font-weight-bold text-primary float-sm-left">Daftar Peminjaman Buku</h6>
+                <?php if(Session::get('role') != 'Admin'){ ?>
                 <a class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#createModal"><i class="fas fa-book">&nbsp;</i>Pinjam</a>
+                <?php } ?>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -269,7 +271,8 @@
                 searchable: false,
                 sortable: false,
                 render: function(data, type, row) {
-                    return row.status == 1 ? `
+                    let role = '<?= Session::get('role') ?>';
+                    return row.status == 1 && role == 'Admin' ? `
                     <div class="dropleft">
                         <button type="button" class="btn btn-link" data-toggle="dropdown" aria-expanded="false" data-offset="10,20">
                             <i class="fa fa-ellipsis-v"></i>

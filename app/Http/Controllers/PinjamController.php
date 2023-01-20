@@ -69,7 +69,7 @@ class PinjamController extends Controller
     {
         $buku = $request->input('buku');
 
-        $user_id = 6;
+        $user_id = Session::get('user_id');
 
         $batas_pengembalian = $request->input('batas_pengembalian');
 
