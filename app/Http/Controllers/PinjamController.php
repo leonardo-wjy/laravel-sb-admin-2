@@ -141,7 +141,7 @@ class PinjamController extends Controller
         $book_id = $request->input('book_id');
 
         // check quote of book
-        $results = $this->book->getById($buku);
+        $results = $this->book->getById($book_id);
 
         if($results)
         {
