@@ -59,14 +59,14 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label class="control-label font-weight-bold">Nama Buku<label class="text-danger">*</label></label>
+                                <label class="control-label font-weight-bold">Nama Buku (Penerbit / Tahun)<label class="text-danger">*</label></label>
                                 <select class="form-control buku" name="buku" id="buku">
                                     <option value=""></option>
                                     <?php
                                     if (!empty($dataBuku)) {
                                         foreach ($dataBuku as $buku) {
                                     ?>
-                                            <option value="<?= $buku->id; ?>"><?= $buku->name; ?></option>
+                                            <option value="<?= $buku->id; ?>"><?= $buku->name; ?> (<?= $buku->penerbit_name; ?>/<?= $buku->tahun_terbit; ?>)</option>
                                     <?php
                                         }
                                     }

@@ -73,20 +73,50 @@ class PinjamController extends Controller
 
         $batas_pengembalian = $request->input('batas_pengembalian');
 
-        $insert = $this->pinjam->create($user_id, $buku, $batas_pengembalian);
-        if($insert)
+        // check quote of book
+        $results = $this->book->getById($buku);
+
+        if($results)
         {
-            $data = [
-                "status"            => true,
-                "message"    => "Berhasil Pinjam Buku"
-            ];
-            echo json_encode($data);
+            //check stock buku not null
+            if($results->jumlah !== 0)
+            {
+                // increase jumlah pinjam and decrease jumlah stok buku
+                $update = $this->book->updateJumlah($buku, ($results->jumlah - 1), ($results->jumlah_dipinjam + 1));
+
+                //create pinjam
+                $insert = $this->pinjam->create($user_id, $buku, $batas_pengembalian);
+                if($insert)
+                {
+                    $data = [
+                        "status"            => true,
+                        "message"    => "Berhasil Pinjam Buku"
+                    ];
+                    echo json_encode($data);
+                }
+                else
+                {
+                    $data = [
+                        "status"            => false,
+                        "message"    => "Gagal Pinjam Buku"
+                    ];
+                    echo json_encode($data);
+                }
+            }
+            else
+            {
+                $data = [
+                    "status"            => false,
+                    "message"    => "Stok Buku Tidak Mencukupi"
+                ];
+                echo json_encode($data);
+            }
         }
         else
         {
             $data = [
                 "status"            => false,
-                "message"    => "Gagal Pinjam Buku"
+                "message"    => "Buku Tidak Ditemukan"
             ];
             echo json_encode($data);
         }

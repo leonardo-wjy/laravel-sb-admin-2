@@ -60,6 +60,14 @@ class bookModel extends Model
         }
     }
 
+    public function getById($id)
+    {
+        return DB::table('book')
+		->where('book_id', $id)
+        ->where('status', '!=', 3)
+        ->first();
+    }
+
     public function create($name, $kategori, $penerbit, $tahun, $file_name, $jumlah)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -121,6 +129,19 @@ class bookModel extends Model
         ]);
     }
 
+    public function updateJumlah($id, $jumlah, $jumlah_dipinjam)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d h:i:s', time());
+
+        return DB::table('book')->where('book_id', $id)->update([
+            'status' => 2,
+            'jumlah' => $jumlah,
+            'jumlah_dipinjam' => $jumlah_dipinjam,
+            'updatedAt' => $date
+        ]);
+    }
+
     public function checkFileName($name)
     {
         return DB::table('book')
@@ -131,9 +152,11 @@ class bookModel extends Model
     public function getDropdown()
     {
         return DB::table('book')
-        ->select('book_id as id', 'name')
-        ->where('status', '!=', 3)
-        ->orderBy('name', 'ASC')
+        ->select('book.book_id as id', 'book.name', 'penerbit.name as penerbit_name', 'book.tahun_terbit')
+        ->join('penerbit', 'book.penerbit_id', '=', 'penerbit.penerbit_id')
+        ->where('book.status', '!=', 3)
+        ->where('book.jumlah', '!=', 0)
+        ->orderBy('book.name', 'ASC')
         ->get();
     }
 }
