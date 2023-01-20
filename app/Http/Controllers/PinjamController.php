@@ -69,11 +69,9 @@ class PinjamController extends Controller
     {
         $buku = $request->input('buku');
 
-        $waktu = $request->input('waktu');
-
         $user_id = 6;
 
-        $batas_pengembalian = "2022-01-25 12:00:00";
+        $batas_pengembalian = $request->input('batas_pengembalian');
 
         $insert = $this->pinjam->create($user_id, $buku, $batas_pengembalian);
         if($insert)

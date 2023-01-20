@@ -181,6 +181,37 @@
             theme: "bootstrap-5"
         })
 
+        $(".create-form").validate({
+            rules: {
+                buku: {
+                    required: true
+                },
+                waktu: {
+                    required: true
+                }
+            },
+            messages: {
+                buku: {
+                    required: "Buku Harus Diisi"
+                },
+                waktu: {
+                    required: "Lama Peminjaman Harus Diisi"
+                }
+            },
+            //add
+            errorElement: 'span',
+            errorClass: 'text-danger',
+            errorPlacement: function(error, element) {
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    element = $("#select2-" + elem.attr("id") + "-container").parent(); 
+                    error.insertAfter(element);
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+        });
+
         // Call the dataTables jQuery plugin
         const table = $('#dataTable').DataTable({
             dom: "<'row'<'col-sm-12 col-md-6'><'col-sm-12 col-md-6'f>>t<'row align-items-start'<'col-md-4'l><'col-md-4 text-center'i><'col-md-4'p>>",
@@ -289,12 +320,40 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         setLoading()
+
+                        var today = new Date();
+                        var dd = String(today.getDate()).padStart(2, '0');
+                        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                        var yyyy = today.getFullYear();
+
+                        var seconds = today.getSeconds();
+                        var minutes = today.getMinutes();
+                        var hour = today.getHours();
+
+
+                        var date = new Date(yyyy + '-' + mm + '-' + dd);       
+                        /* Add nr of days*/
+                        date.setDate(date.getDate() + parseInt($(".waktu").val()));
+                        var year = date.getFullYear();
+
+                        var month = (1 + date.getMonth()).toString();
+                        month = month.length > 1 ? month : '0' + month;
+
+                        var day = date.getDate().toString();
+                        day = day.length > 1 ? day : '0' + day;
+
+                        let data = new FormData(document.querySelector(".create-form"))
+                        data.append("buku", $(".buku option:selected").val())
+                        data.append("batas_pengembalian", year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds)
+
                         $.ajax({
                             url : "{{ url('pinjam/create') }}",
                             type: "POST",
-                            dataType: "json",
                             cache: false,
-                            data: $(".create-form").serialize(),
+                            data: data,
+                            dataType: "json",
+                            processData: false,
+                            contentType: false,
                             success: function(response) {
                                 if (response.status) {
                                     Swal.fire({
