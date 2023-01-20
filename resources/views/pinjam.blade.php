@@ -34,6 +34,12 @@
                             ?>
                         </select>
                     </div>
+                    <div class="form-group col-md-3">
+                        <select class="form-control filter-status">
+                            <option value="3">Sudah Mengembalikan</option>
+                            <option value="1">Belum Mengembalikan</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="table-responsive">
                     <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -193,6 +199,13 @@
             width: "100%",
             theme: "bootstrap-5"
         })
+
+        $(".filter-status").select2({
+            placeholder: "Filter: Status",
+            allowClear: true,
+            width: "100%",
+            theme: "bootstrap-5"
+        })
         
         $(".buku").select2({
             placeholder: "Buku",
@@ -248,6 +261,7 @@
                 dataSrc: "data",
                 data: function(data) {
                     data.buku = $(".filter-buku option:selected").val();
+                    data.status = $(".filter-status option:selected").val();
                 },
                 onError: function(err) {
                     alert("Error")
@@ -332,7 +346,7 @@
 
         $(".dataTables_info").addClass("pt-0");
 
-        $('.filter-buku').on('change', function() {
+        $('.filter-buku, .filter-status').on('change', function() {
             table.ajax.reload();
         })
 

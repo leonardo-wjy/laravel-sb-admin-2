@@ -36,8 +36,9 @@ class PinjamController extends Controller
 
             if (request()->ajax()) {
                 $buku = $request->input('buku');
+                $status = $request->input('status');
 
-                $results = $this->pinjam->getAll($buku);
+                $results = $this->pinjam->getAll($buku, $status);
 
                 $no = 1;
                 foreach ($results as $data) {

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class pinjamModel extends Model
 {
-    public function getAll($buku)
+    public function getAll($buku, $status)
     {
         return DB::table('pinjam')
         ->select('pinjam.pinjam_id', 'pinjam.book_id', 'pinjam.batas_pengembalian', 'pinjam.status', 'pinjam.createdAt', 'pinjam.updatedAt'
@@ -17,6 +17,7 @@ class pinjamModel extends Model
         ->join('user', 'pinjam.user_id', '=', 'user.user_id')
         ->join('penerbit', 'book.penerbit_id', '=', 'penerbit.penerbit_id')
         ->where('pinjam.book_id','LIKE','%'.$buku.'%')
+        ->where('pinjam.status','LIKE','%'.$status.'%')
         ->orderBy('pinjam.batas_pengembalian', 'DESC')
         ->get();
     }
