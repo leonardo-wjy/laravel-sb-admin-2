@@ -36,6 +36,7 @@
                     </div>
                     <div class="form-group col-md-3">
                         <select class="form-control filter-status">
+                            <option value=""></option>
                             <option value="3">Sudah Mengembalikan</option>
                             <option value="1">Belum Mengembalikan</option>
                         </select>
