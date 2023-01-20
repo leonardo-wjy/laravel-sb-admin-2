@@ -143,7 +143,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label class="control-label font-weight-bold">Jumlah Buku<label class="text-danger">*</label></label>
-                                <input class="form-control jumlah" type="number" onkeypress="return event.charCode != 45" min="0" max="100" name="jumlah" id="jumlah">
+                                <input class="form-control jumlah" type="number" onkeypress="return event.charCode != 45 && (event.charCode >= 48 && event.charCode <= 57)" min="0" max="100" name="jumlah" id="jumlah">
                             </div>
                         </div>
                         <div class="form-row">
@@ -229,7 +229,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label class="control-label font-weight-bold">Jumlah Saat Ini</label>
-                                <input class="form-control jumlah-lama" type="text" readonly onkeypress="return event.charCode != 45" min="0" max="100" name="jumlah_lama" id="jumlah_lama">
+                                <input class="form-control jumlah-lama" type="text" readonly name="jumlah_lama" id="jumlah_lama">
                             </div>
                         </div>
                         <div class="form-row">
@@ -241,7 +241,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label class="control-label font-weight-bold">Tambah Jumlah</label>
-                                <input class="form-control jumlah-edit" type="number" onkeypress="return event.charCode != 45" min="0" max="100" name="jumlah_edit" id="jumlah_edit">
+                                <input class="form-control jumlah-edit" type="number" onkeypress="return event.charCode != 45 && (event.charCode >= 48 && event.charCode <= 57)" name="jumlah_edit" id="jumlah_edit">
                             </div>
                         </div>
                         <div class="form-row">
