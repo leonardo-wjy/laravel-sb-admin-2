@@ -142,6 +142,12 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
+                                <label class="control-label font-weight-bold">Jumlah Buku<label class="text-danger">*</label></label>
+                                <input class="form-control jumlah" type="number" onkeypress="return event.charCode != 45" min="0" max="100" name="jumlah" id="jumlah">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
                                 <label class="control-label font-weight-bold">Cover Buku</label>
                                 <div>
                                     <img width="200" style="display: none;" id="preview_photo" height="200" src="" alt="" />
@@ -222,6 +228,24 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
+                                <label class="control-label font-weight-bold">Jumlah Saat Ini</label>
+                                <input class="form-control jumlah-lama" type="text" readonly onkeypress="return event.charCode != 45" min="0" max="100" name="jumlah_lama" id="jumlah_lama">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label font-weight-bold">Jumlah Dipinjam</label>
+                                <input type="text" readonly class="form-control jumlah-pinjam-edit">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label font-weight-bold">Tambah Jumlah</label>
+                                <input class="form-control jumlah-edit" type="number" onkeypress="return event.charCode != 45" min="0" max="100" name="jumlah_edit" id="jumlah_edit">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
                                 <label class="control-label font-weight-bold">Cover Buku</label>
                                 <div>
                                     <img width="200" style="display: none;" id="preview_photo_edit" height="200" src="" alt="" />
@@ -267,6 +291,18 @@
                         <div class="form-group col-md-12">
                             <label class="control-label font-weight-bold">Nama Penerbit</label>
                             <input type="text" readonly class="form-control name-penerbit-detail">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label font-weight-bold">Jumlah Buku</label>
+                            <input type="text" readonly class="form-control jumlah-buku-detail">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label font-weight-bold">Jumlah Dipinjam</label>
+                            <input type="text" readonly class="form-control jumlah-pinjam-detail">
                         </div>
                     </div>
                     <div class="form-row">
@@ -386,6 +422,10 @@
                 },
                 tahun: {
                     required: true
+                },
+                jumlah: {
+                    required: true,
+                    min: 0
                 }
             },
             messages: {
@@ -402,6 +442,10 @@
                 },
                 tahun: {
                     required: "Tahun Terbit Harus Diisi"
+                },
+                jumlah: {
+                    required: "Jumlah Buku Harus Diisi",
+                    min: "Jumlah Buku Minimal 0"
                 }
             },
             // highlight: function(element) {
@@ -441,6 +485,9 @@
                 },
                 tahun_edit: {
                     required: true
+                },
+                jumlah_edit: {
+                    min: 0
                 }
             },
             messages: {
@@ -457,6 +504,9 @@
                 },
                 tahun_edit: {
                     required: "Tahun Terbit Harus Diisi"
+                },
+                jumlah_edit: {
+                    min: "Jumlah Buku Minimal 0"
                 }
             },
             // highlight: function(element) {
@@ -572,6 +622,8 @@
                                     data-penerbit="${row.penerbit_name}"
                                     data-tahun="${row.tahun_terbit}"
                                     data-image="{{URL::asset("`+ row.image +`")}}"
+                                    data-jumlah="${row.jumlah}"
+                                    data-jumlahdipinjam="${row.jumlah_dipinjam}"
                                 ><strong>Lihat</strong></button>
                                 <div class="dropdown-divider"></div>
                                 <button class="dropdown-item delete-data" data-id="${row.id}"><strong>Hapus</strong></button>
@@ -591,6 +643,8 @@
                                     data-penerbit="${row.penerbit_name}"
                                     data-tahun="${row.tahun_terbit}"
                                     data-image=""
+                                    data-jumlah="${row.jumlah}"
+                                    data-jumlahdipinjam="${row.jumlah_dipinjam}"
                                 ><strong>Lihat</strong></button>
                                 <div class="dropdown-divider"></div>
                                 <button class="dropdown-item delete-data" data-id="${row.id}"><strong>Hapus</strong></button>
@@ -615,7 +669,9 @@
             $(".name-edit").val(data.name)
             $(".kategori-edit").val(data.category_id).trigger('change')
             $(".penerbit-edit").val(data.penerbit_id).trigger('change')
+            $(".jumlah-pinjam-edit").val(data.jumlah_dipinjam)
             $(".tahun-edit").val(data.tahun_terbit)
+            $(".jumlah-lama").val(data.jumlah)
             document.getElementById("preview_photo_edit").style = data.image ? "" : "display: none;";
             document.getElementById("preview_photo_edit").src = `{{URL::asset("`+ data.image +`")}}`;
             $("#editModal").modal()
@@ -760,6 +816,8 @@
         $(".name-penerbit-detail").val($(this).data('penerbit'))
         $(".tahun-terbit-detail").val($(this).data('tahun'))
         $(".image-detail").attr("src", $(this).data('image'));
+        $(".jumlah-buku-detail").val($(this).data('jumlah'))
+        $(".jumlah-pinjam-detail").val($(this).data('jumlahdipinjam'))
         $(this).data('image') ? $(".tab-image-detail").css("display",  "") : $(".tab-image-detail").css("display",  "none");
         $("#detailModal").modal()
     })

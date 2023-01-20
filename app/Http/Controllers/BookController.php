@@ -204,6 +204,7 @@ class BookController extends Controller
         $kategori =implode(",", $request->input('kategori'));
         $penerbit = $request->input('penerbit');
         $tahun = $request->input('tahun');
+        $jumlah = $request->input('jumlah');
         $image = $request->file('image');
 
         // // nama file
@@ -243,7 +244,7 @@ class BookController extends Controller
             } 
         }
 
-        $insert = $this->book->create($name, $kategori, $penerbit, $tahun, $name_file);
+        $insert = $this->book->create($name, $kategori, $penerbit, $tahun, $name_file, $jumlah);
         if($insert)
         {
             if($image)
@@ -275,6 +276,8 @@ class BookController extends Controller
         $kategori =implode(",", $request->input('kategori_edit'));
         $penerbit = $request->input('penerbit_edit');
         $tahun = $request->input('tahun_edit');
+        $jumlah = $request->input('jumlah_edit') ? $request->input('jumlah_edit') : 0;
+        $jumlah_lama = $request->input('jumlah_lama');
         $image = $request->file('image_edit');
 
       	// isi dengan nama folder tempat kemana file diupload
@@ -295,7 +298,7 @@ class BookController extends Controller
             } 
         }
 
-        $update = $this->book->updateData($id, $name, $kategori, $penerbit, $tahun, $name_file);
+        $update = $this->book->updateData($id, $name, $kategori, $penerbit, $tahun, $name_file, ($jumlah + $jumlah_lama));
         if($update)
         {
             if($image)

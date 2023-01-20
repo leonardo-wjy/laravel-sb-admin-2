@@ -60,7 +60,7 @@ class bookModel extends Model
         }
     }
 
-    public function create($name, $kategori, $penerbit, $tahun, $file_name)
+    public function create($name, $kategori, $penerbit, $tahun, $file_name, $jumlah)
     {
         date_default_timezone_set('Asia/Jakarta');
         $date = date('Y-m-d h:i:s', time());
@@ -71,13 +71,14 @@ class bookModel extends Model
             'penerbit_id' => $penerbit,
             'tahun_terbit' => $tahun,
             'image' => $file_name,
+            'jumlah' => $jumlah,
             'status' => 1,
             'createdAt' => $date,
             'updatedAt' => $date
         ]);
     }
 
-    public function updateData($id, $name, $kategori, $penerbit, $tahun, $file_name)
+    public function updateData($id, $name, $kategori, $penerbit, $tahun, $file_name, $jumlah)
     {
         date_default_timezone_set('Asia/Jakarta');
         $date = date('Y-m-d h:i:s', time());
@@ -90,6 +91,7 @@ class bookModel extends Model
                 'penerbit_id' => $penerbit,
                 'tahun_terbit' => $tahun,
                 'image' => $file_name,
+                'jumlah' => $jumlah,
                 'status' => 2,
                 'updatedAt' => $date
             ]);
@@ -101,6 +103,7 @@ class bookModel extends Model
                 'category_id' => $kategori,
                 'penerbit_id' => $penerbit,
                 'tahun_terbit' => $tahun,
+                'jumlah' => $jumlah,
                 'status' => 2,
                 'updatedAt' => $date
             ]);
