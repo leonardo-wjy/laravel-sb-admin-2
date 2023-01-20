@@ -138,10 +138,10 @@ class PinjamController extends Controller
 	public function updateStatus(Request $request)
     {
         $id = $request->input('id');
-        $book_id = $request->input('book_id');
+        $buku = $request->input('book_id');
 
         // check quote of book
-        $results = $this->book->getById($book_id);
+        $results = $this->book->getById($buku);
 
         if($results)
         {
