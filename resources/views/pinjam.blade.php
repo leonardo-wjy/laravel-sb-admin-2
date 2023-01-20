@@ -72,6 +72,24 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label font-weight-bold">Lama Peminjman<label class="text-danger">*</label></label>
+                                <select class="form-control waktu" name="waktu" id="waktu">
+                                    <option value=""></option>
+                                    <option value="1">1 Hari</option>
+                                    <option value="2">2 Hari</option>
+                                    <option value="3">3 Hari</option>
+                                    <option value="4">4 Hari</option>
+                                    <option value="5">5 Hari</option>
+                                    <option value="6">6 Hari</option>
+                                    <option value="7">7 Hari</option>
+                                    <option value="8">8 Hari</option>
+                                    <option value="9">9 Hari</option>
+                                    <option value="10">10 Hari</option>
+                                </select>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="card-footer modal-footer">
@@ -153,6 +171,12 @@
     $(document).ready(function () {
         $(".buku").select2({
             placeholder: "Buku",
+            width: "100%",
+            theme: "bootstrap-5"
+        })
+
+        $(".waktu").select2({
+            placeholder: "Lama Peminjaman",
             width: "100%",
             theme: "bootstrap-5"
         })
@@ -251,7 +275,62 @@
 
         $(".dataTables_info").addClass("pt-0");
 
-
+        $(".btn-create-form").click(function() {
+            if ($(".create-form").valid()) {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Simpan Data?',
+                    confirmButtonColor: '#4e73df',
+                    cancelButtonColor: '#d33',
+                    showCancelButton: true,
+                    reverseButtons: true,
+                    confirmButtonText: 'Simpan',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        setLoading()
+                        $.ajax({
+                            url : "{{ url('pinjam/create') }}",
+                            type: "POST",
+                            dataType: "json",
+                            cache: false,
+                            data: $(".create-form").serialize(),
+                            success: function(response) {
+                                if (response.status) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: response.message,
+                                        confirmButtonColor: '#4e73df',
+                                    }).then((responseSuccess) => {
+                                        if (responseSuccess.isConfirmed) {
+                                            stopLoading()
+                                            table.ajax.reload();
+                                            $(".create-form")[0].reset();
+                                            $("#createModal").modal('toggle');
+                                        }
+                                    })
+                                } else {
+                                    stopLoading()
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: response.message,
+                                        confirmButtonColor: '#4e73df',
+                                    })
+                                }
+                            },
+                            onError: function(err) {
+                                stopLoading()
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Pinjam Buku',
+                                    confirmButtonColor: '#4e73df',
+                                })
+                            }
+                        })
+                    }
+                })
+            }
+        })
     })
 
     $(document).on('click', '.view-detail', function() {

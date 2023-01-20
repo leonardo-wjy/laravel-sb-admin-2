@@ -59,6 +59,7 @@ Route::controller(PenerbitController::class)->group(function () {
 
 Route::controller(PinjamController::class)->group(function () {
     Route::get('/pinjam', 'index');
+    Route::post('/pinjam/create', 'create');
     Route::post('/pinjam/update-status', 'updateStatus');
 });
 

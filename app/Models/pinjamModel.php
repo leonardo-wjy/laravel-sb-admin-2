@@ -20,6 +20,21 @@ class pinjamModel extends Model
         ->get();
     }
 
+    public function create($user_id, $buku, $batas_pengembalian)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d h:i:s', time());
+
+        return DB::table('pinjam')->insert([
+            'user_id' => $user_id,
+            'book_id' => $buku,
+            'batas_pengembalian' => $batas_pengembalian,
+            'status' => 1,
+            'createdAt' => $date,
+            'updatedAt' => ''
+        ]);
+    }
+
     public function updateStatus($id)
     {
         date_default_timezone_set('Asia/Jakarta');

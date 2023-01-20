@@ -374,7 +374,7 @@
                 name: {
                     required: true,
                     minlength: 4,
-                    maxlength: 500
+                    maxlength: 1000
                 },
                 "kategori[]": {
                     required: true
@@ -390,7 +390,7 @@
                 name: {
                     required: "Nama Harus Diisi",
                     minlength: "Nama Minimal 4 Karakter",
-                    maxlength: "Nama Maksimal 500 Karakter"
+                    maxlength: "Nama Maksimal 1000 Karakter"
                 },
                 "kategori[]": {
                     required: "Kategori Harus Diisi"
@@ -399,6 +399,61 @@
                     required: "Penerbit Harus Diisi"
                 },
                 tahun: {
+                    required: "Tahun Terbit Harus Diisi"
+                }
+            },
+            // highlight: function(element) {
+            //     $(element).addClass("is-invalid").removeClass("is-valid");
+            // },
+            // unhighlight: function(element) {
+            //     $(element).addClass("is-valid").removeClass("is-invalid");
+            // },
+
+            //add
+            errorElement: 'span',
+            errorClass: 'text-danger',
+            errorPlacement: function(error, element) {
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    element = $("#select2-" + elem.attr("id") + "-container").parent(); 
+                    error.insertAfter(element);
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+            // end add
+        });
+
+        $(".update-form").validate({
+            rules: {
+                name_edit: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 1000
+                },
+                "kategori_edit[]": {
+                    required: true
+                },
+                penerbit_edit: {
+                    required: true
+                },
+                tahun_edit: {
+                    required: true
+                }
+            },
+            messages: {
+                name_edit: {
+                    required: "Nama Harus Diisi",
+                    minlength: "Nama Minimal 4 Karakter",
+                    maxlength: "Nama Maksimal 1000 Karakter"
+                },
+                "kategori_edit[]": {
+                    required: "Kategori Harus Diisi"
+                },
+                penerbit_edit: {
+                    required: "Penerbit Harus Diisi"
+                },
+                tahun_edit: {
                     required: "Tahun Terbit Harus Diisi"
                 }
             },

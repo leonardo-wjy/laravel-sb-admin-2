@@ -64,6 +64,36 @@ class PinjamController extends Controller
 		}
     }
 
+    //create peminjaman buku
+	public function create(Request $request)
+    {
+        $buku = $request->input('buku');
+
+        $waktu = $request->input('waktu');
+
+        $user_id = 6;
+
+        $batas_pengembalian = "2022-01-25 12:00:00";
+
+        $insert = $this->pinjam->create($user_id, $buku, $batas_pengembalian);
+        if($insert)
+        {
+            $data = [
+                "status"            => true,
+                "message"    => "Berhasil Pinjam Buku"
+            ];
+            echo json_encode($data);
+        }
+        else
+        {
+            $data = [
+                "status"            => false,
+                "message"    => "Gagal Pinjam Buku"
+            ];
+            echo json_encode($data);
+        }
+    }
+
     //update status peminjman buku
 	public function updateStatus(Request $request)
     {
