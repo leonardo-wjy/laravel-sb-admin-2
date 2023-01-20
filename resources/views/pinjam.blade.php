@@ -19,6 +19,22 @@
                 <?php } ?>
             </div>
             <div class="card-body">
+                <div class="form-row justify-content-end mx-0">
+                    <div class="form-group col-md-3">
+                        <select class="form-control filter-buku">
+                            <option value=""></option>
+                            <?php
+                            if (!empty($dataBukuAll)) {
+                                foreach ($dataBukuAll as $buku_all) {
+                            ?>
+                                    <option value="<?= $buku_all->id; ?>"><?= $buku_all->name; ?></option>
+                            <?php
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
                 <div class="table-responsive">
                     <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
@@ -171,6 +187,13 @@
 
 <script>
     $(document).ready(function () {
+        $(".filter-buku").select2({
+            placeholder: "Filter: Buku",
+            allowClear: true,
+            width: "100%",
+            theme: "bootstrap-5"
+        })
+        
         $(".buku").select2({
             placeholder: "Buku",
             width: "100%",
@@ -224,7 +247,7 @@
                 url: '{{ url()->current() }}',
                 dataSrc: "data",
                 data: function(data) {
-
+                    data.buku = $(".filter-buku option:selected").val();
                 },
                 onError: function(err) {
                     alert("Error")
@@ -308,6 +331,10 @@
         });
 
         $(".dataTables_info").addClass("pt-0");
+
+        $('.filter-buku').on('change', function() {
+            table.ajax.reload();
+        })
 
         $(".btn-create-form").click(function() {
             if ($(".create-form").valid()) {

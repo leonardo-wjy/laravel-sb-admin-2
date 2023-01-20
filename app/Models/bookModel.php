@@ -155,6 +155,16 @@ class bookModel extends Model
         ->select('book.book_id as id', 'book.name', 'penerbit.name as penerbit_name', 'book.tahun_terbit')
         ->join('penerbit', 'book.penerbit_id', '=', 'penerbit.penerbit_id')
         ->where('book.status', '!=', 3)
+        ->orderBy('book.name', 'ASC')
+        ->get();
+    }
+
+    public function getDropdownAvailableStock()
+    {
+        return DB::table('book')
+        ->select('book.book_id as id', 'book.name', 'penerbit.name as penerbit_name', 'book.tahun_terbit')
+        ->join('penerbit', 'book.penerbit_id', '=', 'penerbit.penerbit_id')
+        ->where('book.status', '!=', 3)
         ->where('book.jumlah', '!=', 0)
         ->orderBy('book.name', 'ASC')
         ->get();

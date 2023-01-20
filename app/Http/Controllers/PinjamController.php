@@ -29,11 +29,15 @@ class PinjamController extends Controller
         if(Session::has('email'))
 		{
             $dataBuku = array();
+            $dataBukuAll = array();
 
-            $dataBuku = $this->book->getDropdown();
+            $dataBuku = $this->book->getDropdownAvailableStock();
+            $dataBukuAll = $this->book->getDropdown();
 
             if (request()->ajax()) {
-                $results = $this->pinjam->getAll();
+                $buku = $request->input('buku');
+
+                $results = $this->pinjam->getAll($buku);
 
                 $no = 1;
                 foreach ($results as $data) {
@@ -57,7 +61,7 @@ class PinjamController extends Controller
                 return DataTables::of($dataPinjam)->make();
             }
 
-            return view('pinjam', ['title' => 'peminjaman buku', 'dataBuku' => $dataBuku]);
+            return view('pinjam', ['title' => 'peminjaman buku', 'dataBukuAll' => $dataBukuAll, 'dataBuku' => $dataBuku]);
 		}
 		else
 		{
