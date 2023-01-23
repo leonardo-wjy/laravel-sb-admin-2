@@ -35,14 +35,29 @@ class PinjamController extends Controller
             $dataBukuAll = $this->book->getDropdown();
 
             if (request()->ajax()) {
+                $tgl_awal = "";
+                $tgl_akhir = "";
+
+                if($request->input('tgl_awal'))
+                {
+                    $tgl_awal = date("Y-m-d", strtotime($request->input('tgl_awal'))) . " 00:00:00";
+                }
+
+                if($request->input('tgl_akhir'))
+                {
+                    $tgl_akhir = date("Y-m-d", strtotime($request->input('tgl_akhir'))) . " 24:00:00";
+                }
+
                 $buku = $request->input('buku');
                 $status = $request->input('status');
 
-                $results = $this->pinjam->getAll($buku, $status);
+                $results = $this->pinjam->getAll($tgl_awal, $tgl_akhir, $buku, $status);
 
                 $no = 1;
                 foreach ($results as $data) {
                         array_push($dataPinjam, [
+                            "awal" => $tgl_awal,
+                            "akhir" => $tgl_akhir,
                             "no" => $no++,
                             "book_id" => $data->book_id,
                             "id" => $data->pinjam_id,

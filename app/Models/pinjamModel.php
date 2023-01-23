@@ -8,18 +8,36 @@ use Illuminate\Support\Facades\DB;
 
 class pinjamModel extends Model
 {
-    public function getAll($buku, $status)
+    public function getAll($tgl_awal, $tgl_akhir, $buku, $status)
     {
-        return DB::table('pinjam')
-        ->select('pinjam.pinjam_id', 'pinjam.book_id', 'pinjam.batas_pengembalian', 'pinjam.status', 'pinjam.createdAt', 'pinjam.updatedAt'
-        , 'user.name as peminjam_name', 'penerbit.name as penerbit_name', 'user.email', 'user.phone', 'book.name as book_name')
-        ->join('book', 'pinjam.book_id', '=', 'book.book_id')
-        ->join('user', 'pinjam.user_id', '=', 'user.user_id')
-        ->join('penerbit', 'book.penerbit_id', '=', 'penerbit.penerbit_id')
-        ->where('pinjam.book_id','LIKE','%'.$buku.'%')
-        ->where('pinjam.status','LIKE','%'.$status.'%')
-        ->orderBy('pinjam.batas_pengembalian', 'DESC')
-        ->get();
+        // if 2 date inserted
+        if($tgl_awal != "" && $tgl_akhir != "")
+        {
+            return DB::table('pinjam')
+            ->select('pinjam.pinjam_id', 'pinjam.book_id', 'pinjam.batas_pengembalian', 'pinjam.status', 'pinjam.createdAt', 'pinjam.updatedAt'
+            , 'user.name as peminjam_name', 'penerbit.name as penerbit_name', 'user.email', 'user.phone', 'book.name as book_name')
+            ->join('book', 'pinjam.book_id', '=', 'book.book_id')
+            ->join('user', 'pinjam.user_id', '=', 'user.user_id')
+            ->join('penerbit', 'book.penerbit_id', '=', 'penerbit.penerbit_id')
+            ->where('pinjam.book_id','LIKE','%'.$buku.'%')
+            ->where('pinjam.status','LIKE','%'.$status.'%')
+            ->whereBetween('pinjam.createdAt',[$tgl_awal, $tgl_akhir])
+            ->orderBy('pinjam.batas_pengembalian', 'DESC')
+            ->get();
+        }
+        else
+        {
+            return DB::table('pinjam')
+            ->select('pinjam.pinjam_id', 'pinjam.book_id', 'pinjam.batas_pengembalian', 'pinjam.status', 'pinjam.createdAt', 'pinjam.updatedAt'
+            , 'user.name as peminjam_name', 'penerbit.name as penerbit_name', 'user.email', 'user.phone', 'book.name as book_name')
+            ->join('book', 'pinjam.book_id', '=', 'book.book_id')
+            ->join('user', 'pinjam.user_id', '=', 'user.user_id')
+            ->join('penerbit', 'book.penerbit_id', '=', 'penerbit.penerbit_id')
+            ->where('pinjam.book_id','LIKE','%'.$buku.'%')
+            ->where('pinjam.status','LIKE','%'.$status.'%')
+            ->orderBy('pinjam.batas_pengembalian', 'DESC')
+            ->get();
+        }
     }
 
     public function create($user_id, $buku, $batas_pengembalian)

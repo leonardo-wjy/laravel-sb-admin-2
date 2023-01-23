@@ -21,6 +21,12 @@
             <div class="card-body">
                 <div class="form-row justify-content-end mx-0">
                     <div class="form-group col-md-3">
+                        <input class="form-control awal-pinjam" name="awal_pinjam" id="awal_pinjam" placeholder="Filter: Tgl. Awal Peminjaman">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input class="form-control akhir-pinjam" name="akhir_pinjam" id="akhir_pinjam" placeholder="Filter: Tgl. Akhir Peminjaman">
+                    </div>
+                    <div class="form-group col-md-3">
                         <select class="form-control filter-buku">
                             <option value=""></option>
                             <?php
@@ -220,6 +226,20 @@
             theme: "bootstrap-5"
         })
 
+        $(".awal-pinjam").datepicker({
+            todayHighlight: true,
+            format: "dd/mm/yyyy",
+            orientation: "bottom auto",
+            autoclose: true
+        })
+
+        $(".akhir-pinjam").datepicker({
+            todayHighlight: true,
+            format: "dd/mm/yyyy",
+            orientation: "bottom auto",
+            autoclose: true
+        })
+
         $(".create-form").validate({
             rules: {
                 buku: {
@@ -261,6 +281,8 @@
                 url: '{{ url()->current() }}',
                 dataSrc: "data",
                 data: function(data) {
+                    data.tgl_awal = $(".awal-pinjam").val() ? $(".awal-pinjam").val().replaceAll("/", "-") : "";
+                    data.tgl_akhir = $(".akhir-pinjam").val() ? $(".akhir-pinjam").val().replaceAll("/", "-") : "";
                     data.buku = $(".filter-buku option:selected").val();
                     data.status = $(".filter-status option:selected").val();
                 },
@@ -347,7 +369,7 @@
 
         $(".dataTables_info").addClass("pt-0");
 
-        $('.filter-buku, .filter-status').on('change', function() {
+        $('.filter-buku, .filter-status, .awal-pinjam, .akhir-pinjam').on('change', function() {
             table.ajax.reload();
         })
 
