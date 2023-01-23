@@ -24,6 +24,15 @@
 </head>
 
 <body class="bg-login-register">
+    <script>
+        const setLoadingLogin = function() {
+            $(".btn-login-register").attr("disabled", true)
+        }
+
+        const stopLoadingLogin = function() {
+            $(".btn-login-register").attr("disabled", false)
+        }
+    </script>
 
     <div class="container">
 
@@ -120,6 +129,7 @@
                 if(key == 13)  // the enter key code
                 {
                     if ($(".login-form").valid()) {
+                        setLoadingLogin()
                         $.ajax({
                             url : "{{ url('login') }}",
                             type: "POST",
@@ -138,6 +148,7 @@
                                         }
                                     })
                                 } else {
+                                    stopLoadingLogin()
                                     Swal.fire({
                                         icon: 'error',
                                         title: response.message,
@@ -146,6 +157,7 @@
                                 }
                             },
                             onError: function(err) {
+                                stopLoadingLogin()
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Data Gagal Disimpan',
@@ -159,6 +171,7 @@
 
             $(".btn-login-register").click(function() {
                 if ($(".login-form").valid()) {
+                    setLoadingLogin()
                     $.ajax({
                         url : "{{ url('login') }}",
                         type: "POST",
@@ -177,6 +190,7 @@
                                     }
                                 })
                             } else {
+                                stopLoadingLogin()
                                 Swal.fire({
                                     icon: 'error',
                                     title: response.message,
@@ -185,6 +199,7 @@
                             }
                         },
                         onError: function(err) {
+                            stopLoadingLogin()
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Data Gagal Disimpan',
