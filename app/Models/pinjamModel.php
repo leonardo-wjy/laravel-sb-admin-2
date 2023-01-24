@@ -65,4 +65,12 @@ class pinjamModel extends Model
             'updatedAt' => $date
         ]);
     }
+
+    public function getStatusNotActiveByUserId($id)
+    {
+        return DB::table('pinjam')
+        ->where('pinjam.status', 1)
+        ->where('user_id', $id)
+        ->get();
+    }
 }

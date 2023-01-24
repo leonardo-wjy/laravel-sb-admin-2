@@ -97,31 +97,44 @@ class PinjamController extends Controller
         // check quote of book
         $results = $this->book->getById($buku);
 
-        if($results)
+        // check semua buku yang belum dikembalikan
+        $result_borrow = $this->pinjam->getStatusNotActiveByUserId($user_id);
+        if(sizeof($result_borrow) >= 3)
         {
-            //check stock buku not null
-            if($results->jumlah !== 0)
+            if($results)
             {
-                // increase jumlah pinjam and decrease jumlah stok buku
-                $update = $this->book->updateJumlah($buku, ($results->jumlah - 1), ($results->jumlah_dipinjam + 1));
-
-                if($update)
+                //check stock buku not null
+                if($results->jumlah !== 0)
                 {
-                    //create pinjam
-                    $insert = $this->pinjam->create($user_id, $buku, $batas_pengembalian);
-                    if($insert)
+                    // increase jumlah pinjam and decrease jumlah stok buku
+                    $update = $this->book->updateJumlah($buku, ($results->jumlah - 1), ($results->jumlah_dipinjam + 1));
+
+                    if($update)
                     {
-                        $data = [
-                            "status"            => true,
-                            "message"    => "Berhasil Pinjam Buku"
-                        ];
-                        echo json_encode($data);
+                        //create pinjam
+                        $insert = $this->pinjam->create($user_id, $buku, $batas_pengembalian);
+                        if($insert)
+                        {
+                            $data = [
+                                "status"            => true,
+                                "message"    => "Berhasil Pinjam Buku"
+                            ];
+                            echo json_encode($data);
+                        }
+                        else
+                        {
+                            $data = [
+                                "status"            => false,
+                                "message"    => "Gagal Pinjam Buku"
+                            ];
+                            echo json_encode($data);
+                        }
                     }
                     else
                     {
                         $data = [
                             "status"            => false,
-                            "message"    => "Gagal Pinjam Buku"
+                            "message"    => "Gagal Ubah Data Jumlah Buku"
                         ];
                         echo json_encode($data);
                     }
@@ -130,7 +143,7 @@ class PinjamController extends Controller
                 {
                     $data = [
                         "status"            => false,
-                        "message"    => "Gagal Ubah Data Jumlah Buku"
+                        "message"    => "Stok Buku Tidak Mencukupi"
                     ];
                     echo json_encode($data);
                 }
@@ -139,7 +152,7 @@ class PinjamController extends Controller
             {
                 $data = [
                     "status"            => false,
-                    "message"    => "Stok Buku Tidak Mencukupi"
+                    "message"    => "Buku Tidak Ditemukan"
                 ];
                 echo json_encode($data);
             }
@@ -148,7 +161,7 @@ class PinjamController extends Controller
         {
             $data = [
                 "status"            => false,
-                "message"    => "Buku Tidak Ditemukan"
+                "message"    => "Buku Yang Dipinjam Maksimal 3 Buku"
             ];
             echo json_encode($data);
         }
