@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class pinjamModel extends Model
 {
-    public function getAll($tgl_awal, $tgl_akhir, $buku, $status)
+    public function getAll($user_id, $tgl_awal, $tgl_akhir, $buku, $status)
     {
         // if 2 date inserted
         if($tgl_awal != "" && $tgl_akhir != "")
@@ -20,6 +20,7 @@ class pinjamModel extends Model
             ->join('user', 'pinjam.user_id', '=', 'user.user_id')
             ->join('penerbit', 'book.penerbit_id', '=', 'penerbit.penerbit_id')
             ->where('pinjam.book_id','LIKE','%'.$buku.'%')
+            ->where('pinjam.user_id','LIKE','%'.$user_id.'%')
             ->where('pinjam.status','LIKE','%'.$status.'%')
             ->whereBetween('pinjam.createdAt',[$tgl_awal, $tgl_akhir])
             ->orderBy('pinjam.batas_pengembalian', 'DESC')
@@ -34,6 +35,7 @@ class pinjamModel extends Model
             ->join('user', 'pinjam.user_id', '=', 'user.user_id')
             ->join('penerbit', 'book.penerbit_id', '=', 'penerbit.penerbit_id')
             ->where('pinjam.book_id','LIKE','%'.$buku.'%')
+            ->where('pinjam.user_id','LIKE','%'.$user_id.'%')
             ->where('pinjam.status','LIKE','%'.$status.'%')
             ->orderBy('pinjam.batas_pengembalian', 'DESC')
             ->get();

@@ -34,6 +34,13 @@ class PinjamController extends Controller
             $dataBuku = $this->book->getDropdownAvailableStock();
             $dataBukuAll = $this->book->getDropdown();
 
+            $user_id = "";
+
+            if(Session::get('role') == 'Peminjam')
+            {
+                $user_id = Session::get('user_id');
+            }
+
             if (request()->ajax()) {
                 $tgl_awal = "";
                 $tgl_akhir = "";
@@ -51,7 +58,7 @@ class PinjamController extends Controller
                 $buku = $request->input('buku');
                 $status = $request->input('status');
 
-                $results = $this->pinjam->getAll($tgl_awal, $tgl_akhir, $buku, $status);
+                $results = $this->pinjam->getAll($user_id, $tgl_awal, $tgl_akhir, $buku, $status);
 
                 $no = 1;
                 foreach ($results as $data) {
