@@ -99,7 +99,7 @@ class PinjamController extends Controller
 
         // check semua buku yang belum dikembalikan
         $result_borrow = $this->pinjam->getStatusNotActiveByUserId($user_id);
-        if(sizeof($result_borrow) >= 3)
+        if(sizeof($result_borrow) < 3)
         {
             if($results)
             {
