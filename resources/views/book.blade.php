@@ -448,14 +448,6 @@
                     min: "Jumlah Buku Minimal 0"
                 }
             },
-            // highlight: function(element) {
-            //     $(element).addClass("is-invalid").removeClass("is-valid");
-            // },
-            // unhighlight: function(element) {
-            //     $(element).addClass("is-valid").removeClass("is-invalid");
-            // },
-
-            //add
             errorElement: 'span',
             errorClass: 'text-danger',
             errorPlacement: function(error, element) {
@@ -466,8 +458,16 @@
                 } else {
                     error.insertAfter(element);
                 }
-            }
-            // end add
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error');
+                $(element).addClass('select-class');                      
+
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-error');
+                $(element).removeClass('select-class');   
+            },
         });
 
         $(".update-form").validate({
@@ -509,14 +509,6 @@
                     min: "Jumlah Buku Minimal 0"
                 }
             },
-            // highlight: function(element) {
-            //     $(element).addClass("is-invalid").removeClass("is-valid");
-            // },
-            // unhighlight: function(element) {
-            //     $(element).addClass("is-valid").removeClass("is-invalid");
-            // },
-
-            //add
             errorElement: 'span',
             errorClass: 'text-danger',
             errorPlacement: function(error, element) {
@@ -527,8 +519,16 @@
                 } else {
                     error.insertAfter(element);
                 }
-            }
-            // end add
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error');
+                $(element).addClass('select-class');                      
+
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-error');
+                $(element).removeClass('select-class');   
+            },
         });
 
         // Call the dataTables jQuery plugin

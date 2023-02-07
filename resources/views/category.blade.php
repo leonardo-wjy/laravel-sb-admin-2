@@ -175,7 +175,6 @@
                     maxlength: "Deskripsi Maksimal 255 Karakter"
                 },
             },
-            //add
             errorElement: 'span',
             errorClass: 'text-danger',
             errorPlacement: function(error, element) {
@@ -186,7 +185,16 @@
                 } else {
                     error.insertAfter(element);
                 }
-            }
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error');
+                $(element).addClass('select-class');                      
+
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-error');
+                $(element).removeClass('select-class');   
+            },
         });
 
         var validator = $(".update-form").validate({
@@ -222,8 +230,16 @@
                 } else {
                     error.insertAfter(element);
                 }
-            }
-            // end add
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error');
+                $(element).addClass('select-class');                      
+
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-error');
+                $(element).removeClass('select-class');   
+            },
         });
 
         // Call the dataTables jQuery plugin

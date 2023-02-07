@@ -306,14 +306,6 @@
                     required: "Nomor Telepon Harus Diisi"
                 }
             },
-            // highlight: function(element) {
-            //     $(element).addClass("is-invalid").removeClass("is-valid");
-            // },
-            // unhighlight: function(element) {
-            //     $(element).addClass("is-valid").removeClass("is-invalid");
-            // },
-
-            //add
             errorElement: 'span',
             errorClass: 'text-danger',
             errorPlacement: function(error, element) {
@@ -324,15 +316,16 @@
                 } else {
                     error.insertAfter(element);
                 }
-            }
-            // errorPlacement: function(error, element) {
-            //     if(element.parent('.form-control').length) {
-            //         error.insertAfter(element.parent());
-            //     } else {
-            //         error.insertAfter(element);
-            //     }
-            // }
-            // end add
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error');
+                $(element).addClass('select-class');                      
+
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-error');
+                $(element).removeClass('select-class');   
+            },
         });
 
         var validator = $(".update-form").validate({
@@ -372,14 +365,6 @@
                     maxlength: "Password Maksimal 30 Karakter"
                 }
             },
-            // highlight: function(element) {
-            //     $(element).addClass("is-invalid").removeClass("is-valid");
-            // },
-            // unhighlight: function(element) {
-            //     $(element).addClass("is-valid").removeClass("is-invalid");
-            // },
-
-            //add
             errorElement: 'span',
             errorClass: 'text-danger',
             errorPlacement: function(error, element) {
@@ -390,8 +375,16 @@
                 } else {
                     error.insertAfter(element);
                 }
-            }
-            // end add
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error');
+                $(element).addClass('select-class');                      
+
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-error');
+                $(element).removeClass('select-class');   
+            },
         });
 
         // Call the dataTables jQuery plugin
