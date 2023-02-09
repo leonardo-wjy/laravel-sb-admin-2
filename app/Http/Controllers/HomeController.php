@@ -36,7 +36,7 @@ class HomeController extends Controller
 			// $usersChart->labels(['Jan', 'Feb', 'Mar']);
 			// $usersChart->dataset('Users by trimester', 'line', [10, 25, 13]);
 
-            return view('home', ['title' => 'Home']);
+            return view('home', ['title' => 'Home', 'count' => $dataCountPinjam]);
 		}
 		else
 		{
