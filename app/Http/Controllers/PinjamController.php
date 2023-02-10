@@ -27,7 +27,6 @@ class PinjamController extends Controller
     //get page peminjaman buku
     public function index(request $request) 
     {
-        var_dump
         $dataPinjam = array();
         if(Session::has('email'))
 		{
