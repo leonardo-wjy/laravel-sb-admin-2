@@ -42,6 +42,22 @@ class pinjamModel extends Model
         }
     }
 
+    public function getBelumMengembalikanToday()
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d');
+
+        return DB::table('pinjam')
+        ->select('pinjam.pinjam_id', 'pinjam.book_id', 'pinjam.batas_pengembalian', 'pinjam.status', 'pinjam.createdAt', 'pinjam.updatedAt'
+        , 'user.name as peminjam_name', 'penerbit.name as penerbit_name', 'user.email', 'user.phone', 'book.name as book_name')
+        ->join('book', 'pinjam.book_id', '=', 'book.book_id')
+        ->join('user', 'pinjam.user_id', '=', 'user.user_id')
+        ->join('penerbit', 'book.penerbit_id', '=', 'penerbit.penerbit_id')
+        // ->whereBetween('pinjam.batas_pengembalian',[$date . " 00:00:00", $date . " 24:00:00"])
+        ->orderBy('pinjam.batas_pengembalian', 'DESC')
+        ->get();
+    }
+
     public function create($user_id, $buku, $batas_pengembalian)
     {
         date_default_timezone_set('Asia/Jakarta');
