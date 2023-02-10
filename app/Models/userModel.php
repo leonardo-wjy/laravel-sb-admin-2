@@ -31,7 +31,7 @@ class userModel extends Model
     public function create($name, $role, $email, $phone, $password)
     {
         date_default_timezone_set('Asia/Jakarta');
-        $date = date('Y-m-d h:i:s', time());
+        $date = date('Y-m-d H:i:s', time());
 
         return DB::table('user')->insert([
             'name' => $name,
@@ -48,7 +48,7 @@ class userModel extends Model
     public function updateData($id, $name, $role, $email, $phone, $password, $status)
     {
         date_default_timezone_set('Asia/Jakarta');
-        $date = date('Y-m-d h:i:s', time());
+        $date = date('Y-m-d H:i:s', time());
 
         //check exist password
         if($password)
@@ -79,7 +79,7 @@ class userModel extends Model
     public function updateStatus($id, $status)
     {
         date_default_timezone_set('Asia/Jakarta');
-        $date = date('Y-m-d h:i:s', time());
+        $date = date('Y-m-d H:i:s', time());
 
         return DB::table('user')->where('user_id', $id)->update([
             'status' => $status, 

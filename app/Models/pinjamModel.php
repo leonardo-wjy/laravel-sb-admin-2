@@ -45,7 +45,7 @@ class pinjamModel extends Model
     public function create($user_id, $buku, $batas_pengembalian)
     {
         date_default_timezone_set('Asia/Jakarta');
-        $date = date('Y-m-d h:i:s', time());
+        $date = date('Y-m-d H:i:s', time());
 
         return DB::table('pinjam')->insert([
             'user_id' => $user_id,
@@ -60,7 +60,7 @@ class pinjamModel extends Model
     public function updateStatus($id)
     {
         date_default_timezone_set('Asia/Jakarta');
-        $date = date('Y-m-d h:i:s', time());
+        $date = date('Y-m-d H:i:s', time());
 
         return DB::table('pinjam')->where('pinjam_id', $id)->update([
             'status' => 3, 

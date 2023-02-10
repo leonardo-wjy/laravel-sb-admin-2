@@ -48,7 +48,7 @@ class categoryModel extends Model
     public function create($name, $description)
     {
         date_default_timezone_set('Asia/Jakarta');
-        $date = date('Y-m-d h:i:s', time());
+        $date = date('Y-m-d H:i:s', time());
 
         return DB::table('category')->insert([
             'name' => $name,
@@ -62,7 +62,7 @@ class categoryModel extends Model
     public function updateData($id, $name, $description)
     {
         date_default_timezone_set('Asia/Jakarta');
-        $date = date('Y-m-d h:i:s', time());
+        $date = date('Y-m-d H:i:s', time());
 
         return DB::table('category')->where('category_id', $id)->update([
             'name' => $name,
@@ -75,7 +75,7 @@ class categoryModel extends Model
     public function updateStatus($id)
     {
         date_default_timezone_set('Asia/Jakarta');
-        $date = date('Y-m-d h:i:s', time());
+        $date = date('Y-m-d H:i:s', time());
 
         return DB::table('category')->where('category_id', $id)->update([
             'status' => 3,

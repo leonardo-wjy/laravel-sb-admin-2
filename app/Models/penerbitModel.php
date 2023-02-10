@@ -48,7 +48,7 @@ class penerbitModel extends Model
     public function create($name)
     {
         date_default_timezone_set('Asia/Jakarta');
-        $date = date('Y-m-d h:i:s', time());
+        $date = date('Y-m-d H:i:s', time());
 
         return DB::table('penerbit')->insert([
             'name' => $name,
@@ -61,7 +61,7 @@ class penerbitModel extends Model
     public function updateData($id, $name)
     {
         date_default_timezone_set('Asia/Jakarta');
-        $date = date('Y-m-d h:i:s', time());
+        $date = date('Y-m-d H:i:s', time());
 
         return DB::table('penerbit')->where('penerbit_id', $id)->update([
             'name' => $name,
@@ -73,7 +73,7 @@ class penerbitModel extends Model
     public function updateStatus($id)
     {
         date_default_timezone_set('Asia/Jakarta');
-        $date = date('Y-m-d h:i:s', time());
+        $date = date('Y-m-d H:i:s', time());
 
         return DB::table('penerbit')->where('penerbit_id', $id)->update([
             'status' => 3,

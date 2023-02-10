@@ -9,6 +9,7 @@ use Session;
 
 use App\Models\bookModel;
 use App\Models\pinjamModel;
+use App\Models\countPinjamModel;
 
 // php artisan make:controller DosenController
 
@@ -20,11 +21,13 @@ class PinjamController extends Controller
     public function __construct(){
         $this->book = new bookModel();
         $this->pinjam = new pinjamModel();
+        $this->count_pinjam = new countPinjamModel();
     }
 
     //get page peminjaman buku
     public function index(request $request) 
     {
+        var_dump
         $dataPinjam = array();
         if(Session::has('email'))
 		{
@@ -122,6 +125,18 @@ class PinjamController extends Controller
                         $insert = $this->pinjam->create($user_id, $buku, $batas_pengembalian);
                         if($insert)
                         {
+                            // check data already exist
+                            $check_count_pinjam = $this->count_pinjam->getByBookId($buku);
+
+                            if($check_count_pinjam)
+                            {
+                                $update_count_pinjam = $this->count_pinjam->updateData($check_count_pinjam->count, $check_count_pinjam->count_pinjam_id);
+                            }
+                            else
+                            {
+                                $insert_count_pinjam = $this->count_pinjam->create($buku);
+                            }
+
                             $data = [
                                 "status"            => true,
                                 "message"    => "Berhasil Pinjam Buku"

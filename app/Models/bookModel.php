@@ -71,7 +71,7 @@ class bookModel extends Model
     public function create($name, $kategori, $penerbit, $tahun, $file_name, $jumlah)
     {
         date_default_timezone_set('Asia/Jakarta');
-        $date = date('Y-m-d h:i:s', time());
+        $date = date('Y-m-d H:i:s', time());
 
         return DB::table('book')->insert([
             'name' => $name,
@@ -89,7 +89,7 @@ class bookModel extends Model
     public function updateData($id, $name, $kategori, $penerbit, $tahun, $file_name, $jumlah)
     {
         date_default_timezone_set('Asia/Jakarta');
-        $date = date('Y-m-d h:i:s', time());
+        $date = date('Y-m-d H:i:s', time());
 
         if($file_name)
         {
@@ -121,7 +121,7 @@ class bookModel extends Model
     public function updateStatus($id)
     {
         date_default_timezone_set('Asia/Jakarta');
-        $date = date('Y-m-d h:i:s', time());
+        $date = date('Y-m-d H:i:s', time());
 
         return DB::table('book')->where('book_id', $id)->update([
             'status' => 3,
@@ -132,7 +132,7 @@ class bookModel extends Model
     public function updateJumlah($id, $jumlah, $jumlah_dipinjam)
     {
         date_default_timezone_set('Asia/Jakarta');
-        $date = date('Y-m-d h:i:s', time());
+        $date = date('Y-m-d H:i:s', time());
 
         return DB::table('book')->where('book_id', $id)->update([
             'status' => 2,

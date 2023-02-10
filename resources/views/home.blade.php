@@ -40,7 +40,7 @@
             data: {
                 labels: arr_name,
                 datasets: [{
-                    label: data.length === 0 ? "" : monthNames[(dt.getMonth())] + " " + dt.getFullYear(),
+                    label: monthNames[(dt.getMonth())] + " " + dt.getFullYear(),
                     backgroundColor: "green",
                     data: arr_count
                 }]
@@ -51,7 +51,7 @@
                         fontColor: "white",
                         fontSize: 18
                     }
-                },
+                }
             }
         });
     })

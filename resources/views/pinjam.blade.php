@@ -401,9 +401,9 @@
                         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
                         var yyyy = today.getFullYear();
 
-                        var seconds = today.getSeconds();
-                        var minutes = today.getMinutes();
-                        var hour = today.getHours();
+                        var seconds = String(today.getSeconds()).padStart(2, '0');
+                        var minutes = String(today.getMinutes()).padStart(2, '0');
+                        var hour = String(today.getHours()).padStart(2, '0');
 
 
                         var date = new Date(yyyy + '-' + mm + '-' + dd);       
